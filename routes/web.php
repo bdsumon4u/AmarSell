@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function(){
+    Auth::routes();
+    Route::get('/home', 'HomeController@index')->name('home');
+});
+
+Route::get('/guest-as-reseller', function(){
+    return 'guest-as-reseller';
+})->middleware('guest:reseller');

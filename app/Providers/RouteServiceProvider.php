@@ -24,6 +24,13 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The path to the "home" route for resellers.
+     *
+     * @var string
+     */
+    public const reseller_HOME = '/reseller/home';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
