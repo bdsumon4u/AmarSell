@@ -18,8 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('getpass', 'Auth\LoginController@login')->name('login');
 Auth::routes(['register' => false]);
-Route::get('/login', function(){
+Route::match(['get', 'post'], '/login', function(){
     return abort('404');
 });
 

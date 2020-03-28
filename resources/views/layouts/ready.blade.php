@@ -1,1 +1,1 @@
-@extends('coreui')
+@extends('layouts.coreui')
