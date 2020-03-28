@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::formatted();
+        return view('categories.index', compact('categories'));
     }
 
     /**

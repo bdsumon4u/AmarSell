@@ -31,4 +31,7 @@ Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'resell
     Route::get('/dashboard', 'HomeController@index')->name('home');
 });
 
-Route::view('/core', 'layouts.coreui');
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::resource('categories', 'CategoryController');
+});

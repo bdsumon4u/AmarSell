@@ -27,15 +27,15 @@ class SidebarComposer
         [
             'icon' => 'fa fa-columns',
             'style' => 'dropdown',
-            'name' => 'Departments',
+            'name' => 'Categories',
             'items' => [
                 [
                     'name' => 'All',
-                    'url' => 'departments.index',
+                    'route' => 'categories.index',
                 ],
                 [
                     'name' => 'Create',
-                    'url' => 'departments.create',
+                    'url' => 'categories.create',
                 ],
             ],
         ],
