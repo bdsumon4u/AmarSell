@@ -17,4 +17,12 @@ class Category extends Model
     protected $fillable = [
         'parent_id', 'name', 'slug',
     ];
+
+    /**
+     * Products
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
