@@ -25,3 +25,5 @@ Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'resell
     Auth::routes(['verify' => true]);
     Route::get('/home', 'HomeController@index')->name('home');
 });
+
+Route::view('/core', 'layouts.coreui');
