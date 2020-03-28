@@ -21,7 +21,7 @@
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     <x-layouts.header />
     <div class="app-body">
-        <x-layouts.sidebar />
+        <x-layouts.sidebar :menu="$menu" />
         <main class="main">
             <!-- Breadcrumb-->
             <x-layouts.breadcrumb />

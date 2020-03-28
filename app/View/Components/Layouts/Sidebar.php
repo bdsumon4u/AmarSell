@@ -7,13 +7,18 @@ use Illuminate\View\Component;
 class Sidebar extends Component
 {
     /**
+     * Menu
+     */
+    public $menu;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($menu)
     {
-        //
+        $this->menu = $menu ?: [];
     }
 
     /**
