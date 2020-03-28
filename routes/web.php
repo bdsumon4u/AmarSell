@@ -17,13 +17,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
+Auth::routes(['register' => false]);
+Route::get('/login', function(){
+    return abort('404');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function(){
     Auth::routes(['verify' => true]);
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@index')->name('home');
 });
 
 Route::view('/core', 'layouts.coreui');

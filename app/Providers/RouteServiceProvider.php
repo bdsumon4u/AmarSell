@@ -21,14 +21,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/dashboard';
 
     /**
      * The path to the "home" route for resellers.
      *
      * @var string
      */
-    public const reseller_HOME = '/reseller/home';
+    public const reseller_HOME = '/reseller/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.
