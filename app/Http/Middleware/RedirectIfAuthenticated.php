@@ -20,12 +20,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            $var = $guard . '_HOME';
-            $class = new ReflectionClass(RouteServiceProvider::class);
-            $const = $class->getConstant($var);
             return $guard == 'web' || $guard == null
                 ? redirect(RouteServiceProvider::HOME)
-                : redirect($const);
+                : redirect(
+                    (new ReflectionClass(RouteServiceProvider::class))
+                        ->getConstant($guard . '_HOME')
+                );
         }
 
         return $next($request);
