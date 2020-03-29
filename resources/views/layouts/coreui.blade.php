@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/coreui.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -35,6 +36,7 @@
     </div>
     <x-layouts.footer />
     <script src="{{ asset('js/coreui.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

@@ -15,6 +15,14 @@ trait CategoryModelHelper
     }
 
     /**
+     * Parent
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    /**
      * Formatted
      */
     public static function formatted()

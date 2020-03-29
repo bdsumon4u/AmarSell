@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'parent_id' => 5,
+        'parent_id' => 6,
         'name' => $faker->unique()->name,
         'slug' => $faker->unique()->slug
     ];

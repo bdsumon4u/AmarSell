@@ -29429,6 +29429,47 @@ body {
   background-position: right calc(0.4em + 0.1875rem) center;
 }
 
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.col,
+[class^=col-] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.close:focus,
+.close:active {
+  outline: none;
+}
+
+.SumoSelect {
+  width: 100%;
+}
+
+.SumoSelect .CaptionCont.SelectBox label {
+  margin: 0;
+}
+
+.SumoSelect label {
+  margin-bottom: 0;
+}
+
+[type=date] {
+  font-variant: small-caps;
+}
+
 .main .container-fluid,
 .main .container-sm,
 .main .container-md,
