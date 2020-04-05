@@ -34,4 +34,5 @@ Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'resell
 
 Route::group(['middleware' => 'auth'], function(){
     Route::resource('categories', 'CategoryController');
+    Route::resource('products', 'ProductController');
 });
