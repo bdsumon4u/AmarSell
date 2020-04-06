@@ -36,3 +36,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
 });
+
+Route::group(['middleware' => 'auth:reseller'], function(){
+    Route::get('shop', 'ShopController@index')->name('shop.index');
+});
