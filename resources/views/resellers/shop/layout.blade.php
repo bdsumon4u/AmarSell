@@ -10,13 +10,12 @@
         - FleetCart
     </title>
 
-    <meta name="csrf-token" content="0jWtgNhwS6A9wjmUanUEK9MzhovCFNpSCaaA39m3">
-
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://fleetcart.envaysoft.com/themes/storefront/public/css/app.css?v=1.1.9">
-
+    <!-- <link rel="stylesheet" href="{{ asset('css/shop.css') }}"> -->
     <link rel="shortcut icon"
         href="https://fleetcart.envaysoft.com/storage/media/w2VuVc7ASHg8KeYCTJWDpLYZu0RjsivUCg4fTN2i.png"
         type="image/x-icon">
@@ -59,19 +58,9 @@
 
             <div class="content-wrapper clearfix ">
                 <div class="container">
+                    
+                    @yield('content')
 
-
-                    <section class="product-list">
-                        <div class="row">
-                            <div class="col-md-3 col-sm-12">
-                                @include('resellers.shop.partials.sidebar')
-                            </div>
-
-                            <div class="col-md-9 col-sm-12">
-                                @yield('content')
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </div>
 

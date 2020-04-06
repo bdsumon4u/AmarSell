@@ -1,8 +1,10 @@
 <?php
 
+use App\Product;
 use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +43,5 @@ Route::group(['middleware' => 'auth'], function(){
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('shop', 'ShopController@index')->name('shop.index');
+    Route::get('product/{product:slug}', 'ShopController@show')->name('shop.product.show');
 });

@@ -2,32 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Product;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class ShopController extends Controller
 {
     /**
      * Shop Index
      */
-    public function index(Request $request, $per_page = 24)
+    public function index(Request $request)
     {
-        $page = $request['page'] ? $request['page'] : 1;
-
-        $products = QueryBuilder::for(Product::class)
-            ->allowedFilters([
-                'title', 
-                'wholesale_price',
-                'page',
-            ])
-            ->defaultSort('created_at')
-            ->allowedSorts(['title'])
-            // ->get(); 
-            ->allowedFields(['title'])
-            ->paginate($per_page, ['*'], 'page', $page)
-            ->appends(request()->query());
-        $products_count = 4;
+        $products = Product::latest();
+        $products_count = $products->count();
+        $products = $products->paginate(12);
         return view('resellers.shop.index', compact('products', 'products_count'));
+    }
+
+    /**
+     * Show
+     */
+    public function show(Request $request, Product $product)
+    {
+        return view('resellers.shop.product', compact('product'));
     }
 }
