@@ -12,7 +12,7 @@
 
     <meta name="csrf-token" content="0jWtgNhwS6A9wjmUanUEK9MzhovCFNpSCaaA39m3">
 
-
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
 
     <link rel="stylesheet" href="https://fleetcart.envaysoft.com/themes/storefront/public/css/app.css?v=1.1.9">
@@ -23,6 +23,22 @@
     <style>
         .search-area .mobile-search .dropdown-menu {
             min-width: 280px;
+        }
+        @media screen and (min-width: 681px)
+        {
+            .product-list-result .grid-products .product-card:nth-child(-n+4) {
+                margin-top: 20px;
+            }
+        }
+        @media screen and (min-width: 991px)
+        {
+            .product-list-result .grid-products {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .product-card .image-holder,
+        .product-card .image-placeholder {
+            border: 2px solid #ddd;
         }
     </style>
     @yield('styles')

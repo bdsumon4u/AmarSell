@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Route;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /*
 |--------------------------------------------------------------------------
