@@ -80,7 +80,8 @@
 
             <div class="col-md-4">
                 <div class="order-review cart-list-sidebar">
-                    <div class="cart-total">
+                    <form action="{{ route('cart.checkout') }}" method="post" class="cart-total">
+                        @csrf
                         <h3>Cart Totals</h3>
 
                         <span class="item-amount">
@@ -88,17 +89,29 @@
                             <span>{{ theMoney(Cart::getSubTotal()) }}</span>
                         </span>
 
-                        
+                        <span>
+                            <div class="form-group shipping-charge">
+                                <label for="shipping-charge">Shipping Charge: </label>
+                                <input type="number" name="shipping_charge" value="{{ old('shipping_charge', 100) }}" id="shipping-charge" onclick="$(this).select();">
+                            </div>
+                        </span>
+
+                        <span>
+                            <div class="form-group advanced">
+                                <label for="advanced">Advanced: </label>
+                                <input type="number" name="advanced" value="{{ old('advanced', 100) }}" id="advanced" onclick="$(this).select();">
+                            </div>
+                        </span>
 
                         <span class="total">
-                            Total
+                            Payable
                             <span id="total-amount">{{ theMoney(Cart::getTotal()) }}</span>
                         </span>
 
-                        <a href="" class="btn btn-primary btn-checkout" data-loading>
+                        <button type="submit" class="btn btn-primary btn-checkout" data-loading>
                             Checkout
-                        </a>
-                    </div>
+                        </button>
+                    </form>
                 </div>
             </div>
         @endif

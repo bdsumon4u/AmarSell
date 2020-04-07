@@ -21,29 +21,6 @@ class Product extends Model
     ];
 
     /**
-     * Price
-     */
-    public function getWholesalePriceAttribute($price)
-    {
-        return number_format($price / 100, 2);
-    }
-    
-    public function getRetailPriceAttribute($price)
-    {
-        return number_format($price / 100, 2);
-    }
-
-    public function setWholesalePriceAttribute($price)
-    {
-        return intval($price * 100, 10);
-    }
-    
-    public function setRetailPriceAttribute($price)
-    {
-        return intval($price * 100, 10);
-    }
-
-    /**
      * Categories
      */
     public function categories()

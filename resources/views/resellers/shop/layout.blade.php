@@ -54,6 +54,19 @@
         .product-card .image-placeholder {
             border: 2px solid #ddd;
         }
+        .shipping-charge,
+        .advanced {
+            display: flex;
+            align-items: center;
+            margin-right: 0;
+        }
+        .shipping-charge input,
+        .advanced input {
+            width: 100px;
+            margin-left: auto;
+            padding: 2px 5px;
+            max-height: 35px !important;
+        }
     </style>
     @yield('styles')
 </head>

@@ -56,4 +56,15 @@ class CartController extends Controller
         Cart::session($user_id)->clear();
         return redirect()->back()->with('success', 'Cart Cleared.');
     }
+
+    /**
+     * Checkout
+     */
+    public function checkout(Request $request)
+    {
+        return view('resellers.checkout.index', [
+            'shipping_charge' => $request->shipping_charge,
+            'advanced' => $request->advanced,
+        ]);
+    }
 }

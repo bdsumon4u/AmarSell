@@ -1,6 +1,8 @@
 <?php
 
 use App\Product;
+use App\Reseller;
+use App\Shop;
 use App\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +51,5 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
+    Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
 });

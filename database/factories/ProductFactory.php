@@ -34,7 +34,7 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'title' => $faker->unique()->sentence,
         'slug' => $faker->unique()->slug,
-        'code' => Str::random(10),
+        'sku' => Str::random(10),
         'description' => $desc,
         'wholesale_price' => $w,
         'retail_price' => $r,

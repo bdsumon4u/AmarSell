@@ -27,6 +27,6 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['layouts.*', 'users.*'], SidebarComposer::class);
-        View::composer(['resellers.shop.partials.mini-cart', 'resellers.cart.index'], CartComposer::class);
+        View::composer(['resellers.shop.partials.mini-cart', 'resellers.cart.index', 'resellers.checkout.partials.confirm'], CartComposer::class);
     }
 }

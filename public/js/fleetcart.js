@@ -34034,50 +34034,6 @@ $(function () {
   });
   /*----------------------------------------*/
 
-  /*      range picker
-  /*----------------------------------------*/
-
-  var priceRangeSlider = document.getElementById('price-range-slider');
-
-  if (priceRangeSlider !== null) {
-    nouislider__WEBPACK_IMPORTED_MODULE_1___default.a.create(priceRangeSlider, {
-      start: [0, priceRangeSlider.dataset.toPrice],
-      connect: true,
-      direction: directionClass,
-      range: {
-        min: 0,
-        max: Number(priceRangeSlider.dataset.max) + 1
-      }
-    });
-    var inputNumberFrom = document.querySelector('.range-from');
-    var inputNumberTo = document.querySelector('.range-to');
-    priceRangeSlider.noUiSlider.on('update', function (values, handle) {
-      var value = values[handle];
-
-      if (handle) {
-        inputNumberTo.value = Math.round(value);
-      } else {
-        inputNumberFrom.value = Math.round(value);
-      }
-    });
-    inputNumberFrom.addEventListener('change', function () {
-      priceRangeSlider.noUiSlider.set([this.value, null]);
-    });
-    inputNumberTo.addEventListener('change', function () {
-      priceRangeSlider.noUiSlider.set([null, this.value]);
-    });
-  }
-  /*----------------------------------------*/
-
-  /*      filter options scroll
-  /*----------------------------------------*/
-
-
-  $('.filter-scroll').slimScroll({
-    height: '215px'
-  });
-  /*----------------------------------------*/
-
   /*      cart
   /*----------------------------------------*/
 

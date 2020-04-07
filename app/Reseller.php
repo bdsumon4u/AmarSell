@@ -59,4 +59,12 @@ class Reseller extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ResetPassword($token));
     }
+
+    /**
+     * Shops
+     */
+    public function shops()
+    {
+        return $this->hasMany(Shop::class, 'reseller_id', 'id');
+    }
 }
