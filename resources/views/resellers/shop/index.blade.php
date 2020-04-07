@@ -72,18 +72,15 @@
                                         </div>
 
                                         <div class="product-content clearfix">
-                                            <span class="product-price">{{ $product->wholesale_price }}</span>
+                                            <span class="product-price">{{ theMoney($product->wholesale_price) }}</span>
                                             <span class="product-name">{{ $product->title }}</span>
                                         </div>
 
                                         <div class="add-to-actions-wrapper">
                                             
 
-                                            <form method="POST" action="https://fleetcart.envaysoft.com/en/compare">
-                                                <input type="hidden" name="_token" value="0jWtgNhwS6A9wjmUanUEK9MzhovCFNpSCaaA39m3">
-
-                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-
+                                            <form method="POST" action="{{ route('cart.add', $product->id) }}">
+                                                @csrf
                                                 <button type="submit" class="btn btn-default btn-add-to-cart">
                                                     Add To Cart
                                                 </button>

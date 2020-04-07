@@ -29,6 +29,9 @@
         href="https://fleetcart.envaysoft.com/storage/media/w2VuVc7ASHg8KeYCTJWDpLYZu0RjsivUCg4fTN2i.png"
         type="image/x-icon">
     <style>
+        .mini-cart-title a {
+            text-decoration: none;
+        }
         .search-area .mobile-search .dropdown-menu {
             min-width: 280px;
         }
@@ -71,6 +74,10 @@
             <div class="content-wrapper clearfix ">
                 <div class="container">
                     
+                    @unless (request()->routeIs('home') || request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('reset') || request()->routeIs('reset.complete'))
+                        @include('resellers.shop.partials.notification')
+                    @endunless
+
                     @yield('content')
 
                 </div>

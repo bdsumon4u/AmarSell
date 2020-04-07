@@ -25,12 +25,22 @@ class Product extends Model
      */
     public function getWholesalePriceAttribute($price)
     {
-        return "$this->currency $price";
+        return number_format($price / 100, 2);
     }
     
     public function getRetailPriceAttribute($price)
     {
-        return "$this->currency $price";
+        return number_format($price / 100, 2);
+    }
+
+    public function setWholesalePriceAttribute($price)
+    {
+        return intval($price * 100, 10);
+    }
+    
+    public function setRetailPriceAttribute($price)
+    {
+        return intval($price * 100, 10);
     }
 
     /**

@@ -192,6 +192,6 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-filter pull-right" data-loading>Filter</button>
+        <button type="submit" class="btn btn-primary pull-right" data-loading>Filter</button>
     </form>
 </div>

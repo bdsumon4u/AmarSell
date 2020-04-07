@@ -97,8 +97,8 @@
                         <div class="clearfix"><br></div>
                         
                         <ul class="list-unstyled">
-                            <li><strong class="class-info">Wholesale Price:</strong> <span class="text-danger">{{ $product->wholesale_price }}</span></li>
-                            <li><strong class="text-primary">Retail Price:</strong> <span class="text-danger">{{ $product->retail_price }}</span></li>
+                            <li><strong class="class-info">Wholesale Price:</strong> <span class="text-danger">{{ theMoney($product->wholesale_price) }}</span></li>
+                            <li><strong class="text-primary">Retail Price:</strong> <span class="text-danger">{{ theMoney($product->retail_price) }}</span></li>
                         </ul>
 
                         <div class="clearfix"><br></div>
@@ -111,14 +111,8 @@
 
                         <div class="clearfix"><br></div>
 
-                        <form method="POST" action="https://fleetcart.envaysoft.com/en/cart/items" class="clearfix">
+                        <form method="POST" action="{{ route('cart.add', $product->id) }}" class="clearfix">
                             @csrf
-
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                            <div class="product-variants clearfix">
-                            </div>
-
                             <div class="quantity pull-left clearfix">
                                 <label class="pull-left" for="qty">Qty</label>
 

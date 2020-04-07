@@ -12,31 +12,7 @@
                     alt="header-logo">
             </a>
 
-            <div class="user-cart pull-right">
-                <div class="dropdown">
-                    <div class="user-cart-inner dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-shopping-bag pull-left" aria-hidden="true"></i>
-
-                        <span class="cart-count">0</span>
-
-                        <div class="cart-amount hidden-sm hidden-xs pull-left">
-                            <span class="cart-label">My Cart</span>
-                            <br>
-                            <span class="cart-price">SAR 0.00</span>
-                        </div>
-                    </div>
-
-                    <div class="dropdown-menu">
-                        <h5 class="mini-cart-title">My Cart</h5>
-
-                        <div class="mini-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <h3 class="empty-cart">Your cart is empty</h3>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            @include('resellers.shop.partials.mini-cart')
             <div class="search-area pull-left">
                 <form action="https://fleetcart.envaysoft.com/en/products" method="GET" id="search-box-form">
                     <div class="search-box hidden-sm hidden-xs">

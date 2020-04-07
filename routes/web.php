@@ -44,4 +44,9 @@ Route::group(['middleware' => 'auth'], function(){
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('shop', 'ShopController@index')->name('shop.index');
     Route::get('product/{product:slug}', 'ShopController@show')->name('shop.product.show');
+
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+    Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
+    Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
 });
