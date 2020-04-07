@@ -190,13 +190,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="slider noUi-target noUi-ltr noUi-horizontal" id="price-range-slider" data-to-price="3600"
-                data-max="3600">
-                <div class="noUi-base">
-                    <div class="noUi-connects"></div>
-                </div>
-            </div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-filter pull-right" data-loading>Filter</button>

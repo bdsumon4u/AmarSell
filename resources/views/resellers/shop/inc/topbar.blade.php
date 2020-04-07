@@ -37,7 +37,7 @@
                         </a>
                     </li>
 
-                    <li><a href="https://fleetcart.envaysoft.com/en/login">Log In</a></li>
+                    <li><a href="{{ route('reseller.home') }}">Dashboard</a></li>
                 </ul>
             </div>
         </div>

@@ -11,6 +11,15 @@
     </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <script>
+        window.FleetCart = {
+            csrfToken: '{{ csrf_token() }}',
+            langs: {
+                'storefront::products.loading': '{{ trans("storefront::products.loading") }}',
+            },
+        };
+    </script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -22,6 +31,9 @@
     <style>
         .search-area .mobile-search .dropdown-menu {
             min-width: 280px;
+        }
+        .category-menu-wrapper.show .fa-angle-down {
+            transform: rotate(180deg);
         }
         @media screen and (min-width: 681px)
         {
@@ -84,7 +96,8 @@
         </div>
     </div>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <script src="https://fleetcart.envaysoft.com/themes/storefront/public/js/app.js?v=1.1.9"></script>
+    <!-- <script src="https://fleetcart.envaysoft.com/themes/storefront/public/js/app.js?v=1.1.9"></script> -->
+    <script src="{{ asset('js/fleetcart.js') }}"></script>
     @yield('scripts')
 </body>
 
