@@ -16,6 +16,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/coreui.css') }}" rel="stylesheet">
+    <style>
+        .nav-dropdown-items .nav-link {
+            padding-left: 5px !important;
+        }
+    </style>
     @yield('styles')
 </head>
 

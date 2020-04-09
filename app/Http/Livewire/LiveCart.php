@@ -66,7 +66,7 @@ class LiveCart extends Component
         $this->subTotal = theMoney(Cart::session($this->user_id)->getSubTotal());
         $this->total = theMoney(Cart::session($this->user_id)->getTotal());
         $this->payable = Cart::session($this->user_id)->getTotal()
-                        + (empty($this->shipping) ? 0 : $this->shipping)
-                        - (empty($this->advanced) ? 0 : $this->advanced);
+                        + (empty($this->shipping) ? 0 : round($this->shipping))
+                        - (empty($this->advanced) ? 0 : round($this->advanced));
     }
 }

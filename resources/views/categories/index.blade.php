@@ -21,17 +21,21 @@
 <div class="row justify-content-center">
     <div class="col-sm-12">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header"><strong>All</strong> <small>Categories</small></div>
+            <div class="card-header"><strong>All</strong> <small><i>Categories</i></small></div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-7">
                         <div class="formatted-categories">
+                            @if($categories->isEmpty())
+                            <div class="alert alert-danger py-2"><strong>No Categories Found.</strong></div>
+                            @else
                             <ul>
                                 @foreach($categories as $category)
                                     <li class="{{ request('active_id', 0) == $category->id ? 'active' : '' }}"><a href="?active_id={{ $category->id }}">{{ $category->name }}</a></li>
                                     @include('categories.list-childrens', ['childrens' => $category->childrens, 'depth' => 1])
                                 @endforeach
                             </ul>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-5">

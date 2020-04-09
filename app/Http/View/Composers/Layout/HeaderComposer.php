@@ -4,7 +4,7 @@ namespace App\Http\View\Composers\Layout;
 
 use Illuminate\View\View;
 
-class SidebarComposer
+class HeaderComposer
 {
     /**
      * Menu
@@ -14,7 +14,7 @@ class SidebarComposer
             'icon' => 'fa fa-tachometer',
             'style' => 'simple',
             'name' => 'Dashboard',
-            'route' => 'home',
+            'url' => 'home',
             'badge' => [
                 'variant' => 'secondary',
                 'data' => 4,
