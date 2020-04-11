@@ -33655,6 +33655,68 @@ $(function () {
   });
   /*----------------------------------------*/
 
+  /*      quantity
+  /*----------------------------------------*/
+
+  function quantity() {
+    $('.btn-number').on('click', function (e) {
+      e.preventDefault();
+      var type = $(this).attr('data-type');
+      var input = $(this).closest('.input-group-quantity').find('input.input-quantity');
+      var minValue = input.attr('min');
+      var maxValue = input.attr('max');
+      var currentValue = parseInt(input.val());
+
+      if (!$.isNumeric(currentValue)) {
+        input.val(minValue);
+      }
+
+      if (type === 'minus') {
+        if (currentValue > minValue) {
+          input.val(currentValue - 1);
+          $('.btn-number.btn-plus').removeAttr('disabled');
+        }
+
+        if (input.val() === minValue) {
+          $(this).attr('disabled', true);
+        }
+      } else if (type === 'plus') {
+        if (!maxValue || currentValue < maxValue) {
+          input.val(currentValue + 1);
+          $('.btn-number.btn-minus').removeAttr('disabled');
+        }
+
+        if (input.val() === maxValue) {
+          $(this).attr('disabled', true);
+        }
+      }
+    });
+    $('.input-number').on('input', function () {
+      var self = $(this);
+      var minValue = parseInt(self.attr('min'));
+      var maxValue = parseInt(self.attr('max'));
+      var currentValue = parseInt(self.val());
+
+      if (!$.isNumeric(self.val())) {
+        self.val(minValue);
+        $('.btn-number.btn-minus').attr('disabled', true);
+      }
+
+      if (currentValue < minValue) {
+        self.val(minValue);
+        $('.btn-number.btn-minus').attr('disabled', true);
+      }
+
+      if (maxValue && currentValue > maxValue) {
+        self.val(maxValue);
+        $('.btn-number.btn-plus').attr('disabled', true);
+      }
+    });
+  }
+
+  quantity();
+  /*----------------------------------------*/
+
   /*      product image
   /*----------------------------------------*/
 

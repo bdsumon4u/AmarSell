@@ -16,11 +16,9 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('reseller_id');
-            $table->string('code')->nullable();
-            $table->integer('qty');
-            $table->integer('sell_price');
+            $table->longText('data');
+            $table->integer('price')->default(0);
             $table->string('status')->default('pending');
-            $table->json('charges');
             $table->timestamps();
         });
     }

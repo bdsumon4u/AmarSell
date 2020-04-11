@@ -12,15 +12,16 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'reseller_id', 'code', 'qty', 'sell_price', 'status', 'charges',
+        'reseller_id', 'data', 'buy_price', 'sell_price', 'status',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'charges' => 'array',
-    ];
+    public function setDataAttribute($data)
+    {
+        $this->attributes['data'] = serialize($data);
+    }
+
+    public function getDataAttribute($data)
+    {
+        return unserialize($data);
+    }
 }

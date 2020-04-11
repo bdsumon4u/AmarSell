@@ -44,7 +44,7 @@
                     <td width="1">
                         <form method="POST" action="{{ route('cart.remove', $cartItem['id']) }}" onsubmit="return confirm('Are Your Sure To Remove It?');">
                             @csrf
-                            {{ method_field('DELETE') }}
+                            @method('DELETE')
 
                             <button type="submit" wire:click.prevent="remove({{ $cartItem['id'] }})" wire:loading.remove class="btn-close" data-toggle="tooltip" data-placement="top" title="Remove">
                                 &times;

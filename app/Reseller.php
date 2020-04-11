@@ -67,4 +67,12 @@ class Reseller extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Shop::class, 'reseller_id', 'id');
     }
+
+    /**
+     * Orders
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

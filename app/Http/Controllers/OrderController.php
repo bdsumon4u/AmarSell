@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:reseller');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +41,39 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id = auth('reseller')->user()->id;
+        $data = $request->validate([
+            'customer_email' => 'nullable',
+            'customer_phone' => 'nullable',
+            'customer_address' => 'nullable',
+            'shop' => 'nullable',
+            'delevary_method' => 'nullable',
+            'sell' => 'required|integer',
+            'shipping' => 'required|integer',
+            'advanced' => 'required|integer',
+        ]);
+        $cart = CartFacade::session($user_id);
+        $data['price'] = $cart->getTotal();
+        $products = $cart->getContent()
+                        ->map(function ($item) {
+                            $arr['id'] = $item->id;
+                            $arr['quantity'] = $item->quantity;
+                            $product = $item->attributes->product;
+                            $arr['product'] = [
+                                'sku' => $product->sku,
+                                'wholesale_price' => $product->wholesale_price,
+                                'retail_price' => $product->retail_price,
+                            ];
+                            return $arr;
+                        });
+        $data['products'] = $products->toArray();
+
+        $order = Order::create([
+            'reseller_id' => $user_id,
+            'data' => $data,
+        ]);
+
+        return redirect()->route('shop.index')->with('success', 'Order Success. Order ID# ' . $order->id);
     }
 
     /**

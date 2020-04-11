@@ -1,5 +1,6 @@
 <?php
 
+use App\Order;
 use App\Product;
 use App\Reseller;
 use App\Shop;
@@ -52,4 +53,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
     Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
+
+
+    Route::post('/order/store', 'OrderController@store')->name('order.store');
 });

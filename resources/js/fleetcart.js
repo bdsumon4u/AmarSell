@@ -666,6 +666,70 @@ $(function () {
     });
 
     /*----------------------------------------*/
+    /*      quantity
+    /*----------------------------------------*/
+
+    function quantity() {
+        $('.btn-number').on('click', function (e) {
+            e.preventDefault();
+
+            let type = $(this).attr('data-type');
+            let input = $(this).closest('.input-group-quantity').find('input.input-quantity');
+            let minValue = input.attr('min');
+            let maxValue = input.attr('max');
+            let currentValue = parseInt(input.val());
+
+            if (!$.isNumeric(currentValue)) {
+                input.val(minValue);
+            }
+
+            if (type === 'minus') {
+                if (currentValue > minValue) {
+                    input.val(currentValue - 1);
+                    $('.btn-number.btn-plus').removeAttr('disabled');
+                }
+
+                if (input.val() === minValue) {
+                    $(this).attr('disabled', true);
+                }
+            } else if (type === 'plus') {
+                if (!maxValue || currentValue < maxValue) {
+                    input.val(currentValue + 1);
+                    $('.btn-number.btn-minus').removeAttr('disabled');
+                }
+
+                if (input.val() === maxValue) {
+                    $(this).attr('disabled', true);
+                }
+            }
+        });
+
+        $('.input-number').on('input', function () {
+            let self = $(this);
+            let minValue = parseInt(self.attr('min'));
+            let maxValue = parseInt(self.attr('max'));
+            let currentValue = parseInt(self.val());
+
+            if (!$.isNumeric(self.val())) {
+                self.val(minValue);
+                $('.btn-number.btn-minus').attr('disabled', true);
+            }
+
+            if (currentValue < minValue) {
+                self.val(minValue);
+                $('.btn-number.btn-minus').attr('disabled', true);
+            }
+
+            if (maxValue && currentValue > maxValue) {
+                self.val(maxValue);
+                $('.btn-number.btn-plus').attr('disabled', true);
+            }
+        });
+    }
+
+    quantity();
+
+    /*----------------------------------------*/
     /*      product image
     /*----------------------------------------*/
 

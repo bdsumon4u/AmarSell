@@ -1,5 +1,5 @@
 <section class="checkout">
-    <form method="POST" action="" id="checkout-form">
+    <form method="POST" action="{{ route('order.store') }}" id="checkout-form">
         @csrf
 
         <div class="row">
@@ -55,25 +55,25 @@
                                 <h5>Order Info</h5>
 
                                 <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('customer_email') ? 'has-error': '' }}">
-                                        <label for="customer-email">
+                                    <div class="form-group {{ $errors->has('shop') ? 'has-error': '' }}">
+                                        <label for="reseller-shop">
                                             Select Shop
                                         </label>
 
-                                        <input type="text" name="customer_email" class="form-control" id="customer-email" value="{{ old('customer_email') }}">
+                                        <input type="text" name="shop" class="form-control" id="reseller-shop" value="{{ old('shop') }}">
 
-                                        {!! $errors->first('customer_email', '<span class="error-message">:message</span>') !!}
+                                        {!! $errors->first('shop', '<span class="error-message">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('customer_address') ? 'has-error': '' }}">
-                                        <label for="customer-address">
+                                    <div class="form-group {{ $errors->has('delevary_method') ? 'has-error': '' }}">
+                                        <label for="delevary-method">
                                             Delevary Method<span>*</span>
                                         </label>
 
-                                        <input type="text" name="customer_address" class="form-control" id="customer-address" value="{{ old('customer_address') }}">
+                                        <input type="text" name="delevary_method" class="form-control" id="delevary-method" value="{{ old('delevary_method') }}">
 
-                                        {!! $errors->first('customer_address', '<span class="error-message">:message</span>') !!}
+                                        {!! $errors->first('delevary_method', '<span class="error-message">:message</span>') !!}
                                     </div>
                                 </div>
                             </div>
@@ -84,10 +84,6 @@
                                     @include('resellers.cart.table')
                                 </div>
                             </div>
-
-                            <button type="button" class="btn btn-primary next-step continue-button pull-right">
-                                Continue
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -97,8 +93,8 @@
                 <div class="checkout-sidebar order-review">
                     <div class="cart-total">
                         @include('resellers.cart.sidebar')
-
-                        <button type="submit" class="btn btn-primary btn-checkout" data-loading disabled>
+                        @method('POST')
+                        <button type="submit" class="btn btn-primary btn-checkout" data-loading>
                             Place Order
                         </button>
                     </div>
