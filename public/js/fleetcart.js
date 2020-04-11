@@ -33655,68 +33655,6 @@ $(function () {
   });
   /*----------------------------------------*/
 
-  /*      quantity
-  /*----------------------------------------*/
-
-  function quantity() {
-    $('.btn-number').on('click', function (e) {
-      e.preventDefault();
-      var type = $(this).attr('data-type');
-      var input = $(this).closest('.input-group-quantity').find('input.input-quantity');
-      var minValue = input.attr('min');
-      var maxValue = input.attr('max');
-      var currentValue = parseInt(input.val());
-
-      if (!$.isNumeric(currentValue)) {
-        input.val(minValue);
-      }
-
-      if (type === 'minus') {
-        if (currentValue > minValue) {
-          input.val(currentValue - 1);
-          $('.btn-number.btn-plus').removeAttr('disabled');
-        }
-
-        if (input.val() === minValue) {
-          $(this).attr('disabled', true);
-        }
-      } else if (type === 'plus') {
-        if (!maxValue || currentValue < maxValue) {
-          input.val(currentValue + 1);
-          $('.btn-number.btn-minus').removeAttr('disabled');
-        }
-
-        if (input.val() === maxValue) {
-          $(this).attr('disabled', true);
-        }
-      }
-    });
-    $('.input-number').on('input', function () {
-      var self = $(this);
-      var minValue = parseInt(self.attr('min'));
-      var maxValue = parseInt(self.attr('max'));
-      var currentValue = parseInt(self.val());
-
-      if (!$.isNumeric(self.val())) {
-        self.val(minValue);
-        $('.btn-number.btn-minus').attr('disabled', true);
-      }
-
-      if (currentValue < minValue) {
-        self.val(minValue);
-        $('.btn-number.btn-minus').attr('disabled', true);
-      }
-
-      if (maxValue && currentValue > maxValue) {
-        self.val(maxValue);
-        $('.btn-number.btn-plus').attr('disabled', true);
-      }
-    });
-  }
-
-  quantity();
-  /*----------------------------------------*/
-
   /*      product image
   /*----------------------------------------*/
 
@@ -33911,11 +33849,7 @@ $(function () {
       width: percent + '%'
     });
   });
-  $('.ship-to-a-different-address label').on('click', function () {
-    $(this).parent().toggleClass('clicked');
-    $('.shipping-address').toggleClass('hide');
-    $(window).resize();
-  });
+  var checkoutButton = $('.btn-checkout');
   $('.prev-step, .next-step').on('click', function () {
     $('#confirm .next-step').attr('disabled', true);
 
@@ -33925,50 +33859,10 @@ $(function () {
 
     $(window).resize();
   });
-  var checkoutButton = $('.btn-checkout');
-  $('.checkout-terms > label').on('click', function (e) {
-    var target = $(e.currentTarget);
-    target.toggleClass('checked');
-
-    if (!$('.confirm-tab').hasClass('disabled')) {
-      var value = target.hasClass('checked') ? null : true;
-      checkoutButton.prop('disabled', value);
-    }
-  });
-  var createAccount = $('.create-account > .checkbox > label');
-  createAccount.on('click', function () {
-    $('.create-account > .form-group').toggleClass('hide');
-  });
-  var stripePayment = $('#stripe-payment');
-  $('#payment .next-step').on('click', function () {
-    var paymentMethod = $('[name="payment_method"]:checked').val();
-
-    if (paymentMethod === 'stripe') {
-      stripePayment.slideDown(300, function () {
-        $(window).resize();
-      });
-    }
-
-    $(".payment-instructions.".concat(paymentMethod)).removeClass('hide');
-  });
-  $('#confirm .prev-step, .address-tab, .payment-tab').on('click', function () {
-    $('#stripe-payment').slideUp(300);
-    $('.payment-instructions').addClass('hide');
-  });
   $('.confirm-tab').on('click', function () {
     if ($(this).hasClass('disabled')) {
       return;
     }
-
-    var paymentMethod = $('[name="payment_method"]:checked').val();
-
-    if (paymentMethod === 'stripe') {
-      stripePayment.slideDown(300, function () {
-        $(window).resize();
-      });
-    }
-
-    $(".payment-instructions.".concat(paymentMethod)).removeClass('hide');
   });
   /*----------------------------------------*/
 

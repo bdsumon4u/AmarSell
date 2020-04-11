@@ -666,70 +666,6 @@ $(function () {
     });
 
     /*----------------------------------------*/
-    /*      quantity
-    /*----------------------------------------*/
-
-    function quantity() {
-        $('.btn-number').on('click', function (e) {
-            e.preventDefault();
-
-            let type = $(this).attr('data-type');
-            let input = $(this).closest('.input-group-quantity').find('input.input-quantity');
-            let minValue = input.attr('min');
-            let maxValue = input.attr('max');
-            let currentValue = parseInt(input.val());
-
-            if (!$.isNumeric(currentValue)) {
-                input.val(minValue);
-            }
-
-            if (type === 'minus') {
-                if (currentValue > minValue) {
-                    input.val(currentValue - 1);
-                    $('.btn-number.btn-plus').removeAttr('disabled');
-                }
-
-                if (input.val() === minValue) {
-                    $(this).attr('disabled', true);
-                }
-            } else if (type === 'plus') {
-                if (!maxValue || currentValue < maxValue) {
-                    input.val(currentValue + 1);
-                    $('.btn-number.btn-minus').removeAttr('disabled');
-                }
-
-                if (input.val() === maxValue) {
-                    $(this).attr('disabled', true);
-                }
-            }
-        });
-
-        $('.input-number').on('input', function () {
-            let self = $(this);
-            let minValue = parseInt(self.attr('min'));
-            let maxValue = parseInt(self.attr('max'));
-            let currentValue = parseInt(self.val());
-
-            if (!$.isNumeric(self.val())) {
-                self.val(minValue);
-                $('.btn-number.btn-minus').attr('disabled', true);
-            }
-
-            if (currentValue < minValue) {
-                self.val(minValue);
-                $('.btn-number.btn-minus').attr('disabled', true);
-            }
-
-            if (maxValue && currentValue > maxValue) {
-                self.val(maxValue);
-                $('.btn-number.btn-plus').attr('disabled', true);
-            }
-        });
-    }
-
-    quantity();
-
-    /*----------------------------------------*/
     /*      product image
     /*----------------------------------------*/
 
@@ -926,14 +862,7 @@ $(function () {
         $('.progress-bar').css({ width: percent + '%' });
     });
 
-    $('.ship-to-a-different-address label').on('click', function () {
-        $(this).parent().toggleClass('clicked');
-
-        $('.shipping-address').toggleClass('hide');
-
-        $(window).resize();
-    });
-
+    let checkoutButton = $('.btn-checkout');
     $('.prev-step, .next-step').on('click', function () {
         $('#confirm .next-step').attr('disabled', true);
 
@@ -944,59 +873,12 @@ $(function () {
         $(window).resize();
     });
 
-    let checkoutButton = $('.btn-checkout');
 
-    $('.checkout-terms > label').on('click', (e) => {
-        let target = $(e.currentTarget);
-        target.toggleClass('checked');
-
-        if (!$('.confirm-tab').hasClass('disabled')) {
-            let value = target.hasClass('checked') ? null : true;
-
-            checkoutButton.prop('disabled', value);
-        }
-    });
-
-    let createAccount = $('.create-account > .checkbox > label');
-
-    createAccount.on('click', () => {
-        $('.create-account > .form-group').toggleClass('hide');
-    });
-
-    let stripePayment = $('#stripe-payment');
-
-    $('#payment .next-step').on('click', () => {
-        let paymentMethod = $('[name="payment_method"]:checked').val();
-
-        if (paymentMethod === 'stripe') {
-            stripePayment.slideDown(300, () => {
-                $(window).resize();
-            });
-        }
-
-        $(`.payment-instructions.${paymentMethod}`).removeClass('hide');
-    });
-
-    $('#confirm .prev-step, .address-tab, .payment-tab').on('click', () => {
-        $('#stripe-payment').slideUp(300);
-
-        $('.payment-instructions').addClass('hide');
-    });
 
     $('.confirm-tab').on('click', function () {
         if ($(this).hasClass('disabled')) {
             return;
         }
-
-        let paymentMethod = $('[name="payment_method"]:checked').val();
-
-        if (paymentMethod === 'stripe') {
-            stripePayment.slideDown(300, () => {
-                $(window).resize();
-            });
-        }
-
-        $(`.payment-instructions.${paymentMethod}`).removeClass('hide');
     });
 
     /*----------------------------------------*/

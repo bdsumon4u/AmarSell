@@ -63,7 +63,8 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         return view('resellers.checkout.index', [
-            'shipping_charge' => $request->shipping_charge,
+            'sell' => $request->sell,
+            'shipping' => $request->shipping,
             'advanced' => $request->advanced,
         ]);
     }

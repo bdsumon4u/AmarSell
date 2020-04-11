@@ -21,13 +21,14 @@
                     <h3 class="empty-cart">Your Cart is Empty!</h3>
                 @else
                     @foreach ($cart as $cartItem)
+                        @php $product = $cartItem->attributes->product @endphp
                         <div class="mini-cart-item clearfix">
                             <div class="mini-cart-image">
                                 
                             </div>
 
                             <div class="mini-cart-details clearfix">
-                                <a class="product-name" href="{{ $cartItem->attributes->product->slug }}">
+                                <a class="product-name" href="{{ route('shop.product.show', $product->slug) }}">
                                     {{ $cartItem->name }}
                                 </a>
 
@@ -42,8 +43,8 @@
                                 </span>
 
                                 <form method="POST" action="{{ route('cart.remove', $cartItem->id) }}" onsubmit="return confirm('Are Your Sure To Remove It?');">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
+                                    @csrf
+                                    @method('DELETE')
 
                                     <button type="submit" class="btn-close" data-toggle="tooltip" data-placement="left" title="Remove">
                                         &times;
@@ -65,9 +66,14 @@
                         View Cart
                     </a>
 
-                    <a href="" class="btn btn-default btn-checkout">
+                    <form action="{{ route('cart.checkout') }}" method="post" id="to-checkout" style="display: none;">
+                        @csrf
+                        <input type="hidden" name="shipping" value="100">
+                        <input type="hidden" name="advanced" value="100">
+                    </form>
+                    <button type="submit" class="btn btn-default btn-checkout" onclick="$('#to-checkout').submit();">
                         Checkout
-                    </a>
+                    </button>
                 </div>
             @endunless
         </div>
