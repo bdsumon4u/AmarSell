@@ -12,8 +12,7 @@
 
 <div class="col-md-4">
     <div class="order-review cart-list-sidebar">
-        <form action="{{ route('cart.checkout') }}" method="post" class="cart-total">
-            @csrf
+        <form action="{{ route('cart.checkout') }}" method="get" class="cart-total">
             
             @include('resellers.cart.sidebar')
 

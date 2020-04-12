@@ -31,11 +31,11 @@ class SidebarComposer
             'items' => [
                 [
                     'name' => 'All',
-                    'route' => 'categories.index',
+                    'route' => 'admin.categories.index',
                 ],
                 [
                     'name' => 'Create',
-                    'route' => 'categories.create',
+                    'route' => 'admin.categories.create',
                 ],
             ],
         ],

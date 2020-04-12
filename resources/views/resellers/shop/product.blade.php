@@ -1,5 +1,30 @@
 @extends('resellers.shop.layout')
 
+@section('styles')
+<style>
+    .price-box {
+        width: 240px;
+        display: flex;
+        align-items: center;
+        border: 3px double #ddd;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .price-box .left {
+        padding: 10px;
+        border-right: 3px double #ddd;
+        margin-right: 10px;
+        width: 60px;
+    }
+    .price-box .right strong {
+        width: 90px;
+        display: inline-block;
+        font-variant: small-caps;
+        font-size: 16px;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="content-wrapper clearfix ">
     <div class="container">
@@ -94,14 +119,21 @@
                         </div>
 
 
-                        <div class="clearfix"><br></div>
+                        <div class="clearfix"></div>
                         
-                        <ul class="list-unstyled">
-                            <li><strong class="class-info">Wholesale Price:</strong> <span class="text-danger">{{ theMoney($product->wholesale_price) }}</span></li>
-                            <li><strong class="text-primary">Retail Price:</strong> <span class="text-danger">{{ theMoney($product->retail_price) }}</span></li>
-                        </ul>
+                        <div class="price-box">
+                            <div class="left">
+                                <strong>Price</strong>
+                            </div>
+                            <div class="right">
+                                <ul class="list-unstyled">
+                                    <li><strong class="class-info">wholesale:</strong> <span class="text-danger">{{ theMoney($product->wholesale) }}</span></li>
+                                    <li><strong class="text-primary">retail:</strong> <span class="text-danger">{{ theMoney($product->retail) }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
 
-                        <div class="clearfix"><br></div>
+                        <div class="clearfix"></div>
 
                         <div class="pull-left">
                             <label>Availability:</label>

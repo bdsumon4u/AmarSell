@@ -12,7 +12,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'reseller_id', 'data', 'buy_price', 'sell_price', 'status',
+        'reseller_id', 'data', 'status',
     ];
 
     public function setDataAttribute($data)
@@ -29,7 +29,7 @@ class Order extends Model
     {
         $products = Product::whereIn('id', array_keys($this->data['products']))->get();
         $sum = $products->sum(function ($product) {
-            return $product->wholesale_price * $this->data['products'][$product->id]['quantity'];
+            return $product->wholesale * $this->data['products'][$product->id]['quantity'];
         });
         return $sum;
     }

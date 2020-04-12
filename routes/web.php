@@ -39,9 +39,11 @@ Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'resell
 });
 
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::resource('categories', 'CategoryController');
-    Route::resource('products', 'ProductController');
+Route::group(['middleware' => 'auth', 'as' => 'admin.'], function(){
+    Route::resource('admin/categories', 'CategoryController');
+    Route::resource('admin/products', 'ProductController');
+    Route::get('admin/order/{order}', 'OrderController@show')->name('order.show');
+    Route::post('/order/{order}/accept', 'OrderController@accept')->name('order.accept');
 });
 
 Route::group(['middleware' => 'auth:reseller'], function(){
@@ -52,7 +54,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
-    Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
+    Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
 
 
     Route::post('/order/store', 'OrderController@store')->name('order.store');

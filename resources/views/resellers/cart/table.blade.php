@@ -10,7 +10,7 @@
 
                     <td>
                         <h5>
-                            <a href="{{ route('products.show', $product['slug']) }}">{{ $cartItem['name'] }}</a>
+                            <a href="{{ route('shop.product.show', $product['slug']) }}">{{ $cartItem['name'] }}</a>
                         </h5>
                     </td>
 

@@ -72,16 +72,16 @@
                                             Select Shop<span>*</span>
                                         </label>
 
-                                        <select name="shop" id="reseller-shop" class="form-control" @if($shops->count() == 1) disabled @endif>
-                                            @if($shops->count() == 1)
-                                            <option value="{{ $shops->first()->name }}">{{ $shops->first()->name }}</option>
-                                            @else
-                                                <option value="">Select Shop</option>
-                                                @foreach($shops as $shop)
-                                                <option value="{{ $shop->name }}" @if(old('shop') == $shop->name) selected @endif>{{ $shop->name }}</option>
-                                                @endforeach
-                                            @endif
+                                        @if($shops->count() == 1)
+                                        <input type="text" name="shop" id="reseller-shop" class="form-control" value="{{ old('shop', $shops->first()->name) }}" readonly>
+                                        @else
+                                        <select name="shop" id="reseller-shop" class="form-control" @if($shops->count() == 1) readonly @endif>
+                                            <option value="">Select Shop</option>
+                                            @foreach($shops as $shop)
+                                            <option value="{{ $shop->name }}" @if(old('shop') == $shop->name) selected @endif>{{ $shop->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @endif
 
                                         {!! $errors->first('shop', '<span class="error-message">:message</span>') !!}
                                     </div>
@@ -107,7 +107,6 @@
                 <div class="cart-list-sidebar order-review">
                     <div class="cart-total">
                         @include('resellers.cart.sidebar')
-                        @method('POST')
                         <button type="submit" class="btn btn-primary btn-checkout" data-loading>
                             Place Order
                         </button>

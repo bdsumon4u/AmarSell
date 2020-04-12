@@ -13,7 +13,7 @@ class ShopSeeder extends Seeder
     public function run()
     {
         Shop::create([
-            'reseller_id' => 1,
+            'reseller_id' => 2,
             'name' => 'Bongo Deal',
             'email' => 'bongodeal@cyber32.com',
             'phone' => '01624093099',

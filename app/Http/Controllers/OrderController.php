@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
 use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
 
@@ -60,11 +61,10 @@ class OrderController extends Controller
                             $arr['id'] = $item->id;
                             $arr['quantity'] = $item->quantity;
                             $product = $item->attributes->product;
-                            $arr['product'] = [
-                                'sku' => $product->sku,
-                                'wholesale_price' => $product->wholesale_price,
-                                'retail_price' => $product->retail_price,
-                            ];
+                            $arr['sku'] = $product->sku;
+                            $arr['slug'] = $product->slug;
+                            $arr['wholesale'] = $product->wholesale;
+                            $arr['retail'] = $product->retail;
                             return $arr;
                         });
         $data['products'] = $products->toArray();
@@ -85,7 +85,28 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $products = Product::whereIn('id', array_keys($order->data['products']))->get();
+        $cp = $order->current_price();
+        return view('admin.orders.show', compact('order', 'products', 'cp'));
+    }
+
+    public function accept(Request $request, Order $order)
+    {
+        if($order->status != 'pending')
+            return redirect()->back();
+        
+        $order->data += $request->validate([
+            'buy_price' => 'required',
+            'payable' => 'required',
+            'profit' => 'required',
+            'packaging' => 'required',
+            'delevary_charge' => 'required',
+            'cod_charge' => 'required',
+        ]);
+        $order->status = 'accepted';
+        $order->save();
+
+        return redirect('/dashboard');
     }
 
     /**

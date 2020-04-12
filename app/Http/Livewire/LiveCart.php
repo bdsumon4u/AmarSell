@@ -81,7 +81,7 @@ class LiveCart extends Component
         return Cart::session($this->user_id)
                     ->getContent()
                     ->sum(function ($item) {
-                        return $item->attributes->product->retail_price * $item->quantity;
+                        return $item->attributes->product->retail * $item->quantity;
                     });
     }
 

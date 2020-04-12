@@ -17,7 +17,6 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('reseller_id');
             $table->longText('data');
-            $table->integer('price')->default(0);
             $table->string('status')->default('pending');
             $table->timestamps();
         });
