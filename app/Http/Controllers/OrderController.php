@@ -43,11 +43,12 @@ class OrderController extends Controller
     {
         $user_id = auth('reseller')->user()->id;
         $data = $request->validate([
+            'customer_name' => 'required|string',
             'customer_email' => 'nullable',
-            'customer_phone' => 'nullable',
-            'customer_address' => 'nullable',
-            'shop' => 'nullable',
-            'delevary_method' => 'nullable',
+            'customer_phone' => 'required',
+            'customer_address' => 'required|string',
+            'shop' => 'required|string',
+            'delevary_method' => 'required|string',
             'sell' => 'required|integer',
             'shipping' => 'required|integer',
             'advanced' => 'required|integer',

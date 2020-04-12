@@ -33928,68 +33928,6 @@ $(function () {
   });
   /*----------------------------------------*/
 
-  /*      sticky sidebar
-  /*----------------------------------------*/
-
-  $(window).on('load scroll resize', function () {
-    var wizard = $('.wizard');
-
-    if (wizard.length === 0) {
-      return;
-    }
-
-    var scrollTop = $(this).scrollTop();
-    var orderReview = $('.order-review');
-    var cartList = $('.cart-list');
-    var checkoutSidebar = $('.checkout-sidebar');
-    var cartListSidebar = $('.cart-list-sidebar');
-    var checkoutSidebarTop = wizard.height() - checkoutSidebar.height();
-    var cartListSidebarTop = cartList.height() - cartListSidebar.height();
-
-    if ($(this).width() <= 991) {
-      orderReview.removeClass('sticky').removeClass('bottom').width('').css('top', '');
-      return;
-    }
-
-    var wizardBottom = '';
-    var wizardOffsetTop = wizard.offset().top - 100;
-
-    if (wizard.length !== 1) {
-      wizardBottom = '';
-    } else {
-      wizardBottom = wizard.height() + wizard.offset().top - checkoutSidebar.height() - 100;
-    }
-
-    var cartListBottom = '';
-    var cartListOffsetTop = cartList.offset().top - 100;
-
-    if (cartList.length !== 1) {
-      cartListBottom = '';
-    } else {
-      cartListBottom = cartList.height() + cartList.offset().top - cartListSidebar.height() - 100;
-    }
-
-    orderReview.width(orderReview.parent().width());
-
-    function stickySidebar(leftContainerOffsetTop, rightSidebar, leftContainerBottom, rightSidebarTop) {
-      if (scrollTop >= leftContainerOffsetTop) {
-        rightSidebar.addClass('sticky');
-      } else {
-        rightSidebar.removeClass('sticky');
-      }
-
-      if (scrollTop >= leftContainerBottom) {
-        rightSidebar.removeClass('sticky').addClass('bottom').css('top', rightSidebarTop);
-      } else {
-        rightSidebar.removeClass('bottom').css('top', '');
-      }
-    }
-
-    stickySidebar(wizardOffsetTop, checkoutSidebar, wizardBottom, checkoutSidebarTop);
-    stickySidebar(cartListOffsetTop, cartListSidebar, cartListBottom, cartListSidebarTop);
-  });
-  /*----------------------------------------*/
-
   /*      cart
   /*----------------------------------------*/
 

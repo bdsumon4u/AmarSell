@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// dd(Order::find(2)->data);
 Route::get('/', function () {
     return view('welcome');
 });

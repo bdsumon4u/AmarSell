@@ -57,14 +57,26 @@ class SidebarComposer
         [
             'icon' => 'fa fa-th-list',
             'style' => 'dropdown',
-            'name' => 'Subjects',
+            'name' => 'Orders',
             'items' => [
                 [
-                    'name' => 'All',
+                    'name' => 'Pending',
                     'url' => 'subjects.index',
                 ],
                 [
-                    'name' => 'Create',
+                    'name' => 'Accepted',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Processing',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Transporting',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Completed',
                     'url' => 'subjects.create',
                 ],
             ],

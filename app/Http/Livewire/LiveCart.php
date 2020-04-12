@@ -17,6 +17,7 @@ class LiveCart extends Component
     public $sell;
     public $shipping;
     public $advanced;
+    public $shops;
     public $success;
     public $delete;
 
@@ -29,6 +30,7 @@ class LiveCart extends Component
         $this->shipping = $shipping;
         $this->advanced = $advanced;
         $this->theMoney();
+        $this->shops = auth('reseller')->user()->shops;
     }
 
     public function increment($id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('users.dashboard');
+        $orders = Order::with('reseller')->get();
+        return view('admin.dashboard', compact('orders'));
     }
 }

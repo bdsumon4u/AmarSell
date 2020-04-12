@@ -24,4 +24,21 @@ class Order extends Model
     {
         return unserialize($data);
     }
+
+    public function current_price()
+    {
+        $products = Product::whereIn('id', array_keys($this->data['products']))->get();
+        $sum = $products->sum(function ($product) {
+            return $product->wholesale_price * $this->data['products'][$product->id]['quantity'];
+        });
+        return $sum;
+    }
+
+    /**
+     * Reseller
+     */
+    public function reseller()
+    {
+        return $this->belongsTo(Reseller::class);
+    }
 }

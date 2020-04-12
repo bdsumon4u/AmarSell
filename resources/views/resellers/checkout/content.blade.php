@@ -14,6 +14,18 @@
                             <div class="personal-information clearfix">
                                 <h5>Customer Info</h5>
 
+                            <div class="col-md-12">
+                                    <div class="form-group {{ $errors->has('customer_name') ? 'has-error': '' }}">
+                                        <label for="customer-name">
+                                            Name<span>*</span>
+                                        </label>
+
+                                        <input type="text" name="customer_name" class="form-control" id="customer-name" value="{{ old('customer_name') }}">
+
+                                        {!! $errors->first('customer_name', '<span class="error-message">:message</span>') !!}
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('customer_email') ? 'has-error': '' }}">
                                         <label for="customer-email">
@@ -57,10 +69,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('shop') ? 'has-error': '' }}">
                                         <label for="reseller-shop">
-                                            Select Shop
+                                            Select Shop<span>*</span>
                                         </label>
 
-                                        <input type="text" name="shop" class="form-control" id="reseller-shop" value="{{ old('shop') }}">
+                                        <select name="shop" id="reseller-shop" class="form-control" @if($shops->count() == 1) disabled @endif>
+                                            @if($shops->count() == 1)
+                                            <option value="{{ $shops->first()->name }}">{{ $shops->first()->name }}</option>
+                                            @else
+                                                <option value="">Select Shop</option>
+                                                @foreach($shops as $shop)
+                                                <option value="{{ $shop->name }}" @if(old('shop') == $shop->name) selected @endif>{{ $shop->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
 
                                         {!! $errors->first('shop', '<span class="error-message">:message</span>') !!}
                                     </div>
@@ -77,20 +98,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="personal-information clearfix">
-                                <br>
-                                <h5>Cart List</h5>
-                                <div class="cart-list">
-                                    @include('resellers.cart.table')
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="checkout-sidebar order-review">
+                <div class="cart-list-sidebar order-review">
                     <div class="cart-total">
                         @include('resellers.cart.sidebar')
                         @method('POST')

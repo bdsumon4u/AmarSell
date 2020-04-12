@@ -8,6 +8,11 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:reseller');
+    }
+
     /**
      * Cart Index
      */
@@ -54,7 +59,7 @@ class CartController extends Controller
     {
         $user_id = auth('reseller')->user()->id;
         Cart::session($user_id)->clear();
-        return redirect()->back()->with('success', 'Cart Cleared.');
+        return redirect()->route('shop.index')->with('success', 'Cart Cleared.');
     }
 
     /**
