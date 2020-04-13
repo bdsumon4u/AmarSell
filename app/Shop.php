@@ -12,7 +12,7 @@ class Shop extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone',
+        'reseller_id', 'name', 'email', 'phone',
     ];
 
     /**

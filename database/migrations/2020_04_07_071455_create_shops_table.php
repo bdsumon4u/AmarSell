@@ -17,8 +17,9 @@ class CreateShopsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('reseller_id')->index();
             $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('email');
+            $table->string('phone');
+            $table->text('description');
             $table->timestamps();
         });
     }

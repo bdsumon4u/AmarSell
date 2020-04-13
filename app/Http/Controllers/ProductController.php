@@ -26,7 +26,7 @@ class ProductController extends Controller
         $products = Product::latest();
         $products_count = $products->count();
         $products = $products->paginate(12);
-        return view('reseller.shop.index', compact('products', 'products_count'));
+        return view('reseller.products.shop', compact('products', 'products_count'));
     }
 
     /**

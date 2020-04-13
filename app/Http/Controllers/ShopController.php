@@ -14,7 +14,8 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        $shops = auth('reseller')->user()->shops;
+        return view('reseller.shop.index', compact('shops'));
     }
 
     /**
@@ -24,7 +25,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('reseller.shop.create');
     }
 
     /**
@@ -35,7 +36,19 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+        ]) + [
+            'reseller_id' => auth('reseller')->user()->id
+        ];
+
+        $shop = Shop::create($data);
+
+        return redirect()->route('reseller.shops.index')->with('success', 'Shop Has Created Successfully.');
     }
 
     /**
