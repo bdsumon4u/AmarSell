@@ -33,9 +33,13 @@ Route::match(['get', 'post'], '/login', function(){
 
 Route::get('/dashboard', 'HomeController@index')->name('home');
 
-Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function(){
-    Auth::routes(['verify' => true]);
-    Route::get('/dashboard', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'reseller', 'as' => 'reseller.'], function(){
+    Route::group(['namespace' => 'Reseller'], function(){
+        Auth::routes(['verify' => true]);
+        Route::get('/dashboard', 'HomeController@index')->name('home');
+    });
+
+    Route::resource('shops', 'ShopController');
 });
 
 
@@ -47,16 +51,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 });
 
-Route::group(['middleware' => 'auth:reseller'], function(){
-    Route::get('shop', 'ShopController@index')->name('shop.index');
-    Route::get('product/{product:slug}', 'ShopController@show')->name('shop.product.show');
+Route::get('/shop', 'ProductController@shop')->name('shop.index');
+Route::get('/shop/product/{product:slug}', 'ProductController@show')->name('shop.product.show');
 
+Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');
     Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
     Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
-
 
     Route::post('/order/store', 'OrderController@store')->name('order.store');
 });

@@ -1,4 +1,4 @@
-@extends('layouts.reseller')
+@extends('layouts.ready')
 
 @section('content')
 <div class="container">

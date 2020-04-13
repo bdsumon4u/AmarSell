@@ -1,11 +1,11 @@
-@extends('resellers.shop.layout')
+@extends('reseller.shop.layout')
 
 @section('content')
 
 <section class="product-list">
     <div class="row">
         <div class="col-md-3 col-sm-12">
-            @include('resellers.shop.partials.sidebar')
+            @include('reseller.shop.partials.sidebar')
         </div>
 
         <div class="col-md-9 col-sm-12">

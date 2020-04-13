@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\View\Composers\Layout;
+namespace App\Http\View\Composers\Reseller;
 
 use Illuminate\View\View;
 
-class HeaderComposer
+class SidebarComposer
 {
     /**
      * Menu
@@ -14,7 +14,7 @@ class HeaderComposer
             'icon' => 'fa fa-tachometer',
             'style' => 'simple',
             'name' => 'Dashboard',
-            'url' => 'home',
+            'route' => 'reseller.home',
             'badge' => [
                 'variant' => 'secondary',
                 'data' => 4,
@@ -25,46 +25,43 @@ class HeaderComposer
             'name' => 'BASE',
         ],
         [
-            'icon' => 'fa fa-columns',
-            'style' => 'dropdown',
-            'name' => 'Categories',
-            'items' => [
-                [
-                    'name' => 'All',
-                    'route' => 'categories.index',
-                ],
-                [
-                    'name' => 'Create',
-                    'route' => 'categories.create',
-                ],
-            ],
-        ],
-        [
             'icon' => 'fa fa-server',
             'style' => 'dropdown',
-            'name' => 'Standards',
+            'name' => 'Shops',
             'items' => [
                 [
-                    'name' => 'All',
-                    'url' => 'standards.index',
+                    'name' => 'My Shops',
+                    'route' => 'reseller.shops.index',
                 ],
                 [
-                    'name' => 'Create',
-                    'url' => 'standards.create',
+                    'name' => 'Create Shop',
+                    'route' => 'reseller.shops.create',
                 ],
             ],
         ],
         [
             'icon' => 'fa fa-th-list',
             'style' => 'dropdown',
-            'name' => 'Subjects',
+            'name' => 'Orders',
             'items' => [
                 [
-                    'name' => 'All',
+                    'name' => 'Pending',
                     'url' => 'subjects.index',
                 ],
                 [
-                    'name' => 'Create',
+                    'name' => 'Accepted',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Processing',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Transporting',
+                    'url' => 'subjects.create',
+                ],
+                [
+                    'name' => 'Completed',
                     'url' => 'subjects.create',
                 ],
             ],
@@ -147,6 +144,6 @@ class HeaderComposer
     public function compose(View $view)
     {
         $view->with('menu', $this->menu);
-        $view->with('provider', 'web');
+        $view->with('provider', 'resellers');
     }
 }

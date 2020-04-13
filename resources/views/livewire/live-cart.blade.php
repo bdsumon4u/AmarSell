@@ -13,10 +13,10 @@
     @else
         @switch($type)
             @case('cart')
-                @include('resellers.cart.content')
+                @include('reseller.cart.content')
                 @break
             @case('checkout')
-                @include('resellers.checkout.content')
+                @include('reseller.checkout.content')
                 @break
         @endswitch
     @endif

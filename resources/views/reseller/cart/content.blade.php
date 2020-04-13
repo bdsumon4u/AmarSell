@@ -5,7 +5,7 @@
         </div>
 
         <div class="cart-list">
-            @include('resellers.cart.table')
+            @include('reseller.cart.table')
         </div>
     </div>
 </div>
@@ -14,7 +14,7 @@
     <div class="order-review cart-list-sidebar">
         <form action="{{ route('cart.checkout') }}" method="get" class="cart-total">
             
-            @include('resellers.cart.sidebar')
+            @include('reseller.cart.sidebar')
 
             <button type="submit" class="btn btn-primary btn-checkout" data-loading>
                 Checkout

@@ -106,7 +106,7 @@
             <div class="col-md-4">
                 <div class="cart-list-sidebar order-review">
                     <div class="cart-total">
-                        @include('resellers.cart.sidebar')
+                        @include('reseller.cart.sidebar')
                         <button type="submit" class="btn btn-primary btn-checkout" data-loading>
                             Place Order
                         </button>

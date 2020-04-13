@@ -1,4 +1,4 @@
-@extends('resellers.shop.layout')
+@extends('reseller.shop.layout')
 
 @section('styles')
 <style>

@@ -1,4 +1,4 @@
-@extends('resellers.shop.layout')
+@extends('reseller.shop.layout')
 
 @section('styles')
 @livewireStyles
@@ -8,10 +8,7 @@
 <div class="row">
     <div class="cart-list-wrapper clearfix">
         @livewire('live-cart', [
-            'type' => 'checkout',
-            'sell' => $sell,
-            'shipping' => $shipping,
-            'advanced' => $advanced,
+            'type' => 'cart',
             'cart' => $cart->toArray()
         ])
     </div>

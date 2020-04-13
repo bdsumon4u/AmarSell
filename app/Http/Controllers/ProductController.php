@@ -21,6 +21,14 @@ class ProductController extends Controller
         return view('admin.products.index', compact('categories', 'products'));
     }
 
+    public function shop()
+    {
+        $products = Product::latest();
+        $products_count = $products->count();
+        $products = $products->paginate(12);
+        return view('reseller.shop.index', compact('products', 'products_count'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +82,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('reseller.shop.product', compact('product'));
     }
 
     /**

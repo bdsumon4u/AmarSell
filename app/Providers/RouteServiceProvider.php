@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/dashboard';
 
     /**
-     * The path to the "home" route for resellers.
+     * The path to the "home" route for reseller.
      *
      * @var string
      */

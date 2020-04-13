@@ -12,7 +12,7 @@
                     alt="header-logo">
             </a>
 
-            @include('resellers.shop.partials.mini-cart')
+            @include('reseller.shop.partials.mini-cart')
             <div class="search-area pull-left">
                 <form action="https://fleetcart.envaysoft.com/en/products" method="GET" id="search-box-form">
                     <div class="search-box hidden-sm hidden-xs">

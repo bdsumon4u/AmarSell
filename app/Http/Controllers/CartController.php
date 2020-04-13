@@ -18,7 +18,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('resellers.cart.index');
+        return view('reseller.cart.index');
     }
     
     /**
@@ -67,7 +67,7 @@ class CartController extends Controller
      */
     public function checkout(Request $request)
     {
-        return view('resellers.checkout.index', [
+        return view('reseller.checkout.index', [
             'sell' => $request->sell,
             'shipping' => $request->shipping,
             'advanced' => $request->advanced,
