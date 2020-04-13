@@ -15,37 +15,6 @@
 
                     <span>{{ $products_count }} products found</span>
                 </div>
-
-                <div class="search-result-right pull-right">
-
-                    <div class="form-group">
-                        <select class="custom-select-black" onchange="location = this.value">
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=relevance">
-                                Relevance
-                            </option>
-
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=alphabetic">
-                                Alphabetic
-                            </option>
-
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=topRated">
-                                Top Rated
-                            </option>
-
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=latest" selected>
-                                Latest
-                            </option>
-
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=priceLowToHigh">
-                                Price: Low to High
-                            </option>
-
-                            <option value="https://fleetcart.envaysoft.com/en/products?sort=priceHighToLow">
-                                Price: High to Low
-                            </option>
-                        </select>
-                    </div>
-                </div>
             </div>
 
             <div class="clearfix"></div>
@@ -67,13 +36,13 @@
 
                                             <div class="image-holder">
                                                 <img src="https://fleetcart.envaysoft.com/storage/media/ieaRDnJgWqOBvGNrcUoRWBcsqXtBrpWIckKo7sWl.jpeg"
-                                                    alt="{{ $product->title }}">
+                                                    alt="{{ $product->name }}">
                                             </div>
                                         </div>
 
                                         <div class="product-content clearfix">
                                             <span class="product-price">{{ theMoney($product->wholesale) }}</span>
-                                            <span class="product-name">{{ $product->title }}</span>
+                                            <span class="product-name">{{ $product->name }}</span>
                                         </div>
 
                                         <div class="add-to-actions-wrapper">

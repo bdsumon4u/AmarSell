@@ -36,7 +36,7 @@
                 <li><a href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
 
                 <li><a href="{{ route('shop.index') }}">Shop</a></li>
-                <li class="active">{{ $product->title }}</li>
+                <li class="active">{{ $product->name }}</li>
             </ul>
         </div>
 
@@ -114,7 +114,7 @@
                 </div>
                 <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
                     <div class="product-details">
-                        <h1 class="product-name">{{ $product->title }}</h1>
+                        <h1 class="product-name">{{ $product->name }}</h1>
 
                         <div class="code">
                             <label>CODE: </label>

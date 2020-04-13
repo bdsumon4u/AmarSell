@@ -1,4 +1,4 @@
-<ol class="breadcrumb">
+<ol class="breadcrumb d-print-none">
     <li class="breadcrumb-item">Home</li>
     <li class="breadcrumb-item">
         <a href="#">Admin</a>

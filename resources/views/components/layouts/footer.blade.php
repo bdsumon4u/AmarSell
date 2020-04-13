@@ -1,4 +1,4 @@
-<footer class="app-footer">
+<footer class="app-footer d-print-none">
     @php $rand = mt_rand(1, 2) @endphp
     <div class="@if($rand == 1) d-none d-sm-block @endif mx-auto">
         <span>Developed By</span>

@@ -66,8 +66,7 @@
                         View Cart
                     </a>
 
-                    <form action="{{ route('cart.checkout') }}" method="post" id="to-checkout" style="display: none;">
-                        @csrf
+                    <form action="{{ route('cart.checkout') }}" method="get" id="to-checkout" style="display: none;">
                         <input type="hidden" name="shipping" value="100">
                         <input type="hidden" name="advanced" value="100">
                     </form>

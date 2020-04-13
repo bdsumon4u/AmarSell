@@ -34,7 +34,7 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-md-4 col-xl-3">
                         <ul class="nav nav-tabs list-group" role="tablist">
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('title') || $errors->has('slug') || $errors->has('description')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('name') || $errors->has('slug') || $errors->has('description')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('wholesale') || $errors->has('retail')) text-danger @endif" data-toggle="tab" href="#item-2">Price</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-3">Inventory</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-4">Images</a></li>
@@ -54,9 +54,9 @@
                                             </div>
                                             @livewire('slugify', [
                                                 'src' => [
-                                                    'label' => 'Product Title',
-                                                    'name' => 'title',
-                                                    'id' => 'title'
+                                                    'label' => 'Product Name',
+                                                    'name' => 'name',
+                                                    'id' => 'name'
                                                 ],
                                                 'emt' => [
                                                     'label' => 'SLUG',

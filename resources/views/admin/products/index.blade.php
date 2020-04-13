@@ -35,7 +35,7 @@
                                             <div class="overlay">
                                                 slfj
                                             </div>
-                                            <h5 class="card-title">{{ $product->title }}</h5>
+                                            <h5 class="card-title">{{ $product->name }}</h5>
                                             <a href="#" class="btn btn-primary">Go somewhere</a>
                                         </div>
                                     </div>

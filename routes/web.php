@@ -39,11 +39,12 @@ Route::group(['namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'resell
 });
 
 
-Route::group(['middleware' => 'auth', 'as' => 'admin.'], function(){
-    Route::resource('admin/categories', 'CategoryController');
-    Route::resource('admin/products', 'ProductController');
-    Route::get('admin/order/{order}', 'OrderController@show')->name('order.show');
-    Route::post('/order/{order}/accept', 'OrderController@accept')->name('order.accept');
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+    Route::resource('categories', 'CategoryController');
+    Route::resource('products', 'ProductController');
+    Route::get('order/{order}', 'OrderController@show')->name('order.show');
+    Route::post('order/{order}/accept', 'OrderController@accept')->name('order.accept');
+    Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 });
 
 Route::group(['middleware' => 'auth:reseller'], function(){

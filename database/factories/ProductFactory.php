@@ -32,7 +32,7 @@ $factory->define(Product::class, function (Faker $faker) {
     $w = mt_rand(200, 700);
     $r = $w + mt_rand(50, 100);
     return [
-        'title' => $faker->unique()->sentence,
+        'name' => $faker->unique()->sentence,
         'slug' => $faker->unique()->slug,
         'code' => Str::random(10),
         'description' => $desc,

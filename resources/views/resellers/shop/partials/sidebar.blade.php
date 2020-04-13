@@ -171,27 +171,4 @@
             </li>
         </ul>
     </div>
-
-    <form method="GET" action="https://fleetcart.envaysoft.com/en/products" id="product-filter-form">
-        <input type="hidden" name="sort" value="latest">
-
-
-        <div class="price-range-picker">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6 col-sm-3 col-xs-6">
-                        <label for="price-from">From</label>
-                        <input type="text" name="fromPrice" class="from-control range-from" id="price-from">
-                    </div>
-
-                    <div class="col-md-6 col-sm-3 col-xs-6">
-                        <label for="price-to">To</label>
-                        <input type="text" name="toPrice" class="from-control range-to" id="price-to">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary pull-right" data-loading>Filter</button>
-    </form>
 </div>

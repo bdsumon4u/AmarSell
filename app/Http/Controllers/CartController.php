@@ -30,7 +30,7 @@ class CartController extends Controller
         $data += [
             'quantity' => 1,
             'id' => $product->id,
-            'name' => $product->title,
+            'name' => $product->name,
             'price' => $product->wholesale,
             'attributes' => [
                 'product' => $product,

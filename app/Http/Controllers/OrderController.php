@@ -109,6 +109,11 @@ class OrderController extends Controller
         return redirect('/dashboard')->with('success', 'Order Accepted');
     }
 
+    public function invoice(Order $order)
+    {
+        return view('admin.orders.invoice', compact('order'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
