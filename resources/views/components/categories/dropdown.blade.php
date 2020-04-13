@@ -3,7 +3,7 @@
     <option value="">{{ $placeholder }}</option>
     @endif
     @foreach($categories as $category)
-        <option value="{{ $category->id }}" {{ request('active_id', 0) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+        <option value="{{ $category->id }}" {{ $selected == $category->id ? 'selected' : ($disabled == $category->id ? 'disabled' : '') }}>{{ $category->name }}</option>
         @include('components.categories.childrens', ['childrens' => $category->childrens, 'depth' => 1])
     @endforeach
 </select>

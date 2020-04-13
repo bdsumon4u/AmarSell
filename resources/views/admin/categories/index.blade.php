@@ -1,6 +1,7 @@
 @extends('layouts.ready')
 
 @section('styles')
+@livewireStyles
 <style>
     .nav-tabs .nav-item .nav-link {
         border-top-left-radius: 0;
@@ -80,17 +81,21 @@
                                             <p class="text-info">Create <strong>{{ $active ? 'Child' : 'Root' }}</strong> Category</p>
                                             <form action="{{ route('admin.categories.store') }}" method="post">
                                                 @csrf
+                                                @livewire('slugify', [
+                                                    'src' => [
+                                                        'label' => 'Name',
+                                                        'name' => 'name',
+                                                        'id' => 'create-name'
+                                                    ],
+                                                    'emt' => [
+                                                        'label' => 'SLUG',
+                                                        'name' => 'slug',
+                                                        'id' => 'create-slug'
+                                                    ]
+                                                ])
                                                 <div class="form-group">
-                                                    <label for="create-name">Name</label>
-                                                    <input type="text" name="name" placeholder="Name" value="{{ old('name') }}" id="create-name" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="create-slug">SLUG</label>
-                                                    <input type="text" name="slug" placeholder="SLUG" value="{{ old('slug') }}" id="create-slug" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="create_parent_id">Select Parent</label>
-                                                    <x-categories.dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="create_parent_id" />
+                                                    <label for="create-parent-id">Select Parent</label>
+                                                    <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="create-parent-id" :selected="request('active_id', 0)" />
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
@@ -101,17 +106,23 @@
                                             <form action="{{ route('admin.categories.update', request('active_id', 0)) }}" method="post">
                                                 @csrf
                                                 @method('PATCH')
+                                                @livewire('slugify', [
+                                                    'src' => [
+                                                        'label' => 'Name',
+                                                        'name' => 'name',
+                                                        'id' => 'edit-name',
+                                                        'default' => old('name', $active->name ?? '')
+                                                    ],
+                                                    'emt' => [
+                                                        'label' => 'SLUG',
+                                                        'name' => 'slug',
+                                                        'id' => 'edit-slug',
+                                                        'default' => old('slug', $active->slug ?? '')
+                                                    ]
+                                                ])
                                                 <div class="form-group">
-                                                    <label for="edit-name">Name</label>
-                                                    <input type="text" name="name" placeholder="Name" value="{{ old('name', $active->name ?? '') }}" id="edit-name" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="edit-slug">SLUG</label>
-                                                    <input type="text" name="slug" placeholder="SLUG" value="{{ old('slug', $active->slug ?? '') }}" id="edit-slug" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="edit_parent_id">Select Parent</label>
-                                                    <x-categories.dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="edit_parent_id" />
+                                                    <label for="edit-parent-id">Select Parent</label>
+                                                    <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="edit-parent-id" :selected="$active->parent->id ?? 0" :disabled="$active->id" />
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
@@ -130,19 +141,5 @@
 @endsection
 
 @section('scripts')
-<script>
-new Vue({
-    data: function() {
-        return {
-            name: "{{ old('name', isset($department) ? $department->name : '') }}",
-            slug: "{{ old('slug', isset($department->slug) ? $department->slug : '') }}",
-        }
-    },
-    methods: {
-        HotashSlug(slug) {
-            this.slug = slug
-        }
-    }
-}).$mount('#app');
-</script>
+@livewireScripts
 @endsection

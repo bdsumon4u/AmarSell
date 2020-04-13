@@ -8,11 +8,17 @@ class Slugify extends Component
 {
     public $title;
     public $slug;
+    public $src;
+    public $emt;
 
-    public function mount($default = null)
+    public function mount($src, $emt)
     {
-        $this->title = $default;
-        $this->slugify();
+        $this->src = $src;
+        $this->emt = $emt;
+        $this->title = $src['default'] ?? null;
+        $this->slug = $emt['default'] ?? null;
+        if(is_null($this->slug) || empty($this->slug))
+            $this->slugify();
     }
 
     public function slugify()

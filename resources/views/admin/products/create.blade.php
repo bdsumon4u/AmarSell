@@ -52,7 +52,18 @@
                                                     <h4><small class="border-bottom mb-1">General</small></h4>
                                                 </div>
                                             </div>
-                                            @livewire('slugify')
+                                            @livewire('slugify', [
+                                                'src' => [
+                                                    'label' => 'Product Title',
+                                                    'name' => 'title',
+                                                    'id' => 'title'
+                                                ],
+                                                'emt' => [
+                                                    'label' => 'SLUG',
+                                                    'name' => 'slug',
+                                                    'id' => 'slug',
+                                                ]
+                                            ])
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
@@ -64,7 +75,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="categories" class="@error('categories') is-invalid @enderror">Categories</label><span class="text-danger">*</span>
-                                                        <x-categories.dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" />
+                                                        <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" />
                                                         {!! $errors->first('categories', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
