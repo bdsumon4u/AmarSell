@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="product-content clearfix">
-                                            <span class="product-price">{{ theMoney($product->wholesale_price) }}</span>
+                                            <span class="product-price">{{ theMoney($product->wholesale) }}</span>
                                             <span class="product-name">{{ $product->title }}</span>
                                         </div>
 

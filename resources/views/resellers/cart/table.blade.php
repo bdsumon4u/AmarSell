@@ -19,7 +19,7 @@
                             <label><strong class="badge badge-secondary">Price:</strong></label>
                             <ul class="list-unstyled">
                                 <li><strong class="text-info">Wholesale:</strong> <span>{{ theMoney($cartItem['price']) }}</span></li>
-                                <li><strong class="text-primary">Retail:</strong> <span>{{ theMoney($product['retail_price']) }}</span></li>
+                                <li><strong class="text-primary">Retail:</strong> <span>{{ theMoney($product['retail']) }}</span></li>
                             </ul>
                         </div>
                         <div class="pull-left" style="margin: 10px;">

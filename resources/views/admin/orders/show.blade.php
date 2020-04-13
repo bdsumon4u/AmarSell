@@ -110,7 +110,7 @@
                                 <table class="table table-bordered table-stripped table-hover table-narrow">
                                     <thead>
                                         <tr>
-                                            <th>SKU</th>
+                                            <th>Code</th>
                                             <th>Price[<small class="uppercase">WHOLESALE</small>]</th>
                                             <th>Quantity</th>
                                             <th>Total</th>
@@ -124,7 +124,7 @@
                                             $iw = $item['wholesale']
                                         @endphp
                                         <tr>
-                                            <td><a href="{{ route('shop.product.show', $item['slug']) }}">{{ $item['sku'] }}</a></td>
+                                            <td><a href="{{ route('shop.product.show', $item['slug']) }}">{{ $item['code'] }}</a></td>
                                             <td>
                                                 <strong>Buy: </strong>{{ $iw }}
                                                 @if($iw != $pw)

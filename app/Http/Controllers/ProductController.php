@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductController extends Controller
     {
         $categories = Category::formatted();
         $products = Product::paginate(20);
-        return view('products.index', compact('categories', 'products'));
+        return view('admin.products.index', compact('categories', 'products'));
     }
 
     /**
@@ -27,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::formatted();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -38,7 +40,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|max:255',
+            'slug' => 'required|max:255',
+            'description' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'required|integer',
+            'wholesale' => 'required|integer',
+            'retail' => 'required|integer',
+        ]);
+        $data['code'] = $this->code();
+
+        $product = Product::create($data);
+
+        $product->categories()->sync($data['categories']);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product Uploaded');
+    }
+
+    protected function code()
+    {
+        $code = Str::random(10);
+        if(Product::where('code', $code)->first())
+            $this->code();
+        return $code;
     }
 
     /**

@@ -17,10 +17,13 @@
         width: 60px;
     }
     .price-box .right strong {
-        width: 90px;
+        width: 80px;
         display: inline-block;
         font-variant: small-caps;
         font-size: 16px;
+    }
+    .price-box .right strong + span {
+        margin-left: 2px;
     }
 </style>
 @endsection
@@ -113,9 +116,9 @@
                     <div class="product-details">
                         <h1 class="product-name">{{ $product->title }}</h1>
 
-                        <div class="sku">
-                            <label>SKU: </label>
-                            <span class="text-uppercase">{{ $product->sku }}</span>
+                        <div class="code">
+                            <label>CODE: </label>
+                            <span class="text-uppercase">{{ $product->code }}</span>
                         </div>
 
 
@@ -127,8 +130,8 @@
                             </div>
                             <div class="right">
                                 <ul class="list-unstyled">
-                                    <li><strong class="class-info">wholesale:</strong> <span class="text-danger">{{ theMoney($product->wholesale) }}</span></li>
-                                    <li><strong class="text-primary">retail:</strong> <span class="text-danger">{{ theMoney($product->retail) }}</span></li>
+                                    <li><strong class="class-info">wholesale</strong>: <span class="text-danger">{{ theMoney($product->wholesale) }}</span></li>
+                                    <li><strong class="text-primary">retail</strong>: <span class="text-danger">{{ theMoney($product->retail) }}</span></li>
                                 </ul>
                             </div>
                         </div>

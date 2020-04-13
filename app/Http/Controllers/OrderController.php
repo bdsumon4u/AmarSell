@@ -61,7 +61,7 @@ class OrderController extends Controller
                             $arr['id'] = $item->id;
                             $arr['quantity'] = $item->quantity;
                             $product = $item->attributes->product;
-                            $arr['sku'] = $product->sku;
+                            $arr['code'] = $product->code;
                             $arr['slug'] = $product->slug;
                             $arr['wholesale'] = $product->wholesale;
                             $arr['retail'] = $product->retail;
@@ -106,7 +106,7 @@ class OrderController extends Controller
         $order->status = 'accepted';
         $order->save();
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('success', 'Order Accepted');
     }
 
     /**

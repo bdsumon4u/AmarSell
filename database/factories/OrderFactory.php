@@ -25,7 +25,7 @@ $factory->define(Order::class, function (Faker $faker) {
                 193 => [
                     'id' => 193,
                     'quantity' => 3,
-                    'sku' => 'AiSKv8PAK7',
+                    'code' => 'AiSKv8PAK7',
                     'slug' => 'fugiat-unde-voluptatem-quia-natus-eos-animi',
                     'wholesale' => 527,
                     'retail' => 608,
@@ -33,7 +33,7 @@ $factory->define(Order::class, function (Faker $faker) {
                 192 => [
                     'id' => 192,
                     'quantity' => 2,
-                    'sku' => 'UUcjsyrUvH',
+                    'code' => 'UUcjsyrUvH',
                     'slug' => 'perferendis-neque-eos-ut-maiores-dolores',
                     'wholesale' => 420,
                     'retail' => 493,

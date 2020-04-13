@@ -10,9 +10,22 @@
         list-style: none;
         padding: 0;
     }
+    .formatted-categories ul li {
+        background-color: #f3f3f3;
+        padding: 5px 10px;
+        margin-bottom: 2px;
+    }
+    .formatted-categories ul li:hover {
+        background-color: aliceblue;
+    }
+    .formatted-categories ul li:hover a {
+        text-decoration: none;
+    }
+    .formatted-categories ul li:hover,
     .formatted-categories ul li.active,
     .formatted-categories ul li.active a {
         color: deeppink;
+        text-decoration: none;
     }
 </style>
 @endsection
@@ -29,12 +42,7 @@
                             @if($categories->isEmpty())
                             <div class="alert alert-danger py-2"><strong>No Categories Found.</strong></div>
                             @else
-                            <ul>
-                                @foreach($categories as $category)
-                                    <li class="{{ request('active_id', 0) == $category->id ? 'active' : '' }}"><a href="?active_id={{ $category->id }}">{{ $category->name }}</a></li>
-                                    @include('categories.list-childrens', ['childrens' => $category->childrens, 'depth' => 1])
-                                @endforeach
-                            </ul>
+                            <x-categories.tree :categories="$categories" />
                             @endif
                         </div>
                     </div>
@@ -53,7 +61,7 @@
                                                 role="tab" aria-controls="edit-category" aria-selected="false">Edit</a>
                                         </li>
                                         <li class="nav-item ml-auto">
-                                            <form action="{{ route('categories.destroy', request('active_id', 0)) }}" method="post">
+                                            <form action="{{ route('admin.categories.destroy', request('active_id', 0)) }}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="nav-link text-danger delete-action">Delete</button>
@@ -70,7 +78,7 @@
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="create-category" role="tabpanel">
                                             <p class="text-info">Create <strong>{{ $active ? 'Child' : 'Root' }}</strong> Category</p>
-                                            <form action="{{ route('categories.store') }}" method="post">
+                                            <form action="{{ route('admin.categories.store') }}" method="post">
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="create-name">Name</label>
@@ -81,14 +89,8 @@
                                                     <input type="text" name="slug" placeholder="SLUG" value="{{ old('slug') }}" id="create-slug" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="parent_id">Select Parent</label>
-                                                    <select selector name="parent_id" placeholder="Select Parent" id="parent_id" class="form-control">
-                                                        <option value="">No Parent</option>
-                                                        @foreach($categories as $category)
-                                                            <option value="{{ $category->id }}" {{ request('active_id', 0) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                                                            @include('categories.option-childrens', ['childrens' => $category->childrens, 'depth' => 1])
-                                                        @endforeach
-                                                    </select>
+                                                    <label for="create_parent_id">Select Parent</label>
+                                                    <x-categories.dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="create_parent_id" />
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>
@@ -96,7 +98,7 @@
                                         @if(request('active_id'))
                                         <div class="tab-pane" id="edit-category" role="tabpanel">
                                             <p class="text-info">Edit Category</p>
-                                            <form action="{{ route('categories.update', request('active_id', 0)) }}" method="post">
+                                            <form action="{{ route('admin.categories.update', request('active_id', 0)) }}" method="post">
                                                 @csrf
                                                 @method('PATCH')
                                                 <div class="form-group">
@@ -108,14 +110,8 @@
                                                     <input type="text" name="slug" placeholder="SLUG" value="{{ old('slug', $active->slug ?? '') }}" id="edit-slug" class="form-control">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="parent_id">Select Parent</label>
-                                                    <select selector name="parent_id" placeholder="Select Parent" id="parent_id" class="form-control">
-                                                        <option value="">No Parent</option>
-                                                        @foreach($categories as $cat)
-                                                            <option value="{{ $cat->id }}" {{ request('active_id', 0) == $cat->id ? 'disabled' : (($active->parent->id ?? 0) == $cat->id ? 'selected' : '') }}>{{ $cat->name }}</option>
-                                                            @include('categories.parent-option-childrens', ['active' => $active, 'childrens' => $cat->childrens, 'depth' => 1])
-                                                        @endforeach
-                                                    </select>
+                                                    <label for="edit_parent_id">Select Parent</label>
+                                                    <x-categories.dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="edit_parent_id" />
                                                 </div>
                                                 <button type="submit" class="btn btn-sm btn-success d-block ml-auto"><i class="fa fa-check"></i> Submit</button>
                                             </form>

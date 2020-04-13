@@ -26,31 +26,22 @@ class SidebarComposer
         ],
         [
             'icon' => 'fa fa-columns',
-            'style' => 'dropdown',
+            'style' => 'simple',
             'name' => 'Categories',
-            'items' => [
-                [
-                    'name' => 'All',
-                    'route' => 'admin.categories.index',
-                ],
-                [
-                    'name' => 'Create',
-                    'route' => 'admin.categories.create',
-                ],
-            ],
+            'route' => 'admin.categories.index',
         ],
         [
             'icon' => 'fa fa-server',
             'style' => 'dropdown',
-            'name' => 'Standards',
+            'name' => 'Products',
             'items' => [
                 [
                     'name' => 'All',
-                    'url' => 'standards.index',
+                    'route' => 'admin.products.index',
                 ],
                 [
                     'name' => 'Create',
-                    'url' => 'standards.create',
+                    'route' => 'admin.products.create',
                 ],
             ],
         ],
