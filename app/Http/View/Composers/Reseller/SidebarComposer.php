@@ -21,6 +21,12 @@ class SidebarComposer
             ],
         ],
         [
+            'icon' => 'fa fa-tachometer',
+            'style' => 'simple',
+            'name' => 'Products',
+            'route' => 'shop.index',
+        ],
+        [
             'style' => 'title',
             'name' => 'BASE',
         ],
@@ -46,23 +52,28 @@ class SidebarComposer
             'items' => [
                 [
                     'name' => 'Pending',
-                    'url' => 'subjects.index',
+                    'route' => 'reseller.order.index',
+                    'param' => 'filter[status]=pending',
                 ],
                 [
                     'name' => 'Accepted',
-                    'url' => 'subjects.create',
+                    'route' => 'reseller.order.index',
+                    'param' => 'filter[status]=accepted',
                 ],
                 [
                     'name' => 'Processing',
-                    'url' => 'subjects.create',
+                    'route' => 'reseller.order.index',
+                    'param' => 'filter[status]=processing',
                 ],
                 [
                     'name' => 'Transporting',
-                    'url' => 'subjects.create',
+                    'route' => 'reseller.order.index',
+                    'param' => 'filter[status]=transporting',
                 ],
                 [
                     'name' => 'Completed',
-                    'url' => 'subjects.create',
+                    'route' => 'reseller.order.index',
+                    'param' => 'filter[status]=completed',
                 ],
             ],
         ],

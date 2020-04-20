@@ -7,6 +7,12 @@
         margin-bottom: .25rem;
         white-space: break-spaces;
     }
+    @media print {
+        tr.head-row {
+            background-color: red !important;
+            -webkit-print-color-adjust: exact; 
+        }
+    }
 </style>
 
 @section('content')
@@ -21,37 +27,33 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-4">
-                            <div class="col-sm-4">
-                                <h6 class="mb-3">From:</h6>
-                                <div><strong>{{ $order->data['shop'] }}</strong></div>
-                                <div>724 John Ave.</div>
-                                <div>Cupertino, CA 95014</div>
-                                <div>Email: email@your-great-company.com</div>
-                                <div>Phone: +1 123-456-7890</div>
+                            <div class="col-sm-7">
+                                <div class="shop-logo">
+                                    <img src="{{ asset('coreui/brand/logo.png') }}" alt="" class="img-responsive img-thumbnail">
+                                </div>
                             </div>
 
-                            <div class="col-sm-4">
-                                <h6 class="mb-3">To:</h6>
-                                <div><strong>{{ $order->data['customer_name'] }}</strong></div>
-                                <div class="address">{{ $order->data['customer_address'] }}</div>
-                                <div>Email: {{ $order->data['customer_email'] }}</div>
-                                <div>Phone: {{ $order->data['customer_phone'] }}</div>
-                            </div>
-
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <h6 class="mb-3">Details:</h6>
                                 <div>Invoice&nbsp;<strong>#{{ $order->id }}</strong></div>
                                 <div>{{ date('F d, Y') }}</div>
-                                <div>Delivery Method: <strong>{{ $order->data['delevary_method'] }}</strong></div>
-                                <div>Payment Status: <strong>{{ $order->data['payable'] == 0 ? 'Complete' : 'Incomplete' }}</strong></div>
+                                <div>Delivery Method: <strong>{{ $order->data['delivery_method'] }}</strong></div>
+                                <div>Payment Status: <strong></strong></div>
                             </div>
 
+                        </div>
+
+                        <h2 class="mb-4"><strong>INVOICE</strong></h2>
+
+                        <div class="row mb-4">
+                            <div class="col-sm-7">sj</div>
+                            <div class="col-sm-5">jsj</div>
                         </div>
 
                         <div class="table-responsive-sm">
                             <table class="table table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr class="head-row">
                                         <th class="center">#</th>
                                         <th>Product Name</th>
                                         <th>Product Code</th>
@@ -80,7 +82,7 @@
                                 dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                             </div>
                             <div class="col-lg-4 col-sm-5 ml-auto">
-                                <table class="table table-clear table-sm">
+                                <table class="table table-bordered table-sm">
                                     <tbody>
                                         <tr>
                                             <td class="left"><strong>Subtotal</strong></td>
@@ -100,7 +102,7 @@
                                         </tr>
                                         <tr>
                                             <td class="left"><strong>Payable</strong></td>
-                                            <td class="right"><strong>{{ $order->data['payable'] }}</strong></td>
+                                            <td class="right"><strong></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

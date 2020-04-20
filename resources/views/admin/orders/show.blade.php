@@ -89,14 +89,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('delevary_method') ? 'has-error': '' }}">
-                                    <label for="delevary-method">
-                                        Delevary Method<span>*</span>
+                                <div class="form-group {{ $errors->has('delivery_method') ? 'has-error': '' }}">
+                                    <label for="delivery-method">
+                                        Delivery Method<span>*</span>
                                     </label>
 
-                                    <input type="text" name="delevary_method" class="form-control" id="delevary-method" value="{{ old('delevary_method', $order->data['delevary_method']) }}" readonly>
+                                    <input type="text" name="delivery_method" class="form-control" id="delivery-method" value="{{ old('delivery_method', $order->data['delivery_method']) }}" readonly>
 
-                                    {!! $errors->first('delevary_method', '<span class="error-message">:message</span>') !!}
+                                    {!! $errors->first('delivery_method', '<span class="error-message">:message</span>') !!}
                                 </div>
                             </div>
                         </div>

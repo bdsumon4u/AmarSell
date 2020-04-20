@@ -13,7 +13,7 @@
         </div>
     </span>
         <div class="form-group charge-box">
-            <label for="shipping-charge">Shipping Charge: </label>
+            <label for="shipping-charge">Shipping Cost: </label>
             <input type="number" name="shipping" value="{{ old('shipping', $shipping) }}" id="shipping-charge" wire:model.debounce.250ms="shipping" wire:keyup="changed" onfocus="$(this).select();">
         </div>
     </span>

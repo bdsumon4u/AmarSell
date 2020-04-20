@@ -69,14 +69,14 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group {{ $errors->has('delevary_charge') ? 'has-error': '' }}">
-                    <label for="delevary-charge">
-                        Delevary<span>*</span>
+                <div class="form-group {{ $errors->has('delivery_charge') ? 'has-error': '' }}">
+                    <label for="delivery-charge">
+                        Delivery<span>*</span>
                     </label>
 
-                    <input type="text" name="delevary_charge" wire:model.debounce.250ms="delevary_charge" wire:change="changed" class="form-control" id="delevary-charge" value="{{ old('delevary_charge') }}">
+                    <input type="text" name="delivery_charge" wire:model.debounce.250ms="delivery_charge" wire:change="changed" class="form-control" id="delivery-charge" value="{{ old('delivery_charge') }}">
 
-                    {!! $errors->first('delevary_charge', '<span class="error-message">:message</span>') !!}
+                    {!! $errors->first('delivery_charge', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
             <div class="col-md-4">

@@ -15,10 +15,11 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <form action="{{ route('reseller.shops.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('reseller.shops.update', $shop->id) }}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Create New Shop</strong>
+                <div class="card-header"><strong>Edit Shop</strong>
                     <div class="card-header-actions"><button type="submit" class="card-header-action btn btn-success text-light">Submit</button></div>
                 </div>
                 <div class="card-body">
@@ -28,7 +29,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="name">Name</label><span class="text-danger">*</span>
-                                        <input type="text" name="name" value="{{ old('name') }}" id="name" class="form-control @error('name') is-invalid @enderror">
+                                        <input type="text" name="name" value="{{ old('name', $shop->name) }}" id="name" class="form-control @error('name') is-invalid @enderror">
                                         @error('name')
                                         <strong class="invalid-feedback">{{ $message }}</strong>
                                         @enderror
@@ -37,7 +38,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="email">Email</label><span class="text-danger">*</span>
-                                        <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control @error('email') is-invalid @enderror">
+                                        <input type="text" name="email" value="{{ old('email', $shop->email) }}" id="email" class="form-control @error('email') is-invalid @enderror">
                                         @error('email')
                                         <strong class="invalid-feedback">{{ $message }}</strong>
                                         @enderror
@@ -46,7 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="phone">Phone</label><span class="text-danger">*</span>
-                                        <input type="text" name="phone" value="{{ old('phone') }}" id="phone" class="form-control @error('phone') is-invalid @enderror">
+                                        <input type="text" name="phone" value="{{ old('phone', $shop->phone) }}" id="phone" class="form-control @error('phone') is-invalid @enderror">
                                         @error('phone')
                                         <strong class="invalid-feedback">{{ $message }}</strong>
                                         @enderror
@@ -61,7 +62,9 @@
                                 @error('logo')
                                 <strong class="invalid-feedback">{{ $message }}</strong>
                                 @enderror
-                                <img id="logo-preview" class="mt-2" src="" alt="Logo" class="img-responsive img-thumbnail">
+                                @if($shop->logo)
+                                <img id="logo-preview" class="mt-2" src="{{ asset($shop->logo) }}" alt="Logo" class="img-responsive img-thumbnail">
+                                @endif
                             </div>
                         </div>
                     </div>

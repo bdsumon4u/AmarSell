@@ -52,23 +52,28 @@ class SidebarComposer
             'items' => [
                 [
                     'name' => 'Pending',
-                    'url' => 'subjects.index',
+                    'route' => 'admin.order.index',
+                    'param' => 'filter[status]=pending',
                 ],
                 [
                     'name' => 'Accepted',
-                    'url' => 'subjects.create',
+                    'route' => 'admin.order.index',
+                    'param' => 'filter[status]=accepted',
                 ],
                 [
                     'name' => 'Processing',
-                    'url' => 'subjects.create',
+                    'route' => 'admin.order.index',
+                    'param' => 'filter[status]=processing',
                 ],
                 [
                     'name' => 'Transporting',
-                    'url' => 'subjects.create',
+                    'route' => 'admin.order.index',
+                    'param' => 'filter[status]=transporting',
                 ],
                 [
                     'name' => 'Completed',
-                    'url' => 'subjects.create',
+                    'route' => 'admin.order.index',
+                    'param' => 'filter[status]=completed',
                 ],
             ],
         ],

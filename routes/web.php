@@ -46,13 +46,14 @@ Route::group(['prefix' => 'reseller', 'as' => 'reseller.'], function(){
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
+    Route::get('orders', 'OrderController@index')->name('order.index');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/accept', 'OrderController@accept')->name('order.accept');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 });
 
-Route::get('/shop', 'ProductController@shop')->name('shop.index');
-Route::get('/shop/product/{product:slug}', 'ProductController@show')->name('shop.product.show');
+Route::get('/products', 'ProductController@shop')->name('shop.index');
+Route::get('/product/{product:slug}', 'ProductController@show')->name('shop.product.show');
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');
@@ -62,4 +63,11 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
 
     Route::post('/order/store', 'OrderController@store')->name('order.store');
+});
+
+
+
+
+Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
+    Route::get('/orders', 'OrderController@index')->name('order.index');
 });

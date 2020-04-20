@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('reseller')->get();
+        $orders = Order::with('reseller')->latest()->take(20)->get();
         return view('admin.dashboard', compact('orders'));
     }
 }

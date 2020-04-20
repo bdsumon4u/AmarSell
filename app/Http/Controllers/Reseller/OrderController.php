@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reseller;
 
 use App\Order;
 use App\Product;
-use Darryldecode\Cart\Facades\CartFacade;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Darryldecode\Cart\Facades\CartFacade;
 
 class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:reseller')->except(['show', 'accept', 'invoice']);
+        $this->middleware('auth:reseller');
     }
 
     /**
@@ -23,9 +24,9 @@ class OrderController extends Controller
     {
         $filter = $request->filter ?? [];
 
-        $orders = Order::where($filter)->latest()->get();
+        $orders = auth('reseller')->user()->orders()->where($filter)->latest()->get();
 
-        return view('admin.orders.list', compact('orders'));
+        return view('reseller.orders.list', compact('orders'));
     }
 
     /**

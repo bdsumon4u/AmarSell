@@ -16,7 +16,7 @@ class ChargeCalculator extends Component
     public $buy_price;
     public $sell;
     public $packaging;
-    public $delevary_charge;
+    public $delivery_charge;
     public $cod_charge;
 
     public $payable;
@@ -35,7 +35,7 @@ class ChargeCalculator extends Component
         $this->sell = $order->data['sell'];
 
         $this->packaging = $quantity * 10;
-        $this->delevary_charge = 100;
+        $this->delivery_charge = 100;
         $this->cod_charge = 0;
     }
     public function render()
@@ -56,7 +56,7 @@ class ChargeCalculator extends Component
                         - (empty($this->advanced) ? 0 : round($this->advanced));
         $this->profit = (empty($this->sell) ? 0 : round($this->sell))
                         - (empty($this->buy_price) ? 0 : round($this->buy_price))
-                        - (empty($this->delevary_charge) ? 0 : round($this->delevary_charge))
+                        - (empty($this->delivery_charge) ? 0 : round($this->delivery_charge))
                         + (empty($this->shipping) ? 0 : round($this->shipping))
                         - (empty($this->packaging) ? 0 : round($this->packaging))
                         - (empty($this->cod_charge) ? 0 : round($this->cod_charge));

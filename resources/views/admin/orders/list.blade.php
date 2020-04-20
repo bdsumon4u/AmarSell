@@ -14,7 +14,7 @@
     <div class="col-sm-12">
         <div class="orders-table">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Recent Orders</strong></div>
+                <div class="card-header"><strong>All Orders</strong></div>
                 <div class="card-body">
                     <div class="table-responive">
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
