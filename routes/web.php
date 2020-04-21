@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('products', 'ProductController');
     Route::get('orders', 'OrderController@index')->name('order.index');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
-    Route::post('order/{order}/accept', 'OrderController@accept')->name('order.accept');
+    Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 });
 
@@ -70,4 +70,6 @@ Route::group(['middleware' => 'auth:reseller'], function(){
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
     Route::get('/orders', 'OrderController@index')->name('order.index');
+    Route::get('order/{order}', 'OrderController@show')->name('order.show');
+    Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
 });

@@ -14,7 +14,7 @@ $factory->define(Order::class, function (Faker $faker) {
             'customer_email' => $faker->email,
             'customer_phone' => $faker->e164PhoneNumber,
             'customer_address' => $faker->address,
-            'shop' => $faker->name,
+            'shop' => mt_rand(1, 2),
             'delivery_method' => $faker->name,
             'sell' => 2421 + mt_rand(150, 500),
             'shipping' => $s[mt_rand(0, 2)],

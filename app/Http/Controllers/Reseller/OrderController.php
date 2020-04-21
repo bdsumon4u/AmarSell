@@ -92,31 +92,12 @@ class OrderController extends Controller
     {
         $products = Product::whereIn('id', array_keys($order->data['products']))->get();
         $cp = $order->current_price();
-        return view('admin.orders.show', compact('order', 'products', 'cp'));
-    }
-
-    public function accept(Request $request, Order $order)
-    {
-        if($order->status != 'pending')
-            return redirect()->back();
-        
-        $order->data += $request->validate([
-            'buy_price' => 'required',
-            'payable' => 'required',
-            'profit' => 'required',
-            'packaging' => 'required',
-            'delivery_charge' => 'required',
-            'cod_charge' => 'required',
-        ]);
-        $order->status = 'accepted';
-        $order->save();
-
-        return redirect('/dashboard')->with('success', 'Order Accepted');
+        return view('reseller.orders.show', compact('order', 'products', 'cp'));
     }
 
     public function invoice(Order $order)
     {
-        return view('admin.orders.invoice', compact('order'));
+        return view('reseller.orders.invoice', compact('order'));
     }
 
     /**

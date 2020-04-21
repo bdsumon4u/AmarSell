@@ -25,6 +25,11 @@ class Order extends Model
         return unserialize($data);
     }
 
+    public function getShopAttribute()
+    {
+        return Shop::find($this->data['shop']);
+    }
+
     public function current_price()
     {
         $products = Product::whereIn('id', array_keys($this->data['products']))->get();

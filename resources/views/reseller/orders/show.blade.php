@@ -1,4 +1,4 @@
-@extends('layouts.ready')
+@extends('reseller.layout')
 
 @section('styles')
 @livewireStyles

@@ -1,4 +1,4 @@
-@extends('layouts.ready')
+@extends('reseller.layout')
 
 @section('styles')
 <style>
@@ -61,7 +61,7 @@
                                         <strong>Sell:</strong> {{ $order->data['sell'] }}
                                     </td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.order.show', $order->id) }}">View</a></td>
+                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('reseller.order.show', $order->id) }}">View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

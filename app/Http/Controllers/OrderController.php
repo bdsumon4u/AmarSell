@@ -94,28 +94,9 @@ class OrderController extends Controller
         return view('admin.orders.show', compact('order', 'products', 'cp'));
     }
 
-    public function accept(Request $request, Order $order)
-    {
-        if($order->status != 'pending')
-            return redirect()->back();
-        
-        $order->data += $request->validate([
-            'buy_price' => 'required',
-            'payable' => 'required',
-            'profit' => 'required',
-            'packaging' => 'required',
-            'delivery_charge' => 'required',
-            'cod_charge' => 'required',
-        ]);
-        $order->status = 'accepted';
-        $order->save();
-
-        return redirect('/dashboard')->with('success', 'Order Accepted');
-    }
-
     public function invoice(Order $order)
     {
-        return view('admin.orders.invoice', compact('order'));
+        return view('orders.invoice', compact('order'));
     }
 
     /**
@@ -138,7 +119,27 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        // dump($order->data);
+        tap($request->validate([
+            'buy_price' => 'required',
+            'payable' => 'required',
+            'profit' => 'required',
+            'packaging' => 'required',
+            'delivery_charge' => 'required',
+            'cod_charge' => 'required',
+            'status' => 'required',
+        ]), function($data) use($order, $request){
+            $order->status = $data['status'];
+            unset($data['status']);
+            foreach($order->data as $key => $val) {
+                $data[$key] = isset($data[$key]) ? $data[$key] : $val;
+            }
+            // dd($data);
+            $order->data = $data;
+            $order->save();
+        });
+
+        return redirect('/dashboard')->with('success', 'Order Updated');
     }
 
     /**

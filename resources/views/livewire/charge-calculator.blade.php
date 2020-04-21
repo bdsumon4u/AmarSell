@@ -1,5 +1,5 @@
 <div class="wizard">
-    <form action="{{ route('admin.order.accept', $order->id) }}" method="post">
+    <form action="{{ route('admin.order.update', $order->id) }}" method="post">
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -113,8 +113,17 @@
                 </div>
             </div>
         </div>
-        <div class="d-block mt-2 float-right">
-            <button type="submit" class="btn btn-success">Accept Order</button>
+        <div class="d-flex mt-2 justify-content-between">
+            @if($order->status == 'pending')
+            <input type="hidden" name="status" value="accepted">
+            @else
+            <select name="status" id="status" class="form-control mr-1">
+                @foreach(config('order.statuses') as $status)
+                <option value="{{ $status }}" @if($status == $order->status) selected @endif class="text-capitalize">{{ ucfirst($status) }}</option>
+                @endforeach
+            </select>
+            @endif
+            <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
         </div>
     </form>
 </div>

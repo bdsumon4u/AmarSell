@@ -31,12 +31,12 @@ class ChargeCalculator extends Component
         $this->shipping = $order->data['shipping'];
         $this->advanced = $order->data['advanced'];
 
-        $this->buy_price = $order->data['price'];
+        $this->buy_price = $order->data['buy_price'] ?? $order->data['price'];
         $this->sell = $order->data['sell'];
 
-        $this->packaging = $quantity * 10;
-        $this->delivery_charge = 100;
-        $this->cod_charge = 0;
+        $this->packaging = $order->data['packaging'] ?? $quantity * 10;
+        $this->delivery_charge = $order->data['delivery_charge'] ?? 100;
+        $this->cod_charge = $order->data['cod_charge'] ?? 0;
     }
     public function render()
     {

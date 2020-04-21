@@ -80,8 +80,15 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">
                     <i class="fa fa-shield"></i> Lock Account</a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-lock"></i> Logout</a>
+                <a class="dropdown-item" href="{{ route($provider == 'users' ? 'logout' : $provider.'.logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                    <i class="fa fa-lock"></i> {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route($provider == 'users' ? 'logout' : $provider.'.logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </li>
     </ul>

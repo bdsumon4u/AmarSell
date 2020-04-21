@@ -74,6 +74,7 @@
 
                                         @if($shops->count() == 1)
                                         <input type="text" name="shop" id="reseller-shop" class="form-control" value="{{ old('shop', $shops->first()->name) }}" readonly>
+                                        <input type="hidden" name="shop" value="{{ old('shop', $shops->first()->id) }}" readonly>
                                         @else
                                         <select name="shop" id="reseller-shop" class="form-control" @if($shops->count() == 1) readonly @endif>
                                             <option value="">Select Shop</option>

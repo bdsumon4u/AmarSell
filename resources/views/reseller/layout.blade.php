@@ -25,7 +25,7 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    <x-layouts.header />
+    <x-layouts.header provider="reseller" />
     <div class="app-body">
         <x-layouts.sidebar :menu="$menu" />
         <main class="main">
