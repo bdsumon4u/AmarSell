@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:reseller')->except(['show', 'accept', 'invoice']);
+        $this->middleware('auth');
     }
 
     /**
@@ -46,39 +46,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = auth('reseller')->user()->id;
-        $data = $request->validate([
-            'customer_name' => 'required|string',
-            'customer_email' => 'nullable',
-            'customer_phone' => 'required',
-            'customer_address' => 'required|string',
-            'shop' => 'required|integer',
-            'delivery_method' => 'required|string',
-            'sell' => 'required|integer',
-            'shipping' => 'required|integer',
-            'advanced' => 'required|integer',
-        ]);
-        $cart = CartFacade::session($user_id);
-        $data['price'] = $cart->getTotal();
-        $products = $cart->getContent()
-                        ->map(function ($item) {
-                            $arr['id'] = $item->id;
-                            $arr['quantity'] = $item->quantity;
-                            $product = $item->attributes->product;
-                            $arr['code'] = $product->code;
-                            $arr['slug'] = $product->slug;
-                            $arr['wholesale'] = $product->wholesale;
-                            $arr['retail'] = $product->retail;
-                            return $arr;
-                        });
-        $data['products'] = $products->toArray();
-
-        $order = Order::create([
-            'reseller_id' => $user_id,
-            'data' => $data,
-        ]);
-
-        return redirect()->route('shop.index')->with('success', 'Order Success. Order ID# ' . $order->id);
+        //
     }
 
     /**
@@ -96,7 +64,7 @@ class OrderController extends Controller
 
     public function invoice(Order $order)
     {
-        return view('orders.invoice', compact('order'));
+        return view('admin.orders.invoice', compact('order'));
     }
 
     /**

@@ -1,5 +1,5 @@
 <section class="checkout">
-    <form method="POST" action="{{ route('order.store') }}" id="checkout-form">
+    <form method="POST" action="{{ route('reseller.order.store') }}" id="checkout-form">
         @csrf
 
         <div class="row">

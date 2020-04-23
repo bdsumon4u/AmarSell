@@ -50,6 +50,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
+
+    Route::get('/transactions/pay', 'TransactionController@pay')->name('transactions.pay');
+    Route::get('/transactions/pay/{reseller}', 'TransactionController@payToReseller')->name('transactions.pay-to-reseller');
+    Route::post('/transactions/pay/store', 'TransactionController@store')->name('transactions.pay.store');
+    Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
+    Route::get('/transactions/requests', 'TransactionController@requests')->name('transactions.requests');
 });
 
 Route::get('/products', 'ProductController@shop')->name('shop.index');
@@ -62,7 +68,6 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
     Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
 
-    Route::post('/order/store', 'OrderController@store')->name('order.store');
 });
 
 
@@ -70,6 +75,11 @@ Route::group(['middleware' => 'auth:reseller'], function(){
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
     Route::get('/orders', 'OrderController@index')->name('order.index');
+    Route::post('/order/store', 'OrderController@store')->name('order.store');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
+
+
+    Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
+    Route::get('/transactions/request', 'TransactionController@request')->name('transactions.request');
 });

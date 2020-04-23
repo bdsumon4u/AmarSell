@@ -78,37 +78,21 @@ class SidebarComposer
             ],
         ],
         [
-            'icon' => 'fa fa-book',
-            'style' => 'simple',
-            'name' => 'Books',
-            'url' => 'slfjs',
-            'badge' => [
-                'variant' => 'secondary',
-                'data' => 4,
-            ],
-        ],
-        [
-            'icon' => 'fa fa-table',
-            'style' => 'simple',
-            'name' => 'Attendance',
-            'url' => 'attendances.index',
-        ],
-        [
-            'style' => 'title',
-            'name' => 'Person',
-        ],
-        [
             'icon' => 'fa fa-server',
             'style' => 'dropdown',
-            'name' => 'Applicants',
+            'name' => 'Transactions',
             'items' => [
                 [
-                    'name' => 'All',
-                    'url' => 'standards.index',
+                    'name' => 'Pay',
+                    'route' => 'admin.transactions.pay',
                 ],
                 [
-                    'name' => 'Create',
-                    'url' => 'standards.create',
+                    'name' => 'History',
+                    'route' => 'admin.transactions.index',
+                ],
+                [
+                    'name' => 'Requests',
+                    'route' => 'admin.transactions.requests',
                 ],
             ],
         ],

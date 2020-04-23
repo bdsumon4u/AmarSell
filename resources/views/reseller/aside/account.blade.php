@@ -1,24 +1,25 @@
 <div class="p-3">
+    @php $reseller = auth('reseller')->user() @endphp
     <table class="table table-sm table-borderless">
         <tr>
             <th>Total Sell:</th>
-            <td>{{ $calculation['total_sell'] }}</td>
+            <td>{{ theMoney($reseller->total_sell) }}</td>
         </tr>
         <tr>
             <th>Pending Sell:</th>
-            <td>{{ $calculation['pending_sell'] }}</td>
+            <td>{{ theMoney($reseller->pending_sell) }}</td>
         </tr>
         <tr>
             <th>Completed Sell:</th>
-            <td>{{ $calculation['completed_sell'] }}</td>
+            <td>{{ theMoney($reseller->completed_sell) }}</td>
         </tr>
         <tr>
             <th>Total Withdraw:</th>
-            <td>{{ 0 }}</td>
+            <td>{{ theMoney($reseller->paid) }}</td>
         </tr>
         <tr>
             <th>My Balance:</th>
-            <td>{{ $calculation['my_balance'] }}</td>
+            <td>{{ theMoney($reseller->balance) }}</td>
         </tr>
     </table>
 </div>

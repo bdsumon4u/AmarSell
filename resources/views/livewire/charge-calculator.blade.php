@@ -1,4 +1,5 @@
 <div class="wizard">
+    @php $is_reseller = Auth::guard('reseller')->check() && (Auth::guard('reseller')->user()->id == request()->user()->id) @endphp
     <form action="{{ route('admin.order.update', $order->id) }}" method="post">
         @csrf
         <div class="row">
@@ -38,7 +39,7 @@
                         Buy<span>*</span>
                     </label>
 
-                    <input type="text" name="buy_price" wire:model.debounce.250ms="buy_price" wire:change="changed" class="form-control" id="buy-price" value="{{ old('buy_price') }}">
+                    <input type="text" name="buy_price" wire:model.debounce.250ms="buy_price" wire:change="changed" class="form-control" id="buy-price" value="{{ old('buy_price') }}" {{ $is_reseller ? 'readonly' : '' }}>
 
                     {!! $errors->first('buy_price', '<span class="error-message">:message</span>') !!}
                 </div>
@@ -63,7 +64,7 @@
                         Packaging
                     </label>
                     
-                    <input type="text" name="packaging" wire:model.debounce.250ms="packaging" wire:change="changed" class="form-control" id="packaging-charge" value="{{ old('packaging', $packaging) }}">
+                    <input type="text" name="packaging" wire:model.debounce.250ms="packaging" wire:change="changed" class="form-control" id="packaging-charge" value="{{ old('packaging', $packaging) }}" {{ $is_reseller ? 'readonly' : '' }}>
                     
                     {!! $errors->first('packaging', '<span class="error-message">:message</span>') !!}
                 </div>
@@ -74,7 +75,7 @@
                         Delivery<span>*</span>
                     </label>
 
-                    <input type="text" name="delivery_charge" wire:model.debounce.250ms="delivery_charge" wire:change="changed" class="form-control" id="delivery-charge" value="{{ old('delivery_charge') }}">
+                    <input type="text" name="delivery_charge" wire:model.debounce.250ms="delivery_charge" wire:change="changed" class="form-control" id="delivery-charge" value="{{ old('delivery_charge') }}" {{ $is_reseller ? 'readonly' : '' }}>
 
                     {!! $errors->first('delivery_charge', '<span class="error-message">:message</span>') !!}
                 </div>
@@ -85,7 +86,7 @@
                         COD<span>*</span>
                     </label>
 
-                    <input type="text" name="cod_charge" wire:model.debounce.250ms="cod_charge" wire:change="changed" class="form-control" id="cod-charge" value="{{ old('cod_charge', $cod_charge) }}">
+                    <input type="text" name="cod_charge" wire:model.debounce.250ms="cod_charge" wire:change="changed" class="form-control" id="cod-charge" value="{{ old('cod_charge', $cod_charge) }}" {{ $is_reseller ? 'readonly' : '' }}>
 
                     {!! $errors->first('cod_charge', '<span class="error-message">:message</span>') !!}
                 </div>
@@ -113,6 +114,8 @@
                 </div>
             </div>
         </div>
+
+        @unless($is_reseller)
         <div class="d-flex mt-2 justify-content-between">
             @if($order->status == 'pending')
             <input type="hidden" name="status" value="accepted">
@@ -125,5 +128,6 @@
             @endif
             <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
         </div>
+        @endunless
     </form>
 </div>

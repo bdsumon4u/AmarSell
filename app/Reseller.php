@@ -68,11 +68,71 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Shop::class, 'reseller_id', 'id');
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function getPaidAttribute()
+    {
+        return $this->transactions->sum(function($transaction) { return $transaction->amount; });
+    }
+
     /**
      * Orders
      */
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function getPendingOrdersAttribute()
+    {
+        return $this->orders->where('status', 'pending');
+    }
+
+    public function getNonPendingOrdersAttribute()
+    {
+        return $this->orders->where('status', '!=', 'pending');
+    }
+
+    public function getCompletedOrdersAttribute()
+    {
+        return $this->orders->where('status', 'completed');
+    }
+
+    public function getTotalSellAttribute()
+    {
+        return $this->orders->sum(function($order){ return $order->data['sell']; });
+    }
+
+    public function getPendingSellAttribute()
+    {
+        return $this->pending_orders->sum(function($order){ return $order->data['sell']; });
+    }
+    
+    public function getCompletedSellAttribute()
+    {
+        return $this->completed_orders->sum(function($order){ return $order->data['sell']; });
+    }
+
+    /**
+     * Balance
+     */
+    public function getBalanceAttribute()
+    {
+        $non_pending = $this->non_pending_orders;
+        $completed = $this->completed_orders;
+
+        $completed_advanced = $completed->sum(function($order){ return $order->data['advanced']; });
+        $completed_shipping = $completed->sum(function($order){ return $order->data['shipping']; });
+
+        $completed_buy = $completed->sum(function($order){ return $order->data['price']; });
+        $non_pending_charges = $non_pending->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
+
+
+        $balance = $this->completed_sell - $completed_advanced - $completed_buy - $non_pending_charges + $completed_shipping - ($this->paid);
+
+        return $balance;
     }
 }

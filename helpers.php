@@ -1,6 +1,6 @@
 <?php
 
-function theMoney($amount, $currency = "BDT")
+function theMoney($amount, $currency = "৳")
 {
-    return "$currency $amount";
+    return "$currency " . number_format($amount,null,null,',');
 }
