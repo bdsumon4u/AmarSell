@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Reseller;
+use Illuminate\Support\Arr;
 use Livewire\Component;
 
 class PaymentCalculator extends Component
@@ -11,6 +12,7 @@ class PaymentCalculator extends Component
     public $balance;
     public $amount;
     public $method;
+    public $number;
 
     public function mount(Reseller $reseller)
     {
@@ -26,5 +28,15 @@ class PaymentCalculator extends Component
     public function calc()
     {
         $this->balance = $this->reseller->balance - (is_numeric($this->amount) ? $this->amount : 0);
+    }
+
+    public function chMethod()
+    {
+        $arr = Arr::first($this->reseller->payment, function($payment) {
+            return $payment->method == $this->method;
+        });
+        
+        // dd($arr);
+        $this->number = $arr->number;
     }
 }

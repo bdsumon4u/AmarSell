@@ -18,7 +18,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="method">Method</label>
-                        <input type="text" name="method" wire:model.debounce.250ms="method" value="{{ old('method', $method) }}" class="form-control @error('method') is-invalid @enderror">
+                        <!-- <input type="text" name="method" wire:model.debounce.250ms="method" value="{{ old('method', $method) }}" class="form-control @error('method') is-invalid @enderror"> -->
+                        <select name="method" wire:model.debounce.250ms="method" wire:change="chMethod" class="form-control @error('method') is-invalid @enderror">
+                            <option value="">Select Method</option>    
+                            @foreach($reseller->payment as $payment)
+                            <option value="{{ $payment->method }}">{{ $payment->method }}</option>
+                            @endforeach
+                        </select>
                         @error('method')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -27,7 +33,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="account_number">Account Number</label>
-                        <input type="text" name="account_number" value="{{ old('account_number') }}" class="form-control @error('account_number') is-invalid @enderror">
+                        <input type="text" name="account_number" value="{{ old('account_number', $number) }}" class="form-control @error('account_number') is-invalid @enderror">
                         @error('account_number')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

@@ -7,6 +7,7 @@ use App\Notifications\Reseller\VerifyEmail;
 use App\Notifications\Reseller\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class Reseller extends Authenticatable implements MustVerifyEmail
 {
@@ -18,7 +19,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password',
+        'name', 'email', 'phone', 'password', 'payment',
     ];
 
     /**
@@ -37,7 +38,34 @@ class Reseller extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'payment' => 'object',
     ];
+
+    /**
+     * Set Hashed Password Attribute
+     * 
+     * @param string $password
+     * 
+     * @return void
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::needsRehash($password)
+                                        ? Hash::make($password)
+                                        : $password;
+    }
+
+    /**
+     * Set Payment Attribute
+     * 
+     * @param array $payment
+     * 
+     * @return void
+     */
+    public function setPaymentAttribute($payment)
+    {
+        $this->attributes['payment'] = json_encode($payment);
+    }
 
     /**
      * Send the email verification notification.
