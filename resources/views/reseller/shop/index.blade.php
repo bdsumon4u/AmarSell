@@ -30,7 +30,7 @@
                                     </tr>
                                     <tr>
                                         <th>Website:</th>
-                                        <td>{{ $shop->website }}</td>
+                                        <td><a href="{{ $shop->website ? url($shop->website) : '' }}">{{ $shop->website }}</a></td>
                                     </tr>
                                 </table>
                             </div>

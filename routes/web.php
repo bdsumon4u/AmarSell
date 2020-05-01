@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::post('/order/store', 'OrderController@store')->name('order.store');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
+    Route::delete('order/{order}/delete', 'OrderController@destroy')->name('order.destroy');
     
     
     Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');

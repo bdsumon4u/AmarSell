@@ -131,6 +131,10 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        if($order->status == 'pending') {
+            $order->delete();
+            return redirect()->back()->with('success', 'Order Cancelled.');
+        }
+        return redirect()->back()->with('error', "Order Can\'t be Cancelled.");
     }
 }

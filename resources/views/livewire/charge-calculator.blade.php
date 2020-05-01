@@ -128,6 +128,9 @@
             @endif
             <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
         </div>
+        @elseif($order->status == 'pending')
+        @method('DELETE')
+        <button type="submit" formaction="{{ route('reseller.order.destroy', $order->id) }}" class="btn btn-danger ml-1">Cancel</button>
         @endunless
     </form>
 </div>
