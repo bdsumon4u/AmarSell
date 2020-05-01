@@ -22,7 +22,6 @@
                                 <tr>
                                     <th></th>
                                     <th>ID</th>
-                                    <th>Reseller</th>
                                     <th>Customer</th>
                                     <th>Status</th>
                                     <th>Price</th>
@@ -35,13 +34,6 @@
                                 <tr data-row-id="{{ $order->id }}">
                                     <td></td>
                                     <td>{{ $order->id }}</td>
-                                    <td>
-                                        <a href="">
-                                            <strong>Name:</strong> {{ $order->reseller->name }}
-                                            <br>
-                                            <strong>Phone:</strong> {{ $order->reseller->phone }}
-                                        </a>
-                                    </td>
                                     <td>
                                         <strong>Name:</strong> {{ $order->data['customer_name'] }}
                                         <br>
@@ -126,14 +118,14 @@
                     columns: ':visible'
                 }
             },
-            {
-                extend: 'copy',
-                className: 'btn-light',
-                text: 'Copy',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
+            // {
+            //     extend: 'copy',
+            //     className: 'btn-light',
+            //     text: 'Copy',
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
             {
                 extend: 'csv',
                 className: 'btn-light',

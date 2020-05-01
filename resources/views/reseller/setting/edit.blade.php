@@ -40,7 +40,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header py-2">Add New <strong>Product</strong></div>
+            <div class="card-header py-2">Reseller <strong>Setting</strong></div>
             <div class="card-body p-2">
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-md-4 col-xl-3">

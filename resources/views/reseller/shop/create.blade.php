@@ -61,7 +61,25 @@
                                 @error('logo')
                                 <strong class="invalid-feedback">{{ $message }}</strong>
                                 @enderror
-                                <img id="logo-preview" class="mt-2" src="" alt="Logo" class="img-responsive img-thumbnail">
+                                <img id="logo-preview" class="mt-2" src="" alt="Logo" class="img-responsive img-thumbnail" style="display:none;">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="address">Address</label><span class="text-danger">*</span>
+                                <input type="text" name="address" value="{{ old('address') }}" id="address" class="form-control @error('address') is-invalid @enderror">
+                                @error('address')
+                                <strong class="invalid-feedback">{{ $message }}</strong>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="website">Website</label><span class="text-danger">*</span>
+                                <input type="text" name="website" value="http://" value="{{ old('website') }}" id="website" class="form-control @error('website') is-invalid @enderror">
+                                @error('website')
+                                <strong class="invalid-feedback">{{ $message }}</strong>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -85,7 +103,7 @@
             var reader = new FileReader;
             reader.readAsDataURL(input.files[0]);
             reader.onload = function(e){
-                $('#logo-preview').attr('src', e.target.result)
+                $('#logo-preview').show().attr('src', e.target.result)
             };
         }
     }

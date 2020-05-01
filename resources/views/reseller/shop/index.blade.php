@@ -24,6 +24,14 @@
                                         <th>Phone:</th>
                                         <td>{{ $shop->phone }}</td>
                                     </tr>
+                                    <tr>
+                                        <th>Address:</th>
+                                        <td>{{ $shop->address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Website:</th>
+                                        <td>{{ $shop->website }}</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

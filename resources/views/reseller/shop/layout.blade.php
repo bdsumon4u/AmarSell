@@ -124,10 +124,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <!-- <script src="https://fleetcart.envaysoft.com/themes/storefront/public/js/app.js?v=1.1.9"></script> -->
-    <script src="{{ asset('js/fleetcart.js') }}"></script>
+    <script src="https://fleetcart.envaysoft.com/themes/storefront/public/js/app.js?v=1.1.9"></script>
+    <!-- <script src="{{ asset('js/fleetcart.js') }}"></script> -->
     @yield('scripts')
 </body>
 

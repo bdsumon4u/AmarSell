@@ -43,6 +43,8 @@ class ShopController extends Controller
             'email' => 'required|email',
             'phone' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'address' => 'required',
+            'website' => 'nullable',
         ]) + [
             'reseller_id' => auth('reseller')->user()->id
         ], function($data) use ($request) {
@@ -76,41 +78,6 @@ class ShopController extends Controller
             
             $shop = Shop::create($data);
         });
-        // $data = $request->validate([
-        //     'name' => 'required|max:255',
-        //     'email' => 'required|email',
-        //     'phone' => 'required',
-        //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]) + [
-        //     'reseller_id' => auth('reseller')->user()->id
-        // ];
-
-        // $filenameWithExt = $request->file('logo')->getClientOriginalName(); 
-        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
-        // $extension = $request->file('logo')->getClientOriginalExtension(); 
-        // $fileNameToStore= $filename.time().'.'.$extension; 
-        // $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
-
-        // //This store image creates the folder and saves the file 
-        // $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
-
-        // if(! is_dir($dir = public_path('shop'))) {
-        //     mkdir($dir, 755);
-        // }
-        // $to = 'shop/' . $thumbnailpic;
-
-        // //Here is where I am trying to resize with image and it breaks
-        // Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(public_path($to));
-
-        // if(!empty($to)) {
-        //     Storage::delete(public_path($to));
-        //     unset($data['logo']);
-        //     $data += [
-        //         'logo' => $to
-        //     ];
-        // }
-        
-        // $shop = Shop::create($data);
 
         return redirect()->route('reseller.shops.index')->with('success', 'Shop Has Created Successfully.');
     }
@@ -146,41 +113,46 @@ class ShopController extends Controller
      */
     public function update(Request $request, Shop $shop)
     {
-        $data = $request->validate([
+        tap($request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'address' => 'required',
+            'website' => 'nullable',
         ]) + [
             'reseller_id' => auth('reseller')->user()->id
-        ];
+        ], function($data) use ($request, $shop) {
+            
+            if($request->hasFile('logo')) {
+                $filenameWithExt = $request->file('logo')->getClientOriginalName(); 
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
+                $extension = $request->file('logo')->getClientOriginalExtension(); 
+                $fileNameToStore= $filename.time().'.'.$extension; 
+                $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
 
-        $filenameWithExt = $request->file('logo')->getClientOriginalName(); 
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
-        $extension = $request->file('logo')->getClientOriginalExtension(); 
-        $fileNameToStore= $filename.time().'.'.$extension; 
-        $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
+                //This store image creates the folder and saves the file 
+                $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
-        //This store image creates the folder and saves the file 
-        $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
+                if(! is_dir($dir = public_path('shop'))) {
+                    mkdir($dir, 755);
+                }
+                $to = 'shop/' . $thumbnailpic;
 
-        if(! is_dir($dir = public_path('shop'))) {
-            mkdir($dir, 755);
-        }
-        $to = 'shop/' . $thumbnailpic;
+                //Here is where I am trying to resize with image and it breaks
+                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(public_path($to));
 
-        //Here is where I am trying to resize with image and it breaks
-        Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(public_path($to));
-
-        if(!empty($to)) {
-            Storage::delete(public_path($to));
-            unset($data['logo']);
-            $data += [
-                'logo' => $to
-            ];
-        }
-
-        $shop->update($data);
+                if(!empty($to)) {
+                    Storage::delete(public_path($to));
+                    unset($data['logo']);
+                    $data += [
+                        'logo' => $to
+                    ];
+                }
+            }
+            
+            $shop->update($data);
+        });
 
         return redirect()->route('reseller.shops.index')->with('success', 'Shop Has Updated Successfully.');
     }

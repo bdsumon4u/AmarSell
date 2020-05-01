@@ -67,6 +67,24 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="address">Address</label><span class="text-danger">*</span>
+                                <input type="text" name="address" value="{{ old('address', $shop->address) }}" id="address" class="form-control @error('address') is-invalid @enderror">
+                                @error('address')
+                                <strong class="invalid-feedback">{{ $message }}</strong>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="website">Website</label><span class="text-danger">*</span>
+                                <input type="text" name="website" value="{{ old('website', $shop->website ?? 'http://') }}" id="website" class="form-control @error('website') is-invalid @enderror">
+                                @error('website')
+                                <strong class="invalid-feedback">{{ $message }}</strong>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

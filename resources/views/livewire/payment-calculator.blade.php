@@ -21,9 +21,11 @@
                         <!-- <input type="text" name="method" wire:model.debounce.250ms="method" value="{{ old('method', $method) }}" class="form-control @error('method') is-invalid @enderror"> -->
                         <select name="method" wire:model.debounce.250ms="method" wire:change="chMethod" class="form-control @error('method') is-invalid @enderror">
                             <option value="">Select Method</option>    
-                            @foreach($reseller->payment as $payment)
-                            <option value="{{ $payment->method }}">{{ $payment->method }}</option>
-                            @endforeach
+                            @if($reseller->payment)
+                                @foreach($reseller->payment as $payment)
+                                <option value="{{ $payment->method }}">{{ $payment->method }}</option>
+                                @endforeach
+                            @endif
                         </select>
                         @error('method')
                         <span class="invalid-feedback">{{ $message }}</span>
