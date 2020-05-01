@@ -1,4 +1,4 @@
-@extends('reseller.shop.layout')
+@extends('reseller.products.layout')
 
 @section('styles')
 @livewireStyles

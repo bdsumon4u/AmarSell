@@ -53,7 +53,7 @@
                                         <strong>Sell:</strong> {{ $order->data['sell'] }}
                                     </td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('reseller.order.show', $order->id) }}">View</a></td>
+                                    <td><a class="btn btn-sm btn-block btn-primary" target="_blank" href="{{ route('reseller.order.show', $order->id) }}">View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

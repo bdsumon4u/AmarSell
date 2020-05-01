@@ -1,4 +1,4 @@
-@extends('reseller.shop.layout')
+@extends('reseller.products.layout')
 
 @section('styles')
 <style>
@@ -43,7 +43,7 @@
 
         <div class="row">
             <div class="col-sm-12 col-md-3">
-            @include('reseller.shop.partials.sidebar')
+            @include('reseller.products.partials.sidebar')
             </div>
             <div class="col-sm-12 col-md-9">
                 <div class="product-details-wrapper">

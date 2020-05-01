@@ -79,17 +79,17 @@
 
     <div class="main">
         <div class="wrapper">
-            @include('reseller.shop.inc.sidebar')
-            @include('reseller.shop.inc.topbar')
-            @include('reseller.shop.inc.header')
+            @include('reseller.products.inc.sidebar')
+            @include('reseller.products.inc.topbar')
+            @include('reseller.products.inc.header')
             
-            @include('reseller.shop.partials.mega-menu')
+            @include('reseller.products.partials.mega-menu')
 
             <div class="content-wrapper clearfix ">
                 <div class="container">
                     
                     @unless (request()->routeIs('home') || request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('reset') || request()->routeIs('reset.complete'))
-                        @include('reseller.shop.partials.notification')
+                        @include('reseller.products.partials.notification')
                     @endunless
 
                     @yield('content')
@@ -98,7 +98,7 @@
             </div>
 
 
-            @include('reseller.shop.inc.footer')
+            @include('reseller.products.inc.footer')
 
             <a class="scroll-top" href="#">
                 <i class="fa fa-angle-up" aria-hidden="true"></i>

@@ -29466,6 +29466,10 @@ body {
   margin-bottom: 0;
 }
 
+.SumoSelect .optWrapper {
+  margin-bottom: 5rem;
+}
+
 [type=date] {
   font-variant: small-caps;
 }

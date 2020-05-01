@@ -61,7 +61,7 @@
                                         <strong>Sell:</strong> {{ $order->data['sell'] }}
                                     </td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.order.show', $order->id) }}">View</a></td>
+                                    <td><a class="btn btn-sm btn-block btn-primary" target="_blank" href="{{ route('admin.order.show', $order->id) }}">View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -126,14 +126,14 @@
                     columns: ':visible'
                 }
             },
-            {
-                extend: 'copy',
-                className: 'btn-light',
-                text: 'Copy',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
+            // {
+            //     extend: 'copy',
+            //     className: 'btn-light',
+            //     text: 'Copy',
+            //     exportOptions: {
+            //         columns: ':visible'
+            //     }
+            // },
             {
                 extend: 'csv',
                 className: 'btn-light',
