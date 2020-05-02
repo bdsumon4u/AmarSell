@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::post('/transactions/pay/store', 'TransactionController@store')->name('transactions.pay.store');
     Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
     Route::get('/transactions/requests', 'TransactionController@requests')->name('transactions.requests');
+
+    Route::resource('images', 'ImageController');
 });
 
 Route::get('/products', 'ProductController@shop')->name('shop.index');

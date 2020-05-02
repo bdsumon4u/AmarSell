@@ -63,9 +63,9 @@ class OrderController extends Controller
         $data['price'] = $cart->getTotal();
         $products = $cart->getContent()
                         ->map(function ($item) {
-                            $arr['id'] = $item->id;
-                            $arr['quantity'] = $item->quantity;
                             $product = $item->attributes->product;
+                            $arr['id'] = $item->id;
+                            $arr['quantity'] = is_numeric($product->stock) && $product->stock < $item->quantity ? $product->stock : $item->quantity;
                             $arr['code'] = $product->code;
                             $arr['slug'] = $product->slug;
                             $arr['wholesale'] = $product->wholesale;
@@ -78,6 +78,15 @@ class OrderController extends Controller
             'reseller_id' => $user_id,
             'data' => $data,
         ]);
+
+        if($order) {
+            $cart->getContent()
+                ->map(function($item){
+                    $product = Product::findOrFail($item->attributes->product->id);
+                    $product->stock = is_numeric($product->stock) ? ($product->stock >= $item->quantity ? $product->stock - $item->quantity : 0) : $product->stock;
+                    return $product->save();
+                });
+        }
 
         return redirect()->route('shop.index')->with('success', 'Order Success. Order ID# ' . $order->id);
     }
@@ -132,9 +141,14 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         if($order->status == 'pending') {
+            foreach($order->data['products'] as $item) {
+                $product = Product::findOrFail($item['id']);
+                $product->stock = is_numeric($product->stock) ? $product->stock + $item['quantity'] : $product->stock;
+                $product->save();
+            }
             $order->delete();
-            return redirect()->back()->with('success', 'Order Cancelled.');
+            return redirect()->route('reseller.order.index')->with('success', 'Order Cancelled.');
         }
-        return redirect()->back()->with('error', "Order Can\'t be Cancelled.");
+        return redirect()->route('reseller.order.index')->with('error', "Order Can\'t be Cancelled.");
     }
 }

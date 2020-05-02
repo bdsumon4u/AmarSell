@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('code')->unique();
+            $table->integer('stock')->nullable();
             $table->text('description')->nullable();
             $table->integer('wholesale');
             $table->integer('retail');

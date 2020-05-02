@@ -17,7 +17,7 @@
         width: 60px;
     }
     .price-box .right strong {
-        width: 80px;
+        width: 90px;
         display: inline-block;
         font-variant: small-caps;
         font-size: 16px;
@@ -52,68 +52,32 @@
                             <div class="product-image">
                                 <div class="base-image">
                                     <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/WqFQAxS9QIf4pRVDcMRqRgR6GUTbuaQD0Zj1736H.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/WqFQAxS9QIf4pRVDcMRqRgR6GUTbuaQD0Zj1736H.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
+                                        href="{{ $product->base_image }}">
+                                        <img src="{{ $product->base_image }}"
+                                            alt="Base Image">
                                         <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
                                     </a>
+                                    @foreach($product->additional_images as $path)
                                     <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
+                                        href="{{ $path }}">
+                                        <img src="{{ $path }}"
+                                            alt="Additional Image">
                                         <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
                                     </a>
-                                    <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                        <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/44cIVlsBGSil719QwRuSpHJsAvvgtP03HyBfAbPv.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/44cIVlsBGSil719QwRuSpHJsAvvgtP03HyBfAbPv.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                        <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                        <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
-                                    </a>
-                                    <a class="base-image-inner"
-                                        href="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                        <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
-                                    </a>
+                                    @endforeach
                                 </div>
 
                                 <div class="additional-image">
                                     <div class="thumb-image slick-slide slick-current slick-active">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/WqFQAxS9QIf4pRVDcMRqRgR6GUTbuaQD0Zj1736H.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
+                                        <img src="{{ $product->base_image }}"
+                                            alt="Base Image">
                                     </div>
+                                    @foreach($product->additional_images as $path)
                                     <div class="thumb-image">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
+                                        <img src="{{ $path }}"
+                                            alt="Additional Image">
                                     </div>
-                                    <div class="thumb-image">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                    </div>
-                                    <div class="thumb-image">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/44cIVlsBGSil719QwRuSpHJsAvvgtP03HyBfAbPv.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                    </div>
-                                    <div class="thumb-image">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/9VwstoeMcPqKFcI3rHjy4zMTpL5ZHNRFNJMcT2av.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                    </div>
-                                    <div class="thumb-image">
-                                        <img src="https://fleetcart.envaysoft.com/storage/media/mBVIO9T8Y0kwcTqsKwpnAnW86FnTT8PcXc7ElhBV.jpeg"
-                                            alt="Eastpak Unisex Provider Backpack - Navy">
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -146,7 +110,7 @@
                                 <div class="pull-left">
                                     <label>Availability:</label>
 
-                                    <span class="in-stock">In Stock</span>
+                                    <span class="in-stock">{!! $product->availability !!}</span>
                                 </div>
 
                                 <div class="clearfix"><br></div>
@@ -158,7 +122,7 @@
 
                                         <div class="input-group-quantity pull-left clearfix">
                                             <input type="text" name="qty" value="1"
-                                                class="input-number input-quantity pull-left" id="qty" min="1" max="">
+                                                class="input-number input-quantity pull-left" id="qty" min="1" max="{{ $product->stock }}">
 
                                             <span class="pull-left btn-wrapper">
                                                 <button type="button" class="btn btn-number btn-plus" data-type="plus"> +

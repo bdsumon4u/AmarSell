@@ -35,10 +35,11 @@ class LiveCart extends Component
 
     public function increment($id)
     {
-        CartFacade::session($this->user_id)->update($id, [
+        $cart = CartFacade::session($this->user_id);
+        $cart->update($id, [
             'quantity' => 1
         ]);
-        $this->cart[$id]['quantity'] = $this->cart[$id]['quantity'] + 1;
+        $this->cart = $cart->getContent()->toArray();
         
         $this->sell = $this->retail();
         $this->theMoney();
@@ -46,12 +47,11 @@ class LiveCart extends Component
 
     public function decrement($id)
     {
-        CartFacade::session($this->user_id)->update($id, [
+        $cart = CartFacade::session($this->user_id);
+        $cart->update($id, [
             'quantity' => -1
         ]);
-        $this->cart[$id]['quantity'] = $this->cart[$id]['quantity'] - 1 > 0
-                                            ? $this->cart[$id]['quantity'] - 1
-                                            : 1;
+        $this->cart = $cart->getContent()->toArray();
         
         $this->sell = $this->retail();
         $this->theMoney();

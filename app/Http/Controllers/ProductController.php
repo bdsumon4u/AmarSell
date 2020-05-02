@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
-use Illuminate\Http\Request;
+use App\Helpers\Traits\ImageHelper;
+use App\Image;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ImageHelper;
+
     /**
      * Display a listing of the resource.
      *
@@ -51,18 +55,48 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255',
+            'stock' => 'required_if:should_track,1',
             'description' => 'required',
             'categories' => 'required|array',
             'categories.*' => 'required|integer',
             'wholesale' => 'required|integer',
             'retail' => 'required|integer',
+
+            'base_image' => 'required|image',
+            'additional_images' => 'nullable|array',
+            'additional_images.*' => 'nullable|image',
+        ], [
+            'stock.required_if' => 'Stock count is required when inventory tracking is enabled.',
+            'additional_images.*.image' => 'All items of additional_images must be image.'
         ]);
         $data['code'] = $this->code();
-
         $product = Product::create($data);
 
+        $file = $data['base_image'];
+        $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);            
+        $image = Image::create([
+            'disk' => config('filesystems.default'),
+            'filename' => $file->getClientOriginalName(),
+            'path' => $path,
+            'extension' => $file->guessClientExtension() ?? '',
+            'mime' => $file->getClientMimeType(),
+            'size' => $file->getSize(),
+        ]);
+        $product->images()->save($image, ['zone' => 'base']);
+        foreach($data['additional_images'] as $file) {
+            $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);
+            $image = Image::create([
+                'disk' => config('filesystems.default'),
+                'filename' => $file->getClientOriginalName(),
+                'path' => $path,
+                'extension' => $file->guessClientExtension() ?? '',
+                'mime' => $file->getClientMimeType(),
+                'size' => $file->getSize(),
+            ]);
+            $product->images()->save($image, ['zone' => 'additionals']);
+        }
         $product->categories()->sync($data['categories']);
-
+        
         return redirect()->route('admin.products.index')->with('success', 'Product Uploaded');
     }
 

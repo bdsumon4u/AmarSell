@@ -35,7 +35,7 @@
                                             </ul>
 
                                             <div class="image-holder">
-                                                <img src="https://fleetcart.envaysoft.com/storage/media/ieaRDnJgWqOBvGNrcUoRWBcsqXtBrpWIckKo7sWl.jpeg"
+                                                <img src="{{ $product->base_image }}"
                                                     alt="{{ $product->name }}">
                                             </div>
                                         </div>

@@ -18,8 +18,8 @@
                         <div class="pull-left" style="margin: 10px;">
                             <label><strong class="badge badge-secondary">Price:</strong></label>
                             <ul class="list-unstyled">
-                                <li><strong class="text-info">Wholesale:</strong> <span>{{ theMoney($cartItem['price']) }}</span></li>
-                                <li><strong class="text-primary">Retail:</strong> <span>{{ theMoney($product['retail']) }}</span></li>
+                                <li><strong class="text-info" style="width: 110px; float: left;">WHOLESALE</strong> :&nbsp;<span>{{ theMoney($cartItem['price']) }}</span></li>
+                                <li><strong class="text-primary" style="width: 110px; float: left;">RETAIL</strong> :&nbsp;<span>{{ theMoney($product['retail']) }}</span></li>
                             </ul>
                         </div>
                         <div class="pull-left" style="margin: 10px;">
@@ -27,10 +27,10 @@
                             <br>
                             <div class="quantity pull-left clearfix">
                                 <div class="input-group-quantity pull-left clearfix">
-                                    <input type="text" name="qty" value="{{ $cartItem['quantity'] }}" class="input-number input-quantity pull-left {{ "qty-{$loop->index}"  }}" min="1" max="{{ isset($product['manage_stock']) && !is_null($product['manage_stock']) && isset($product['qty']) ? $product['qty'] : '' }}">
+                                    <input type="text" name="qty" value="{{ $cartItem['quantity'] }}" class="input-number input-quantity pull-left" min="1" max="{{ $product->stock }}">
 
                                     <span class="pull-left btn-wrapper">
-                                        <button type="button" class="btn btn-number btn-plus" datatype="plus" wire:click="increment({{ $cartItem['id'] }})"> + </button>
+                                        <button type="button" class="btn btn-number btn-plus" datatype="plus" wire:click="increment({{ $cartItem['id'] }})" {{ !is_null($product->stock) && $cartItem['quantity'] >= $product->stock ? 'disabled' : '' }}> + </button>
                                         <button type="button" class="btn btn-number btn-minus" datatype="minus" wire:click="decrement({{ $cartItem['id'] }})" {{ $cartItem['quantity'] === 1 ? 'disabled' : '' }}> &#8211; </button>
                                     </span>
                                 </div>
