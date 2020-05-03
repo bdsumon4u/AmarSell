@@ -7,7 +7,7 @@
                 <span class="bottom-bar icon-bar"></span>
             </button>
 
-            <a href="{{ route('shop.index') }}" class="website-logo pull-left">
+            <a href="{{ route('reseller.product.index') }}" class="website-logo pull-left">
                 <img src="https://fleetcart.envaysoft.com/storage/media/r7LLPDONYuawTltrLmtMkEio9JwnK6Cxk3Ggimfr.png"
                     alt="header-logo">
             </a>

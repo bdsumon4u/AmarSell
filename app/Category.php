@@ -18,6 +18,10 @@ class Category extends Model
         'parent_id', 'name', 'slug',
     ];
 
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
     /**
      * Products
      */

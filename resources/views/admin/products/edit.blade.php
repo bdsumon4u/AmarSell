@@ -29,7 +29,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header py-2">Add New <strong>Product</strong></div>
+            <div class="card-header py-2">Edit <strong>Product</strong></div>
             <div class="card-body p-2">
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-md-4 col-xl-3">
@@ -43,9 +43,10 @@
                     <div class="col-sm-6 col-md-8 col-xl-9">
                         <div class="row">
                             <div class="col">
-                                <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('admin.products.update', $product->id) }}" method="post" enctype="multipart/form-data">
                                     <div class="tab-content">
                                         @csrf
+                                        @method("PATCH")
                                         <div class="tab-pane active" id="item-1" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -56,32 +57,34 @@
                                                 'src' => [
                                                     'label' => 'Product Name',
                                                     'name' => 'name',
-                                                    'id' => 'name'
+                                                    'id' => 'name',
+                                                    'default' => $product->name,
                                                 ],
                                                 'emt' => [
                                                     'label' => 'SLUG',
                                                     'name' => 'slug',
                                                     'id' => 'slug',
+                                                    'default' => $product->slug,
                                                 ]
                                             ])
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="description">Description</label><span class="text-danger">*</span>
-                                                        <textarea name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                                                        <textarea name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
                                                         {!! $errors->first('description', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="categories" class="@error('categories') is-invalid @enderror">Categories</label><span class="text-danger">*</span>
-                                                        <x-category-dropdown :categories="$categories" name="categories[]" placeholder="Select Category" id="categories" multiple="true" />
+                                                        <x-category-dropdown :categories="$categories" :selected="$product->categories->pluck('id')->toArray()" name="categories[]" placeholder="Select Category" id="categories" multiple="true" />
                                                         {!! $errors->first('categories', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
-                                                    <button type="submit" class="btn btn-success">Save Product</button>
+                                                    <button type="submit" class="btn btn-success">Update Product</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,20 +97,20 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="wholesale">Wholesale Price</label><span class="text-danger">*</span>
-                                                        <input type="text" name="wholesale" value="{{ old('wholesale') }}" id="wholesale" class="form-control @error('wholesale') is-invalid @enderror">
+                                                        <input type="text" name="wholesale" value="{{ old('wholesale', $product->wholesale) }}" id="wholesale" class="form-control @error('wholesale') is-invalid @enderror">
                                                         {!! $errors->first('wholesale', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="retail">Retail Price</label><span class="text-danger">*</span>
-                                                        <input type="text" name="retail" id="retail" value="{{ old('retail') }}" class="form-control @error('retail') is-invalid @enderror">
+                                                        <input type="text" name="retail" id="retail" value="{{ old('retail', $product->retail) }}" class="form-control @error('retail') is-invalid @enderror">
                                                         {!! $errors->first('retail', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
-                                                    <button type="submit" class="btn btn-success">Save Product</button>
+                                                    <button type="submit" class="btn btn-success">Update Product</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,7 +123,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" name="should_track" value="1" @if(old('should_track')) checked @endif id="should-track" class="custom-control-input">
+                                                            <input type="checkbox" name="should_track" value="1" @if(old('should_track', is_numeric($product->stock))) checked @endif id="should-track" class="custom-control-input">
                                                             <label for="should-track" class="custom-control-label @error('stock') is-invalid @enderror">Track</label>
                                                             @error('stock')
                                                             <span class="invalid-feedback">{{ $message }}</span>
@@ -129,14 +132,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <div class="form-group stock-count" @if(!old('should_track', 0)) style="display: none;" @endif>
+                                                    <div class="form-group stock-count" @if(!old('should_track', is_numeric($product->stock))) style="display: none;" @endif>
                                                         <label for="stock">Stock Count</label>
-                                                        <input type="text" name="stock" value="{{ old('stock') }}" id="stock" class="form-control">
+                                                        <input type="text" name="stock" value="{{ old('stock', $product->stock) }}" id="stock" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
-                                                    <button type="submit" class="btn btn-success">Save Product</button>
+                                                    <button type="submit" class="btn btn-success">Update Product</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,7 +175,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group mb-0">
-                                                    <button type="submit" class="btn btn-success">Save Product</button>
+                                                    <button type="submit" class="btn btn-success">Update Product</button>
                                                     </div>
                                                 </div>
                                             </div>

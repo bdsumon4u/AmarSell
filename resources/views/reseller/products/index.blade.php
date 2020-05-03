@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="grid-products separator">
                                 @foreach($products as $product)
-                                <a href="{{ route('shop.product.show', $product->slug) }}"
+                                <a href="{{ route('reseller.product.show', $product->slug) }}"
                                     class="product-card">
                                     <div class="product-card-inner">
                                         <div class="product-image clearfix">

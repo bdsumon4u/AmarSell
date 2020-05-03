@@ -1,51 +1,15 @@
-@extends('reseller.products.layout')
-
-@section('styles')
-<style>
-    .price-box {
-        width: 240px;
-        display: flex;
-        align-items: center;
-        border: 3px double #ddd;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-    .price-box .left {
-        padding: 10px;
-        border-right: 3px double #ddd;
-        margin-right: 10px;
-        width: 60px;
-    }
-    .price-box .right strong {
-        width: 90px;
-        display: inline-block;
-        font-variant: small-caps;
-        font-size: 16px;
-    }
-    .price-box .right strong + span {
-        margin-left: 2px;
-    }
-</style>
-@endsection
+@extends('layouts.ready')
 
 @section('content')
-<div class="content-wrapper clearfix ">
-    <div class="container">
-        <div class="breadcrumb">
-            <ul class="list-inline">
-                <li><a href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-
-                <li><a href="{{ route('reseller.product.index') }}">Shop</a></li>
-                <li class="active">{{ $product->name }}</li>
-            </ul>
-        </div>
-
-
-        <div class="row">
-            <div class="col-sm-12 col-md-3">
-            @include('reseller.products.partials.sidebar')
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card rounded-0 shadow-sm">
+            <div class="card-header">Product: <strong>{{ $product->name }}</strong>
+                <div class="card-header-actions">
+                    <a href="{{ route('admin.products.edit', $product->id) }}" class="card-header-action btn btn-sm btn-primary text-light">Edit</a>
+                </div>
             </div>
-            <div class="col-sm-12 col-md-9">
+            <div class="card-body">
                 <div class="product-details-wrapper">
                     <div class="row">
                         <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7">
@@ -114,48 +78,19 @@
                                 </div>
 
                                 <div class="clearfix"><br></div>
-
-                                <form method="POST" action="{{ route('cart.add', $product->id) }}" class="clearfix">
-                                    @csrf
-                                    <div class="quantity pull-left clearfix">
-                                        <label class="pull-left" for="qty">Qty</label>
-
-                                        <div class="input-group-quantity pull-left clearfix">
-                                            <input type="text" name="qty" value="1"
-                                                class="input-number input-quantity pull-left" id="qty" min="1" max="{{ $product->stock }}">
-
-                                            <span class="pull-left btn-wrapper">
-                                                <button type="button" class="btn btn-number btn-plus" data-type="plus"> +
-                                                </button>
-                                                <button type="button" class="btn btn-number btn-minus" data-type="minus"
-                                                    disabled=""> – </button>
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="add-to-cart btn btn-primary pull-left" data-loading="">
-                                        Add to cart
-                                    </button>
-                                </form>
+                                <h6>Categories:</h6>
+                                <div class="categories">
+                                    <ul class="mb-0">
+                                        @foreach($product->categories as $category)
+                                        <li>{{ $category->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tab product-tab clearfix">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#description">Description</a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div id="description" class="description tab-pane fade in active">
-                            {!! nl2br($product->description) !!}
+                        <div class="col-sm-12">
+                            <h3 class="mt-3">Description</h3>
+                            <div class="description">{!! $product->description !!}</div>
                         </div>
                     </div>
                 </div>

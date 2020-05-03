@@ -24,7 +24,7 @@ class SidebarComposer
             'icon' => 'fa fa-tachometer',
             'style' => 'simple',
             'name' => 'Products',
-            'route' => 'shop.index',
+            'route' => 'reseller.product.index',
         ],
         [
             'style' => 'title',

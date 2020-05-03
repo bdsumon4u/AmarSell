@@ -22,7 +22,7 @@
                                 <img class="card-img-top p-2" src="{{ $product->base_image }}" alt="Base Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-primary">Details</a>
                                 </div>
                             </div>
                         </div>

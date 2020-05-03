@@ -60,8 +60,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('images', 'ImageController');
 });
 
-Route::get('/products', 'ProductController@shop')->name('shop.index');
-Route::get('/product/{product:slug}', 'ProductController@show')->name('shop.product.show');
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');
@@ -69,13 +67,17 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
     Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
-
+    
 });
 
 
 
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
+    Route::get('/products', 'ProductController@index')->name('product.index');
+    Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
+
+
     Route::get('/orders', 'OrderController@index')->name('order.index');
     Route::post('/order/store', 'OrderController@store')->name('order.store');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');

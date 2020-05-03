@@ -28,7 +28,7 @@
                             </div>
 
                             <div class="mini-cart-details clearfix">
-                                <a class="product-name" href="{{ route('shop.product.show', $product->slug) }}">
+                                <a class="product-name" href="{{ route('reseller.product.show', $product->slug) }}">
                                     {{ $cartItem->name }}
                                 </a>
 
