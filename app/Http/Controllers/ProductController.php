@@ -117,6 +117,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255',
+            'should_track' => 'sometimes',
             'stock' => 'required_if:should_track,1',
             'description' => 'required',
             'categories' => 'required|array',
@@ -129,6 +130,7 @@ class ProductController extends Controller
         ], [
             'stock.required_if' => 'Stock count is required when inventory tracking is enabled.',
         ]);
+        $data['stock'] = ($data['should_track'] ?? 0) == 1 ? $data['stock'] : NULL;
         $product->update($data);
 
         $images = [ $data['base_image'] => ['zone' => 'base'] ];

@@ -155,7 +155,7 @@
 
                     <div class="tab-content">
                         <div id="description" class="description tab-pane fade in active">
-                            {!! nl2br($product->description) !!}
+                            {!! $product->description !!}
                         </div>
                     </div>
                 </div>

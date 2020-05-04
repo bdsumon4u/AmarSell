@@ -43,7 +43,7 @@
         "slimscroll": "^0.9.1",
         "summernote": "^0.8.12",
         "sumoselect": "^3.0.5",
-        "tinymce": "^5.1.5"
+        "tinymce": "^5.2.2"
     },
     "devDependencies": {
         "axios": "^0.19",

@@ -51,7 +51,7 @@ class ImageController extends Controller
         
         $file = $request->file('file');
         // $path = Storage::putFile('media', $file);
-        $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 150, 'width' => 150]);
+        $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);
 
         Image::create([
             'disk' => config('filesystems.default'),

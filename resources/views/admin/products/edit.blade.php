@@ -24,6 +24,11 @@
     }
 </style>
 <style>
+    .dropzone {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .previewer {
         display: inline-block;
         position: relative;
@@ -32,7 +37,7 @@
     }
     .previewer i {
         position: absolute;
-        top: .5rem;
+        top: 0;
         color: red;
         right: 0;
         background: #ddd;
@@ -102,7 +107,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="description">Description</label><span class="text-danger">*</span>
-                                                        <textarea name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
+                                                        <textarea editor name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
                                                         {!! $errors->first('description', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
@@ -190,7 +195,7 @@
                                                                     <i class="fa fa-image fa-4x text-primary"></i>
                                                                 </button>
                                                                 
-                                                                <img src="{{ $product->base_image }}" alt="Base Image" id="base_image-preview" class="mt-2 img-thumbnail img-responsive" style="height: 150px; width: 150px; cursor: pointer;">
+                                                                <img src="{{ $product->base_image }}" alt="Base Image" id="base_image-preview" class="img-thumbnail img-responsive" style="height: 150px; width: 150px; cursor: pointer;">
                                                                 
                                                                 <input type="hidden" name="base_image" value="{{ old('base_image', $product->baseImage()->id) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
@@ -207,7 +212,7 @@
 
                                                                 @foreach($product->additional_images as $additional_image)
                                                                 <div class="previewer">
-                                                                    <img src="{{ $additional_image->path }}" alt="Additional Image" id="additional_images-preview-{{ $additional_image->id }}" class="mt-2 img-thumbnail img-responsive" style="height: 150px; width: 150px;">
+                                                                    <img src="{{ $additional_image->path }}" alt="Additional Image" id="additional_images-preview-{{ $additional_image->id }}" class="img-thumbnail img-responsive" style="height: 150px; width: 150px;">
                                                                     <i data-remove="{{ $additional_image->id }}" class="fa fa-close"></i>
                                                                 </div>
                                                                 @endforeach
@@ -264,7 +269,7 @@
                         <table class="table table-bordered table-striped table-hover datatable w-100" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <!-- <th></th> -->
                                     <th width="5">ID</th>
                                     <th width="150">Preview</th>
                                     <th>Filename</th>
@@ -319,19 +324,19 @@
             } else {
                 var theID = $(this).parents('tr').data('entry-id');
                 if(jQuery.inArray(theID, IDs) != -1) {
-                    IDs.splice(IDs.indexOf(theID),1);
+                    // IDs.splice(IDs.indexOf(theID),1);
                 } else {
                     src = $(this).parents('tr').find('.img-preview').attr('src');
-                    btn.after('<div class="previewer"><img src="'+src+'" alt="Additional Image" id="additional_images-preview-'+theID+'" class="mt-2 img-thumbnail img-responsive" style="height: 150px; width: 150px;"><i data-remove="'+theID+'" class="fa fa-close"></i></div>')
+                    btn.after('<div class="previewer"><img src="'+src+'" alt="Additional Image" id="additional_images-preview-'+theID+'" class="img-thumbnail img-responsive" style="height: 150px; width: 150px;"><i data-remove="'+theID+'" class="fa fa-close"></i></div>')
                     IDs.push(theID);
                 }
-                console.log('IDs', IDs)
+                // console.log('IDs', IDs)
                 $('[name="additional_images"]').val(IDs.join(','));
             }
         })
         $('#select-images-modal').on('hidden.bs.modal', function(e) {
             var btn = $('[data-target="#select-images-modal"][opened="true"]');
-            console.log('closing');
+            // console.log('closing');
             btn.removeAttr('opened');
         })
         $(document).on('click', 'i[data-remove]', function(){
@@ -339,41 +344,43 @@
             IDs.splice(IDs.indexOf(theID),1);
             // console.log(IDs);
             $('[name="additional_images"]').val(IDs.join(','));
-            $(this).parents('.previewer').remove();
+            $(this).parents('.previewer').fadeOut(300, function(){
+                $(this).remove();
+            });
         })
 
 
 
-        $('[name="base_image"]').change(function(e){
-            renderBaseImage(this);
-        });
-        $('[name="additional_images[]"]').change(function(e){
-            renderAdditionalImages(this);
-        });
+        // $('[name="base_image"]').change(function(e){
+        //     renderBaseImage(this);
+        // });
+        // $('[name="additional_images[]"]').change(function(e){
+        //     renderAdditionalImages(this);
+        // });
 
-        function renderBaseImage(input) {
-            if(input.files.length) {
-                var reader = new FileReader;
-                reader.readAsDataURL(input.files[0]);
-                reader.onload = function(e) {
-                    $('#base_image-preview').css('display', 'inline-block').attr('src', e.target.result);
-                }
-            }
-        }
+        // function renderBaseImage(input) {
+        //     if(input.files.length) {
+        //         var reader = new FileReader;
+        //         reader.readAsDataURL(input.files[0]);
+        //         reader.onload = function(e) {
+        //             $('#base_image-preview').css('display', 'inline-block').attr('src', e.target.result);
+        //         }
+        //     }
+        // }
 
-        function renderAdditionalImages(input) {
-            if(input.files.length) {
-                $.each(input.files, function (index, value) {
-                    var reader = new FileReader;
-                    reader.readAsDataURL(value);
-                    reader.onload = function(e) {
-                        $('[name="additional_images[]"]').after(`
-                            <img src="`+e.target.result+`" alt="Additional Image" id="additional_images-preview-`+index+`" class="mt-2 img-thumbnail img-responsive d-inline-block" style="height: 150px; width: 150px;">
-                        `);
-                    }
-                })
-            }
-        }
+        // function renderAdditionalImages(input) {
+        //     if(input.files.length) {
+        //         $.each(input.files, function (index, value) {
+        //             var reader = new FileReader;
+        //             reader.readAsDataURL(value);
+        //             reader.onload = function(e) {
+        //                 $('[name="additional_images[]"]').after(`
+        //                     <img src="`+e.target.result+`" alt="Additional Image" id="additional_images-preview-`+index+`" class="mt-2 img-thumbnail img-responsive d-inline-block" style="height: 150px; width: 150px;">
+        //                 `);
+        //             }
+        //         })
+        //     }
+        // }
 
         $('#should-track').change(function() {
             if($(this).is(':checked')) {
@@ -396,91 +403,91 @@
             },
         },
         columnDefs: [
-            {
-                orderable: false,
-                className: 'select-checkbox',
-                searchable: false,
-                targets: 0,
-            },
+            // {
+            //     orderable: false,
+            //     className: 'select-checkbox',
+            //     searchable: false,
+            //     targets: 0,
+            // },
             {
                 orderable: false,
                 searchable: false,
                 targets: -1
             },
         ],
-        select: {
-            style:    'multi+shift',
-            selector: 'td:first-child'
-        },
+        // select: {
+        //     style:    'multi+shift',
+        //     selector: 'td:first-child'
+        // },
         order: [],
         scrollX: true,
         pagingType: 'numbers',
         pageLength: 10,
         dom: 'lBfrtip<"actions">',
-        buttons: [
-            {
-                extend: 'selectAll',
-                className: 'btn-primary',
-                text: 'Select All',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'selectNone',
-                className: 'btn-primary',
-                text: 'Deselect All',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-        ],
+        // buttons: [
+        //     {
+        //         extend: 'selectAll',
+        //         className: 'btn-primary',
+        //         text: 'Select All',
+        //         exportOptions: {
+        //             columns: ':visible'
+        //         }
+        //     },
+        //     {
+        //         extend: 'selectNone',
+        //         className: 'btn-primary',
+        //         text: 'Deselect All',
+        //         exportOptions: {
+        //             columns: ':visible'
+        //         }
+        //     },
+        // ],
     });
-    var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
-    var delete_button = {
-        text: 'Bulk Delete',
-        url: "{{ route('api.images.destroy') }}",
-        className: 'btn-danger',
-        action: function(e, dt, node, config) {
-            var IDs = $.map(dt.rows({
-                selected: true
-            }).nodes(), function(entry) {
-                return $(entry).data('entry-id')
-            });
+    // var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+    // var delete_button = {
+    //     text: 'Bulk Delete',
+    //     url: "{{ route('api.images.destroy') }}",
+    //     className: 'btn-danger',
+    //     action: function(e, dt, node, config) {
+    //         var IDs = $.map(dt.rows({
+    //             selected: true
+    //         }).nodes(), function(entry) {
+    //             return $(entry).data('entry-id')
+    //         });
 
-            if (IDs.length === 0) {
-                alert('Select Rows First.')
+    //         if (IDs.length === 0) {
+    //             alert('Select Rows First.')
 
-                return;
-            }
+    //             return;
+    //         }
 
-            if (confirm('Are You Sure To Delete?')) {
-                $.ajax({
-                    headers: {
-                        'x-csrf-token': "{{ csrf_token() }}"
-                    },
-                    method: 'POST',
-                    url: config.url,
-                    data: {
-                        IDs: IDs,
-                        _method: 'DELETE'
-                    }
-                })
-                .done(function() {
-                    $('.datatable').DataTable().ajax.reload();
-                })
-            }
-        }
-    }
-    dt_buttons.push(delete_button)
+    //         if (confirm('Are You Sure To Delete?')) {
+    //             $.ajax({
+    //                 headers: {
+    //                     'x-csrf-token': "{{ csrf_token() }}"
+    //                 },
+    //                 method: 'POST',
+    //                 url: config.url,
+    //                 data: {
+    //                     IDs: IDs,
+    //                     _method: 'DELETE'
+    //                 }
+    //             })
+    //             .done(function() {
+    //                 $('.datatable').DataTable().ajax.reload();
+    //             })
+    //         }
+    //     }
+    // }
+    // dt_buttons.push(delete_button)
 
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{!! route('api.images.index') !!}",
-        buttons: dt_buttons,
+        // buttons: dt_buttons,
         columns: [
-            { data: 'empty', name: 'empty' },
+            // { data: 'empty', name: 'empty' },
             { data: 'id', name: 'id' },
             { data: 'preview', name: 'preview' },
             { data: 'filename', name: 'filename' },
@@ -489,7 +496,7 @@
             { data: 'action', name: 'action' },
         ],
         order: [
-            [1, 'desc']
+            [0, 'desc']
         ],
     })
 </script>
