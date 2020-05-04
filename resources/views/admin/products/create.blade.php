@@ -23,6 +23,37 @@
         display: block;
     }
 </style>
+<style>
+    .previewer {
+        display: inline-block;
+        position: relative;
+        margin-left: 3px;
+        margin-right: 7px;
+    }
+    .previewer i {
+        position: absolute;
+        top: .5rem;
+        color: red;
+        right: 0;
+        background: #ddd;
+        padding: 2px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .dataTables_scrollHeadInner {
+        width: 100% !important;
+    }
+    th,
+    td {
+        vertical-align: middle !important;
+    }
+    table.dataTable tbody td.select-checkbox:before,
+    table.dataTable tbody td.select-checkbox:after,
+    table.dataTable tbody th.select-checkbox:before,
+    table.dataTable tbody th.select-checkbox:after {
+        top: 50%;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -150,9 +181,15 @@
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="base_image" class="d-block mb-2"><strong>Base Image</strong></label>
-                                                                <input type="file" name="base_image" class="@error('base_image') is-invalid @enderror" id="base_image">
-                                                                <img src="" alt="Base Image" id="base_image-preview" class="mt-2 img-thumbnail img-responsive" style="display: none; height: 150px; width: 150px;">
+                                                                <!-- Button to Open the Modal -->
+                                                                <label for="base_image" class="d-block"><strong>Base Image</strong></label>
+                                                                <button type="button" class="btn single btn-primary" data-toggle="modal" data-target="#select-images-modal" style="height: 150px; width: 150px; background: transparent;">
+                                                                    <i class="fa fa-image fa-4x text-primary"></i>
+                                                                </button>
+                                                                
+                                                                <img src="" alt="Base Image" id="base_image-preview" class="mt-2 img-thumbnail img-responsive" style="display: none; height: 150px; width: 150px; cursor: pointer;">
+                                                                
+                                                                <input type="hidden" name="base_image" value="{{ old('base_image') }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
@@ -160,12 +197,14 @@
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="additional_images" class="d-block mb-2"><strong>Additional Images</strong></label>
-                                                                <input type="file" name="additional_images[]" class="@if($errors->has('additional_images') || $errors->has('additional_images.*')) is-invalid @endif"  id="additional_images" multiple>
+                                                                <label for="additional_images" class="d-block"><strong>Additional Images</strong></label>
+                                                                <button type="button" class="btn multiple btn-primary" data-toggle="modal" data-target="#select-images-modal" style="height: 150px; width: 150px; background: transparent;">
+                                                                    <i class="fa fa-image fa-4x text-primary"></i>
+                                                                </button>
+
+                                                                <input type="hidden" name="additional_images" value="{{ old('additional_images') }}" class="@error('additional_images') is-invalid @enderror" id="additional-images" class="form-control">
+
                                                                 @error('additional_images')
-                                                                    <span class="invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                                @error('additional_images.*')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
@@ -187,12 +226,115 @@
         </div>
     </div>
 </div>
+
+<!-- The Modal -->
+<div class="modal" id="select-images-modal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Image Picker</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="card rounded-0">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.images.store') }}" id="drop-imgs" class="dropzone" enctype="multipart/form-data">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+            <div class="card rounded-0">
+                <div class="card-body">
+                    <div class="table-responive">
+                        <table class="table table-bordered table-striped table-hover datatable w-100" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th width="5">ID</th>
+                                    <th width="150">Preview</th>
+                                    <th>Filename</th>
+                                    <th>Mime</th>
+                                    <th>Size</th>
+                                    <th width="10">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
 @livewireScripts
 <script>
     $(document).ready(function(){
+
+        $('#base_image-preview').click(function(){
+            $(this).parent().find('[data-target="#select-images-modal"]').click();
+        })
+        var ID;
+        var IDs = [];
+        $('[data-target="#select-images-modal"]').click(function(){
+            $(this).attr('opened', 'true');
+        })
+        $(document).on('click', '#select-images-modal .select-item', function(e){
+            e.preventDefault();
+            var btn = $('[data-target="#select-images-modal"][opened="true"]');
+            if(btn.hasClass('single')) {
+                ID = $(this).parents('tr').data('entry-id');
+                // console.log('ID', ID)
+                $('[name="base_image"]').val(ID);
+                $(this).parents('#select-images-modal').modal('hide');
+                btn.hide();
+
+                src = $(this).parents('tr').find('.img-preview').attr('src');
+                $('#base_image-preview').show().attr('src', src);
+            } else {
+                var theID = $(this).parents('tr').data('entry-id');
+                if(jQuery.inArray(theID, IDs) != -1) {
+                    IDs.splice(IDs.indexOf(theID),1);
+                } else {
+                    src = $(this).parents('tr').find('.img-preview').attr('src');
+                    btn.after('<div class="previewer"><img src="'+src+'" alt="Additional Image" id="additional_images-preview-'+theID+'" class="mt-2 img-thumbnail img-responsive" style="height: 150px; width: 150px;"><i data-remove="'+theID+'" class="fa fa-close"></i></div>')
+                    IDs.push(theID);
+                }
+                console.log('IDs', IDs)
+                $('[name="additional_images"]').val(IDs.join(','));
+            }
+        })
+        $('#select-images-modal').on('hidden.bs.modal', function(e) {
+            var btn = $('[data-target="#select-images-modal"][opened="true"]');
+            console.log('closing');
+            btn.removeAttr('opened');
+        })
+        $(document).on('click', 'i[data-remove]', function(){
+            var theID = $(this).data('remove');
+            IDs.splice(IDs.indexOf(theID),1);
+            // console.log(IDs);
+            $('[name="additional_images"]').val(IDs.join(','));
+            $(this).parents('.previewer').remove();
+        })
+
+
+
         $('[name="base_image"]').change(function(e){
             renderBaseImage(this);
         });
@@ -232,5 +374,114 @@
             }
         });
     });
+</script>
+<script>
+    $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn btn-sm' });
+    $.extend(true, $.fn.dataTable.defaults, {
+        language: {
+            paginate: {
+                previous: '<i class="fa fa-angle-left"></i>',
+                first: '<i class="fa fa-angle-double-left"></i>',
+                last: '<i class="fa fa-angle-double-right"></i>',
+                next: '<i class="fa fa-angle-right"></i>',
+            },
+        },
+        columnDefs: [
+            {
+                orderable: false,
+                className: 'select-checkbox',
+                searchable: false,
+                targets: 0,
+            },
+            {
+                orderable: false,
+                searchable: false,
+                targets: -1
+            },
+        ],
+        select: {
+            style:    'multi+shift',
+            selector: 'td:first-child'
+        },
+        order: [],
+        scrollX: true,
+        pagingType: 'numbers',
+        pageLength: 10,
+        dom: 'lBfrtip<"actions">',
+        buttons: [
+            {
+                extend: 'selectAll',
+                className: 'btn-primary',
+                text: 'Select All',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'selectNone',
+                className: 'btn-primary',
+                text: 'Deselect All',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+        ],
+    });
+    var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+    var delete_button = {
+        text: 'Bulk Delete',
+        url: "{{ route('api.images.destroy') }}",
+        className: 'btn-danger',
+        action: function(e, dt, node, config) {
+            var IDs = $.map(dt.rows({
+                selected: true
+            }).nodes(), function(entry) {
+                return $(entry).data('entry-id')
+            });
+
+            if (IDs.length === 0) {
+                alert('Select Rows First.')
+
+                return;
+            }
+
+            if (confirm('Are You Sure To Delete?')) {
+                $.ajax({
+                    headers: {
+                        'x-csrf-token': "{{ csrf_token() }}"
+                    },
+                    method: 'POST',
+                    url: config.url,
+                    data: {
+                        IDs: IDs,
+                        _method: 'DELETE'
+                    }
+                })
+                .done(function() {
+                    $('.datatable').DataTable().ajax.reload();
+                })
+            }
+        }
+    }
+    dt_buttons.push(delete_button)
+
+    $('.datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{!! route('api.images.index') !!}",
+        buttons: dt_buttons,
+        columns: [
+            { data: 'empty', name: 'empty' },
+            { data: 'id', name: 'id' },
+            { data: 'preview', name: 'preview' },
+            { data: 'filename', name: 'filename' },
+            { data: 'mime', name: 'mime' },
+            { data: 'size', name: 'size' },
+            { data: 'action', name: 'action' },
+        ],
+        order: [
+            [1, 'desc']
+        ],
+    })
 </script>
 @endsection

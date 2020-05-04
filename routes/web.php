@@ -46,6 +46,7 @@ Route::group(['prefix' => 'reseller', 'as' => 'reseller.'], function(){
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
+    Route::resource('images', 'ImageController');
     Route::get('orders', 'OrderController@index')->name('order.index');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');

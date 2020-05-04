@@ -16,9 +16,24 @@ import 'jquery-confirm';
 // Vue.component('slugify', require('./components/HotashSLUG.vue').default);
 
 import 'sumoselect';
+import Dropzone from 'dropzone';
 require('slick-carousel');
 require('slick-lightbox');
 import Drift from 'drift-zoom';
+
+Dropzone.autoDiscover = false;
+if($('#drop-imgs').length) {
+    var dropImgs = new Dropzone('#drop-imgs', {
+        paramName: 'file',
+        maxFilesize: .1, // MB
+        dictDefaultMessage: 'Drop images here to upload.',
+    });
+    dropImgs.on('complete', function(){
+        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0) {
+            $('.datatable').DataTable().ajax.reload();
+        }
+    })
+}
 
 // var $ = jQuery = window.$ = window.jQuery = require('jquery');
 // require( 'jszip' );

@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::formatted();
-        $products = Product::paginate(20);
+        $products = Product::latest()->paginate(20);
         return view('admin.products.index', compact('categories', 'products'));
     }
 
@@ -54,39 +54,21 @@ class ProductController extends Controller
             'wholesale' => 'required|integer',
             'retail' => 'required|integer',
 
-            'base_image' => 'required|image',
-            'additional_images' => 'nullable|array',
-            'additional_images.*' => 'nullable|image',
+            'base_image' => 'required|integer',
+            'additional_images' => 'nullable|string',
         ], [
             'stock.required_if' => 'Stock count is required when inventory tracking is enabled.',
-            'additional_images.*.image' => 'All items of additional_images must be image.'
         ]);
         $data['code'] = $this->code();
         $product = Product::create($data);
 
-        $file = $data['base_image'];
-        $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);            
-        $image = Image::create([
-            'disk' => config('filesystems.default'),
-            'filename' => $file->getClientOriginalName(),
-            'path' => $path,
-            'extension' => $file->guessClientExtension() ?? '',
-            'mime' => $file->getClientMimeType(),
-            'size' => $file->getSize(),
-        ]);
+        $image = Image::find($data['base_image']);
         $product->images()->save($image, ['zone' => 'base']);
-        foreach($data['additional_images'] as $file) {
-            $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);
-            $image = Image::create([
-                'disk' => config('filesystems.default'),
-                'filename' => $file->getClientOriginalName(),
-                'path' => $path,
-                'extension' => $file->guessClientExtension() ?? '',
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
-            ]);
+        foreach(explode(',', $data['additional_images']) as $additional_image) {
+            $image = Image::find($additional_image);
             $product->images()->save($image, ['zone' => 'additionals']);
         }
+
         $product->categories()->sync($data['categories']);
         
         return redirect()->route('admin.products.index')->with('success', 'Product Uploaded');
@@ -142,41 +124,21 @@ class ProductController extends Controller
             'wholesale' => 'required|integer',
             'retail' => 'required|integer',
 
-            // 'base_image' => 'nullable|image',
-            // 'additional_images' => 'nullable|array',
-            // 'additional_images.*' => 'nullable|image',
+            'base_image' => 'required|integer',
+            'additional_images' => 'nullable|string',
         ], [
             'stock.required_if' => 'Stock count is required when inventory tracking is enabled.',
-            'additional_images.*.image' => 'All items of additional_images must be image.'
         ]);
+        $product->update($data);
 
-        if($request->hasFile('base_image')) {
-            $file = $data['base_image'];
-            $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);            
-            $image = Image::create([
-                'disk' => config('filesystems.default'),
-                'filename' => $file->getClientOriginalName(),
-                'path' => $path,
-                'extension' => $file->guessClientExtension() ?? '',
-                'mime' => $file->getClientMimeType(),
-                'size' => $file->getSize(),
-            ]);
-            $product->images()->save($image, ['zone' => 'base']);
-        }
-        if($request->hasFile('additional_images')) {
-            foreach($data['additional_images'] as $file) {
-                $path = $this->uploadImage($file, ['dir' => 'images/products', 'height' => 600, 'width' => 600]);
-                $image = Image::create([
-                    'disk' => config('filesystems.default'),
-                    'filename' => $file->getClientOriginalName(),
-                    'path' => $path,
-                    'extension' => $file->guessClientExtension() ?? '',
-                    'mime' => $file->getClientMimeType(),
-                    'size' => $file->getSize(),
-                ]);
-                $product->images()->save($image, ['zone' => 'additionals']);
+        $images = [ $data['base_image'] => ['zone' => 'base'] ];
+        if($data['additional_images']) {
+            foreach(explode(',', $data['additional_images']) as $additional_image) {
+                $images[$additional_image] = ['zone' => 'additionals'];
             }
         }
+        $product->images()->sync($images);
+
         $product->categories()->sync($data['categories']);
         
         return redirect()->route('admin.products.index')->with('success', 'Product Updated');

@@ -60,7 +60,8 @@ class Product extends Model
     public function getAdditionalImagesAttribute()
     {
         return $this->additionalImages()->map(function($item) {
-            return $item->path = asset($item->path);
+            $item->path = asset($item->path);
+            return $item;
         });
     }
 

@@ -11,6 +11,11 @@ class ImageController extends Controller
 {
     use ImageHelper;
     
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        $images = Image::all();
+        return view('admin.images.index', compact('images'));
     }
 
     /**
@@ -39,7 +45,6 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(Image::find(3)->path);
         $request->validate([
             'file' => 'required|image',
         ]);

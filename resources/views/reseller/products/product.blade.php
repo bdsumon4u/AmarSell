@@ -57,10 +57,10 @@
                                             alt="Base Image">
                                         <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
                                     </a>
-                                    @foreach($product->additional_images as $path)
+                                    @foreach($product->additional_images as $additional_image)
                                     <a class="base-image-inner"
-                                        href="{{ $path }}">
-                                        <img src="{{ $path }}"
+                                        href="{{ $additional_image->path }}">
+                                        <img src="{{ $additional_image->path }}"
                                             alt="Additional Image">
                                         <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
                                     </a>
@@ -72,9 +72,9 @@
                                         <img src="{{ $product->base_image }}"
                                             alt="Base Image">
                                     </div>
-                                    @foreach($product->additional_images as $path)
+                                    @foreach($product->additional_images as $additional_image)
                                     <div class="thumb-image">
-                                        <img src="{{ $path }}"
+                                        <img src="{{ $additional_image->path }}"
                                             alt="Additional Image">
                                     </div>
                                     @endforeach

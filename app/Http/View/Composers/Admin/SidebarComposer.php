@@ -46,6 +46,12 @@ class SidebarComposer
             ],
         ],
         [
+            'icon' => 'fa fa-image',
+            'style' => 'simple',
+            'name' => 'Images',
+            'route' => 'admin.images.index',
+        ],
+        [
             'icon' => 'fa fa-th-list',
             'style' => 'dropdown',
             'name' => 'Orders',
