@@ -103,7 +103,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
 
     public function getPaidAttribute()
     {
-        return $this->transactions->sum(function($transaction) { return $transaction->amount; });
+        return $this->transactions->where('status', 'paid')->sum(function($transaction) { return $transaction->amount; });
     }
 
     /**
@@ -162,5 +162,23 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         $balance = $this->completed_sell - $completed_advanced - $completed_buy - $non_pending_charges + $completed_shipping - ($this->paid);
 
         return $balance;
+    }
+
+    /**
+     * Get Payment Methods Attribute
+     */
+    public function getPaymentMethodsAttribute()
+    {
+        $payment_methods = [];
+        $methods = $this->payment ?? [];
+        foreach($methods as $method) {
+            $payment_methods[$method->method] = $payment_methods[$method->method] ?? $method;
+        }
+        return $payment_methods;
+    }
+
+    public function getLastPaidAttribute()
+    {
+        return $this->transactions->last() ?? new Transaction;
     }
 }

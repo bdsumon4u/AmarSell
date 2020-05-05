@@ -22,9 +22,8 @@
                                 <tr>
                                     <th></th>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Reseller</th>
+                                    <th>Last Paid</th>
                                     <th>Balance</th>
                                     <th>Pay</th>
                                 </tr>
@@ -35,10 +34,17 @@
                                     <td></td>
                                     <td>{{ $reseller->id }}</td>
                                     <td>
-                                        <a href="">{{ $reseller->name }}</a>
+                                        <strong>Name:</strong> {{ $reseller->name }}
+                                        <br>
+                                        <strong>Phone:</strong> {{ $reseller->phone }}
                                     </td>
-                                    <td>{{ $reseller->email }}</td>
-                                    <td>{{ $reseller->phone }}</td>
+                                    <td>
+                                        @if($reseller->lastPaid->created_at)
+                                            {{ theMoney($reseller->lastPaid->amount) }}
+                                            <br>
+                                            {{ $reseller->lastPaid->created_at->format('F j, Y') }}
+                                        @endif
+                                    </td>
                                     <td>{{ $reseller->balance }}</td>
                                     <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', $reseller->id) }}">Pay</a></td>
                                 </tr>

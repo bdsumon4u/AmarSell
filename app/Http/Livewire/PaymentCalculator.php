@@ -12,11 +12,18 @@ class PaymentCalculator extends Component
     public $balance;
     public $amount;
     public $method;
+    public $bank_name;
+    public $account_name;
+    public $branch;
+    public $routing_no;
+    public $type;
     public $number;
 
-    public function mount(Reseller $reseller)
+    public function mount(Reseller $reseller, $amount = null, $method = null)
     {
         $this->reseller = $reseller;
+        $this->amount = $amount;
+        $this->method = $method;
         $this->calc();
     }
 
@@ -37,6 +44,11 @@ class PaymentCalculator extends Component
         });
         
         // dd($arr);
+        $this->bank_name = $arr->bank_name ?? '';
+        $this->account_name = $arr->account_name ?? '';
+        $this->type = $arr->type ?? '';
+        $this->branch = $arr->branch ?? '';
+        $this->routing_no = $arr->routing_no ?? '';
         $this->number = $arr->number;
     }
 }

@@ -22,7 +22,9 @@ class SettingController extends Controller
             'payment' => 'required|array',
             'payment.*' => 'required|array',
         ]);
+        // dump($data);
         $data['payment'] = $this->payment_filter($data['payment']);
+        // dd($data);
 
         auth('reseller')->user()->update($data);
         return redirect()->back()->with('success', 'Setting Updated.');
@@ -32,7 +34,12 @@ class SettingController extends Controller
     {
         $items = [];
         foreach($payment as $item) {
-            if(isset($item['method']) && !empty($item['method']) && isset($item['number']) && !empty($item['number'])) {
+            if(isset($item['method']) && !empty($item['method']) && isset($item['type']) && !empty($item['type']) && isset($item['number']) && !empty($item['number'])) {
+                if ( $item['method'] == 'Bank') {
+                    if(!isset($item['bank_name']) || empty($item['bank_name']) || !isset($item['account_name']) || empty($item['account_name'])) {
+                        continue;
+                    }
+                }
                 $items[] = $item;
             }
         }

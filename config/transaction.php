@@ -2,6 +2,7 @@
 
 return [
     'ways' => [
+        'Bank',
         'bKash',
         'Rocket',
     ]

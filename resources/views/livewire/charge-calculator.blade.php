@@ -1,5 +1,5 @@
 <div class="wizard">
-    @php $is_reseller = Auth::guard('reseller')->check() && (Auth::guard('reseller')->user()->id == request()->user()->id) @endphp
+    @php $is_reseller = (auth('reseller')->user()->id ?? 0) == request()->user()->id @endphp
     <form action="{{ route('admin.order.update', $order->id) }}" method="post">
         @csrf
         <div class="row">

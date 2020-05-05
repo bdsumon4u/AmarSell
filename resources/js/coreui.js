@@ -25,7 +25,7 @@ Dropzone.autoDiscover = false;
 if($('#drop-imgs').length) {
     var dropImgs = new Dropzone('#drop-imgs', {
         paramName: 'file',
-        maxFilesize: .1, // MB
+        maxFilesize: 2, // MB
         dictDefaultMessage: 'Drop images here to upload.',
     });
     dropImgs.on('complete', function(){

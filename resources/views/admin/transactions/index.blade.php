@@ -22,10 +22,12 @@
                                 <tr>
                                     <th></th>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
+                                    <th>Reseller</th>
                                     <th>Amount</th>
                                     <th>Date</th>
+                                    <th>Way</th>
+                                    <th>Account Number</th>
+                                    <th>Transaction Number</th>
                                     <th>Remain</th>
                                 </tr>
                             </thead>
@@ -36,13 +38,27 @@
                                     <td>{{ $transaction->id }}</td>
                                     @php $reseller = $transaction->reseller @endphp
                                     <td>
-                                        <a href="">{{ $reseller->name }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="">{{ $reseller->phone }}</a>
+                                        <strong>Name:</strong> {{ $reseller->name }}
+                                        <br>
+                                        <strong>Phone:</strong> {{ $reseller->phone }}
                                     </td>
                                     <td>{{ $transaction->amount }}</td>
                                     <td>{{ $transaction->created_at->format('F j, Y') }}</td>
+                                    <td>
+                                        <strong>Method:</strong> {{ $transaction->method }}
+                                        @if($transaction->method == 'Bank')
+                                        <br>
+                                        <strong>Bank Name:</strong> {{ $transaction->bank_name }}
+                                        <br>
+                                        <strong>Account Name:</strong> {{ $transaction->account_name }}
+                                        <br>
+                                        <strong>Branch:</strong> {{ $transaction->branch }}
+                                        <br>
+                                        <strong>Routing No:</strong> {{ $transaction->routing_no }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $transaction->account_number }}</td>
+                                    <td>{{ $transaction->transaction_number }}</td>
                                     <td>{{ $reseller->balance }}</td>
                                 </tr>
                                 @endforeach

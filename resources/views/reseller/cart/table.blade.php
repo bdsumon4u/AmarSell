@@ -5,7 +5,7 @@
                 @php $product = $cartItem['attributes']['product'] @endphp
                 <tr class="cart-item">
                     <td>
-                        img
+                        <img src="{{ $product->base_image }}" alt="Base Image" width="150" height="150">
                     </td>
 
                     <td>

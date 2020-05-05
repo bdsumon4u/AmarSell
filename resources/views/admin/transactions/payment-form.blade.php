@@ -6,9 +6,11 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
         @livewire('payment-calculator', [
             'reseller' => $reseller,
+            'amount' => request('amount'),
+            'method' => request('method')
         ])
     </div>
 </div>

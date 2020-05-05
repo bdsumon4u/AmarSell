@@ -104,7 +104,7 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="description">Description</label><span class="text-danger">*</span>
-                                                        <textarea name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                                                        <textarea editor name="description" id="" cols="30" rows="10" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
                                                         {!! $errors->first('description', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>

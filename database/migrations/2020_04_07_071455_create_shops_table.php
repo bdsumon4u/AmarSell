@@ -19,7 +19,7 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->string('address');
             $table->string('website')->nullable();
             $table->timestamps();

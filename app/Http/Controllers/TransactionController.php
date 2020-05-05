@@ -20,7 +20,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with('reseller')->get();
+        $transactions = Transaction::with('reseller')->where('status', 'paid')->get();
         return view('admin.transactions.index', compact('transactions'));
     }
 
@@ -79,12 +79,24 @@ class TransactionController extends Controller
             'reseller_id' => 'required|integer',
             'amount' => 'required|integer',
             'method' => 'required',
+            'bank_name' => 'nullable',
+            'account_name' => 'nullable',
+            'branch' => 'nullable',
+            'routing_no' => 'nullable',
+            'account_type' => 'required',
             'account_number' => 'required',
-            'transaction_number' => 'required',
+            'transaction_number' => 'nullable',
         ]);
+        $data['status'] = 'paid';
 
         Transaction::create($data);
 
         return Redirect::back()->with('success', 'Transaction Details Stored.');
+    }
+
+    public function requests()
+    {
+        $transactions = Transaction::with('reseller')->where('status', 'pending')->get();
+        return view('admin.transactions.requests', compact('transactions'));
     }
 }

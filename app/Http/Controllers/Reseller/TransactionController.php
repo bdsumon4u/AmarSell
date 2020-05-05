@@ -38,7 +38,21 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reseller = auth('reseller')->user();
+        $data = $request->validate([
+            'amount' => 'required|integer',
+            'method' => 'required',
+            'bank_name' => 'nullable',
+            'account_name' => 'nullable',
+            'branch' => 'nullable',
+            'routing_no' => 'nullable',
+            'account_type' => 'required',
+            'account_number' => 'nullable',
+        ]);
+        $data['reseller_id'] = $reseller->id;
+        
+        Transaction::create($data);
+        return redirect()->back()->with('success', 'Money Request Sent.');
     }
 
     /**

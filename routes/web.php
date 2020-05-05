@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('getpass', 'Auth\LoginController@login')->name('login');
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 Route::match(['get', 'post'], '/login', function(){
     return abort('404');
 });
@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     
     Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
     Route::get('/transactions/request', 'TransactionController@request')->name('transactions.request');
+    Route::post('/transactions/request', 'TransactionController@store')->name('transactions.store');
 
     Route::get('/setting', 'SettingController@edit')->name('setting.edit');
     Route::patch('/setting', 'SettingController@update')->name('setting.update');

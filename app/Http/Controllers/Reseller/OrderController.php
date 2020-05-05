@@ -88,7 +88,7 @@ class OrderController extends Controller
                 });
         }
 
-        return redirect()->route('shop.index')->with('success', 'Order Success. Order ID# ' . $order->id);
+        return redirect()->route('reseller.product.index')->with('success', 'Order Success. Order ID# ' . $order->id);
     }
 
     /**

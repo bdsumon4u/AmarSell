@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="website">Website</label><span class="text-danger">*</span>
+                                <label for="website">Website</label>
                                 <input type="text" name="website" value="{{ old('website', $shop->website ?? 'http://') }}" id="website" class="form-control @error('website') is-invalid @enderror">
                                 @error('website')
                                 <strong class="invalid-feedback">{{ $message }}</strong>

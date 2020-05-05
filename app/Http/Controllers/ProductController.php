@@ -62,12 +62,14 @@ class ProductController extends Controller
         $data['code'] = $this->code();
         $product = Product::create($data);
 
-        $image = Image::find($data['base_image']);
-        $product->images()->save($image, ['zone' => 'base']);
-        foreach(explode(',', $data['additional_images']) as $additional_image) {
-            $image = Image::find($additional_image);
-            $product->images()->save($image, ['zone' => 'additionals']);
+        
+        $images = [ $data['base_image'] => ['zone' => 'base'] ];
+        if($data['additional_images']) {
+            foreach(explode(',', $data['additional_images']) as $additional_image) {
+                $images[$additional_image] = ['zone' => 'additionals'];
+            }
         }
+        $product->images()->sync($images);
 
         $product->categories()->sync($data['categories']);
         

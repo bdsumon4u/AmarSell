@@ -18,8 +18,14 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('reseller_id');
             $table->integer('amount');
             $table->string('method');
+            $table->string('bank_name')->nullable();
+            $table->string('account_name')->nullable();
+            $table->string('branch')->nullable();
+            $table->string('routing_no')->nullable();
+            $table->string('account_type');
             $table->string('account_number');
-            $table->string('transaction_number');
+            $table->string('transaction_number')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

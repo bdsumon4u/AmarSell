@@ -166,7 +166,7 @@
                                             $iw = $item['wholesale']
                                         @endphp
                                         <tr>
-                                            <td><a href="{{ route('shop.product.show', $item['slug']) }}">{{ $item['code'] }}</a></td>
+                                            <td><a href="{{ route('reseller.product.show', $item['slug']) }}">{{ $item['code'] }}</a></td>
                                             <td>
                                                 <strong>Buy: </strong>{{ $iw }}
                                                 @if($iw != $pw)
