@@ -14,9 +14,9 @@
 
             @include('reseller.products.partials.mini-cart')
             <div class="search-area pull-left">
-                <form action="https://fleetcart.envaysoft.com/en/products" method="GET" id="search-box-form">
+                <form action="{{ request()->route()->getName() == 'reseller.product.by-category' ? url()->current() : route('reseller.product.index') }}" method="GET" id="search-box-form">
                     <div class="search-box hidden-sm hidden-xs">
-                        <input type="text" name="query" class="search-box-input" placeholder="Search for products..."
+                        <input type="text" name="s" class="search-box-input" placeholder="Search for products..."
                             value="">
 
                         <div class="search-box-button">
@@ -35,8 +35,8 @@
 
                             <div class="dropdown-menu">
                                 <div class="search-box">
-                                    <input type="search" name="query" class="search-box-input"
-                                        placeholder="Search for products...">
+                                    <input type="text" name="s" class="search-box-input"
+                                        placeholder="Search for products..." value="">
 
                                     <div class="search-box-button">
                                         <button type="submit" class="search-box-btn btn btn-primary">

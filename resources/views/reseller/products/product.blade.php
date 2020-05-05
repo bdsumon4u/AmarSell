@@ -137,6 +137,13 @@
                                         Add to cart
                                     </button>
                                 </form>
+                                <div class="clearfix"></div>
+                                <h4 style="margin-top: 2.5rem;">Categories</h4>
+                                <ul style="margin-top: .55rem; margin-left: 1.5rem;">
+                                    @foreach($product->categories as $category)
+                                    <li><a href="{{ route('reseller.product.by-category', [$category->slug, $category->id]) }}">{{ $category->name }}</a></li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@
         <ul class="filter-category list-inline">
             @foreach(App\Category::formatted() as $category)
             <li class="">
-                <a href="https://fleetcart.envaysoft.com/en/products?sort=latest&amp;category=electronics&amp;page=1">
+                <a href="{{ route('reseller.product.by-category', [$category->slug, $category->id]) }}">
                     {{ $category->name }}
                 </a>
                 @if(!$category->childrens->isEmpty())

@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
 
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
+    Route::get('/products/category/{slug}/id/{category}', 'ProductController@index')->name('product.by-category');
     Route::get('/products', 'ProductController@index')->name('product.index');
     Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
 

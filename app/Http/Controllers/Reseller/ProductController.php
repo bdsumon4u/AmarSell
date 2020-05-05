@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reseller;
 
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $slug = null, ?Category $category)
     {
-        $products = Product::latest();
+        if($category->getKey()) {
+            $products = $category->products();
+        } else {
+            $products = Product::latest();
+        }
+        $products = $request->has('s') ? $products->where('name', 'like', '%' . $request->s . '%') : $products;
         $products_count = $products->count();
-        $products = $products->paginate(12);
+        $products = $products->paginate(12)->appends($request->query());
         return view('reseller.products.index', compact('products', 'products_count'));
     }
 

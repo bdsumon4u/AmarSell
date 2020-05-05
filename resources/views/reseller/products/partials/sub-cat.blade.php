@@ -2,7 +2,7 @@
 <ul>
     @foreach($categories as $category)
     <li class="">
-        <a href="https://fleetcart.envaysoft.com/en/products?sort=latest&amp;category=laptops">
+        <a href="{{ route('reseller.product.by-category', [$category->slug, $category->id]) }}">
             {{ $category->name }}
         </a>
         @if(!$category->childrens->isEmpty())
