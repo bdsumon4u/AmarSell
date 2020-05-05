@@ -34,9 +34,11 @@
                                     <td></td>
                                     <td>{{ $reseller->id }}</td>
                                     <td>
-                                        <strong>Name:</strong> {{ $reseller->name }}
-                                        <br>
-                                        <strong>Phone:</strong> {{ $reseller->phone }}
+                                        <a href="{{ route('reseller.profile.show', $reseller->id) }}">
+                                            <strong>Name:</strong> {{ $reseller->name }}
+                                            <br>
+                                            <strong>Phone:</strong> {{ $reseller->phone }}
+                                        </a>
                                     </td>
                                     <td>
                                         @if($reseller->lastPaid->created_at)

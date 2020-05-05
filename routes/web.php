@@ -95,4 +95,6 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::patch('/setting', 'SettingController@update')->name('setting.update');
 
     Route::patch('/password', 'PasswordController@update')->name('password.update');
+
+    Route::get('/profile/{reseller}', 'ProfileController')->name('profile.show');
 });

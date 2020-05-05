@@ -68,7 +68,7 @@
                         <i class="fa fa-bell-o"></i> Updates
                         <span class="badge badge-info">42</span>
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ route('reseller.profile.show', auth('reseller')->user()->id) }}">
                         <i class="fa fa-user"></i> Profile</a>
                     <a class="dropdown-item" href="{{ route('reseller.setting.edit') }}">
                         <i class="fa fa-wrench"></i> Settings</a>

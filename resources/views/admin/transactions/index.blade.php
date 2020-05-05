@@ -38,9 +38,11 @@
                                     <td>{{ $transaction->id }}</td>
                                     @php $reseller = $transaction->reseller @endphp
                                     <td>
-                                        <strong>Name:</strong> {{ $reseller->name }}
-                                        <br>
-                                        <strong>Phone:</strong> {{ $reseller->phone }}
+                                        <a href="{{ route('reseller.profile.show', $reseller->id) }}">
+                                            <strong>Name:</strong> {{ $reseller->name }}
+                                            <br>
+                                            <strong>Phone:</strong> {{ $reseller->phone }}
+                                        </a>
                                     </td>
                                     <td>{{ $transaction->amount }}</td>
                                     <td>{{ $transaction->created_at->format('F j, Y') }}</td>
