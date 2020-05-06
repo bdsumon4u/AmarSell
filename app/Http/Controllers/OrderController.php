@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderStatusChanged;
 use App\Order;
 use App\Product;
 use Darryldecode\Cart\Facades\CartFacade;
@@ -97,6 +98,7 @@ class OrderController extends Controller
             'cod_charge' => 'required',
             'status' => 'required',
         ]), function($data) use($order, $request){
+            $before = $order->status;
             $order->status = $data['status'];
             unset($data['status']);
             foreach($order->data as $key => $val) {
@@ -104,7 +106,9 @@ class OrderController extends Controller
             }
             // dd($data);
             $order->data = $data;
-            $order->save();
+            if($order->save()) {
+                event(new OrderStatusChanged(['order' => $order, 'before' => $before]));
+            }
         });
 
         return redirect('/dashboard')->with('success', 'Order Updated');

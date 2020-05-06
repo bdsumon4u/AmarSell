@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Notifications\TransactionRequestRecieved;
+use App\User;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification;
+
+class HasRecievedTransactionRequest
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  object  $event
+     * @return void
+     */
+    public function handle($event)
+    {
+        $event->transaction->reseller->notify(new TransactionRequestRecieved($event));
+        Notification::send(User::all(), new TransactionRequestRecieved($event));
+    }
+}

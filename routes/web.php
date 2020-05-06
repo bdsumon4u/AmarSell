@@ -59,6 +59,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('/transactions/requests', 'TransactionController@requests')->name('transactions.requests');
 
     Route::resource('images', 'ImageController');
+    Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
+    Route::patch('/notifications/read/{notification?}', 'NotificationController@update')->name('notifications.update');
+    Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 });
 
 
@@ -97,4 +100,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::patch('/password', 'PasswordController@update')->name('password.update');
 
     Route::get('/profile/{reseller}', 'ProfileController')->name('profile.show');
+    Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
+    Route::patch('/notifications/read/{notification?}', 'NotificationController@update')->name('notifications.update');
+    Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 });

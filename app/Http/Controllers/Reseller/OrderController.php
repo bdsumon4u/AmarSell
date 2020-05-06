@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reseller;
 
+use App\Events\NewOrderRecieved;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = auth('reseller')->user()->id;
+        $reseller = auth('reseller')->user();
         $data = $request->validate([
             'customer_name' => 'required|string',
             'customer_email' => 'nullable',
@@ -59,13 +60,14 @@ class OrderController extends Controller
             'shipping' => 'required|integer',
             'advanced' => 'required|integer',
         ]);
-        $cart = CartFacade::session($user_id);
+        $cart = CartFacade::session($reseller->id);
         $data['price'] = $cart->getTotal();
         $products = $cart->getContent()
                         ->map(function ($item) {
                             $product = $item->attributes->product;
                             $arr['id'] = $item->id;
                             $arr['quantity'] = is_numeric($product->stock) && $product->stock < $item->quantity ? $product->stock : $item->quantity;
+                            $arr['name'] = $product->name;
                             $arr['code'] = $product->code;
                             $arr['slug'] = $product->slug;
                             $arr['wholesale'] = $product->wholesale;
@@ -75,7 +77,7 @@ class OrderController extends Controller
         $data['products'] = $products->toArray();
 
         $order = Order::create([
-            'reseller_id' => $user_id,
+            'reseller_id' => $reseller->id,
             'data' => $data,
         ]);
 
@@ -86,6 +88,7 @@ class OrderController extends Controller
                     $product->stock = is_numeric($product->stock) ? ($product->stock >= $item->quantity ? $product->stock - $item->quantity : 0) : $product->stock;
                     return $product->save();
                 });
+            event(new NewOrderRecieved($order, $reseller));
         }
 
         return redirect()->route('reseller.product.index')->with('success', 'Order Success. Order ID# ' . $order->id);

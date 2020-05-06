@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reseller;
 
+use App\Events\TransactionRequestRecieved;
 use App\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -51,7 +52,9 @@ class TransactionController extends Controller
         ]);
         $data['reseller_id'] = $reseller->id;
         
-        Transaction::create($data);
+        if($transaction = Transaction::create($data)) {
+            event(new TransactionRequestRecieved($transaction));
+        }
         return redirect()->back()->with('success', 'Money Request Sent.');
     }
 
