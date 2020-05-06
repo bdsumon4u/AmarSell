@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Events\NewOrderRecieved;
 use App\Events\OrderStatusChanged;
+use App\Events\TransactionCompleted;
 use App\Events\TransactionRequestRecieved;
 use App\Listeners\HasRecievedTransactionRequest;
 use App\Listeners\HasChangedOrderStatus;
+use App\Listeners\HasCompletedTransaction;
 use App\Listeners\HasRecievedNewOrder;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TransactionRequestRecieved::class => [
             HasRecievedTransactionRequest::class,
+        ],
+        TransactionCompleted::class => [
+            HasCompletedTransaction::class,
         ],
     ];
 

@@ -62,8 +62,9 @@
                                     <td>{{ $transaction->account_number }}</td>
                                     <td>{{ $transaction->transaction_number }}</td>
                                     <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$reseller->id,
+                                        'transaction_id' => $transaction->id,
                                         'amount' => $transaction->amount,
-                                        'method' => 'Bank',
+                                        'method' => $transaction->method,
                                         'bank_name' => $transaction->bank_name,
                                         'account_name' => $transaction->account_name,
                                         'branch' => $transaction->branch,

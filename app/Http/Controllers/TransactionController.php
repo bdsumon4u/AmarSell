@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TransactionCompleted;
 use App\Reseller;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -87,9 +88,18 @@ class TransactionController extends Controller
             'account_number' => 'required',
             'transaction_number' => 'nullable',
         ]);
-        $data['status'] = 'paid';
 
-        Transaction::create($data);
+        $transaction_type = null;
+        if($id = $request->transaction_id) {
+            $transaction = Transaction::findOrFail($id);
+            $transaction->update([
+                'transaction_number' => $request->transaction_number,
+                'status' => 'paid',
+            ]);
+            $transaction_type = 'request';
+        } else $transaction = Transaction::create($data);
+
+        event(new TransactionCompleted($transaction, $transaction_type));
 
         return Redirect::back()->with('success', 'Transaction Details Stored.');
     }
