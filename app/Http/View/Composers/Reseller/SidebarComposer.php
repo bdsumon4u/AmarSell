@@ -15,10 +15,6 @@ class SidebarComposer
             'style' => 'simple',
             'name' => 'Dashboard',
             'route' => 'reseller.home',
-            'badge' => [
-                'variant' => 'secondary',
-                'data' => 4,
-            ],
         ],
         [
             'icon' => 'fa fa-tachometer',
@@ -89,38 +85,6 @@ class SidebarComposer
                 [
                     'name' => 'Money Request',
                     'route' => 'reseller.transactions.request',
-                ],
-            ],
-        ],
-        [
-            'icon' => 'fa fa-columns',
-            'style' => 'dropdown',
-            'name' => 'Students',
-            'items' => [
-                [
-                    'name' => 'Active',
-                    'url' => 'students.index',
-                    'param' => ['status' => 'active'],
-                ],
-                [
-                    'name' => 'Suspended',
-                    'url' => 'students.index',
-                    'param' => ['status' => 'suspended'],
-                ],
-            ],
-        ],
-        [
-            'icon' => 'fa fa-exclamation',
-            'style' => 'dropdown',
-            'name' => 'Exams',
-            'items' => [
-                [
-                    'name' => 'All',
-                    'url' => 'exams.index',
-                ],
-                [
-                    'name' => 'Add New',
-                    'url' => 'exams.create',
                 ],
             ],
         ],

@@ -12,10 +12,7 @@
     </button>
     <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item px-3">
-            <a class="nav-link" href="#">Resellers</a>
+            <a class="nav-link" href="{{ route('admin.resellers') }}">Resellers</a>
         </li>
         <li class="nav-item px-3">
             <a class="nav-link" href="#">Settings</a>
@@ -29,16 +26,6 @@
                 @if($unreadCount)
                 <span class="badge badge-pill badge-danger">{{ $unreadCount }}</span>
                 @endif
-            </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="#">
-                <i class="icon-list"></i>
-            </a>
-        </li>
-        <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="#">
-                <i class="icon-location-pin"></i>
             </a>
         </li>
         <li class="nav-item dropdown">
@@ -57,35 +44,11 @@
                     @endif
                 </a>
                 <a class="dropdown-item" href="#">
-                    <i class="fa fa-envelope-o"></i> Messages
-                    <span class="badge badge-success">42</span>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-tasks"></i> Tasks
-                    <span class="badge badge-danger">42</span>
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-comments"></i> Comments
-                    <span class="badge badge-warning">42</span>
-                </a>
-                <div class="dropdown-header text-center">
-                    <strong>Settings</strong>
-                </div>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-user"></i> Profile</a>
-                <a class="dropdown-item" href="#">
                     <i class="fa fa-wrench"></i> Settings</a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-usd"></i> Payments
-                    <span class="badge badge-secondary">42</span>
+                <a class="dropdown-item" href="{{ route('admin.transactions.requests') }}">
+                    <i class="fa fa-usd"></i> Payment Requests
+                    <span class="badge badge-secondary">{{ \App\Transaction::where('status', 'pending')->count() }}</span>
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-file"></i> Projects
-                    <span class="badge badge-primary">42</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
-                    <i class="fa fa-shield"></i> Lock Account</a>
                 <a class="dropdown-item" href="{{ route($provider == 'users' ? 'logout' : $provider.'.logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

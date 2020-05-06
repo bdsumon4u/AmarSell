@@ -25,10 +25,6 @@ class SidebarComposer
                 'style' => 'simple',
                 'name' => 'Dashboard',
                 'route' => 'home',
-                'badge' => [
-                    'variant' => 'secondary',
-                    'data' => 4,
-                ],
             ],
             [
                 'style' => 'title',
@@ -129,38 +125,6 @@ class SidebarComposer
                             'variant' => 'secondary',
                             'data' => Transaction::where(['status' => 'pending'])->count(),
                         ],
-                    ],
-                ],
-            ],
-            [
-                'icon' => 'fa fa-columns',
-                'style' => 'dropdown',
-                'name' => 'Students',
-                'items' => [
-                    [
-                        'name' => 'Active',
-                        'url' => 'students.index',
-                        'param' => ['status' => 'active'],
-                    ],
-                    [
-                        'name' => 'Suspended',
-                        'url' => 'students.index',
-                        'param' => ['status' => 'suspended'],
-                    ],
-                ],
-            ],
-            [
-                'icon' => 'fa fa-exclamation',
-                'style' => 'dropdown',
-                'name' => 'Exams',
-                'items' => [
-                    [
-                        'name' => 'All',
-                        'url' => 'exams.index',
-                    ],
-                    [
-                        'name' => 'Add New',
-                        'url' => 'exams.create',
                     ],
                 ],
             ],

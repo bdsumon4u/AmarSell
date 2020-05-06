@@ -24,6 +24,10 @@
                                     <th>ID</th>
                                     <th>Reseller</th>
                                     <th>Last Paid</th>
+                                    <th>Total Sell</th>
+                                    <th>Pending Sell</th>
+                                    <th>Completed Sell</th>
+                                    <th>Total Withdraw</th>
                                     <th>Balance</th>
                                     <th>Pay</th>
                                 </tr>
@@ -47,6 +51,10 @@
                                             {{ $reseller->lastPaid->created_at->format('F j, Y') }}
                                         @endif
                                     </td>
+                                    <td>{{ theMoney($reseller->total_sell) }}</td>
+                                    <td>{{ theMoney($reseller->pending_sell) }}</td>
+                                    <td>{{ theMoney($reseller->completed_sell) }}</td>
+                                    <td>{{ theMoney($reseller->total_withdraw) }}</td>
                                     <td>{{ theMoney($reseller->balance) }}</td>
                                     <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', $reseller->id) }}">Pay</a></td>
                                 </tr>

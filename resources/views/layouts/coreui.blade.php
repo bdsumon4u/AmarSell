@@ -28,9 +28,8 @@
     <x-layouts.header />
     <div class="app-body">
         <x-layouts.sidebar :menu="$menu" />
-        <main class="main">
+        <main class="main mt-3">
             <!-- Breadcrumb-->
-            <x-layouts.breadcrumb />
             <div class="container-fluid">
                 <div class="animated fadeIn">
                     @if($message = Session::get('success'))
