@@ -4,10 +4,8 @@
 <div class="content-wrapper clearfix ">
     <div class="container">
         <div class="page-wrapper clearfix">
-            <h3>{{ $page->title }}</h3>
-            <div class="page-content">
+            <h3 class="page-title">{{ $page->title }}</h3>
             {!! $page->content !!}
-            </div>
         </div>
     </div>
 </div>

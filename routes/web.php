@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\PageMiddleware;
 use App\Shop;
 use App\User;
 use App\Order;
@@ -73,7 +74,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::delete('/pages/{page:slug}/delete', 'PageController@destroy')->name('pages.destroy');
 });
 
-Route::get('/page/{page:slug}', 'PageController@show')->name('page.show');
+Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(PageMiddleware::class);
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');
