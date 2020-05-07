@@ -52,6 +52,27 @@ class SidebarComposer
                 ],
             ],
             [
+                'icon' => 'fa fa-columns',
+                'style' => 'simple',
+                'name' => 'Menus',
+                'url' => 'admin/menus',
+            ],
+            [
+                'icon' => 'fa fa-server',
+                'style' => 'dropdown',
+                'name' => 'Pages',
+                'items' => [
+                    [
+                        'name' => 'All',
+                        'route' => 'admin.pages.index',
+                    ],
+                    [
+                        'name' => 'Create',
+                        'route' => 'admin.pages.create',
+                    ],
+                ],
+            ],
+            [
                 'icon' => 'fa fa-image',
                 'style' => 'simple',
                 'name' => 'Images',

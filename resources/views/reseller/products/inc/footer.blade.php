@@ -82,7 +82,8 @@
         </div>
 
         <div class="footer-middle p-tb-30 clearfix">
-            <ul class="social-links list-inline">
+            {!! iconMenu('footersocial') !!}
+            <!-- <ul class="social-links list-inline">
                 <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
@@ -90,7 +91,7 @@
                 <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 

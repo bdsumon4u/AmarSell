@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPaymentColumnToResellersTable extends Migration
+class CreatePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddPaymentColumnToResellersTable extends Migration
      */
     public function up()
     {
-        Schema::table('resellers', function (Blueprint $table) {
-            $table->text('payment')->after('phone')->nullable();
+        Schema::create('pages', function (Blueprint $table) {
+            $table->id();
+            $table->string('title')->unique();
+            $table->string('slug')->unique();
+            $table->longText('content');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddPaymentColumnToResellersTable extends Migration
      */
     public function down()
     {
-        Schema::table('resellers', function (Blueprint $table) {
-            $table->dropColumn('payment');
-        });
+        Schema::dropIfExists('pages');
     }
 }

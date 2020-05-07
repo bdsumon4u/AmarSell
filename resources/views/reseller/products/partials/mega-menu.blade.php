@@ -1,8 +1,8 @@
 <div class="megamenu-wrapper hidden-xs">
     <div class="container">
         <nav class="navbar navbar-default">
-            
-            <ul class="nav navbar-nav">
+            @menu('homepagetop')
+            <!-- <ul class="nav navbar-nav">
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" target="_self">
                         Home Pages
@@ -48,7 +48,7 @@
                     <ul class="dropdown-menu multi-level">
                     </ul>
                 </li>
-            </ul>
+            </ul> -->
         </nav>
     </div>
 </div>

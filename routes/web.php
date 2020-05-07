@@ -1,10 +1,10 @@
 <?php
 
+use App\Shop;
+use App\User;
 use App\Order;
 use App\Product;
 use App\Reseller;
-use App\Shop;
-use App\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Request;
 |
 */
 // dd(Order::find(2)->data);
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     return view('welcome');
 });
 
@@ -64,8 +64,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 
     Route::get('/resellers', 'ResellerController')->name('resellers');
+
+    Route::get('/pages', 'PageController@index')->name('pages.index');
+    Route::get('/pages/create', 'PageController@create')->name('pages.create');
+    Route::post('/pages/create', 'PageController@store')->name('pages.store');
+    Route::get('/pages/{page:slug}/edit', 'PageController@edit')->name('pages.edit');
+    Route::patch('/pages/{page:slug}/edit', 'PageController@update')->name('pages.update');
+    Route::delete('/pages/{page:slug}/delete', 'PageController@destroy')->name('pages.destroy');
 });
 
+Route::get('/page/{page:slug}', 'PageController@show')->name('page.show');
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');
@@ -106,3 +114,5 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::patch('/notifications/read/{notification?}', 'NotificationController@update')->name('notifications.update');
     Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 });
+
+MenuBuilder::routes();
