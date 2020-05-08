@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Request;
 // dd(Order::find(2)->data);
 Route::get('/', function (Request $request) {
     return view('welcome');
-});
+})->middleware('guest:reseller');
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('getpass', 'Auth\LoginController@login')->name('login');

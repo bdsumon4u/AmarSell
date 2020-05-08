@@ -25,7 +25,7 @@ class PageMiddleware
 
         if(strpos($content, '[!PAGE_TITLE]') != false) {
             $content = str_replace('[!PAGE_TITLE]', '', $content);
-            $content = preg_replace("~<h3\sclass=\"page-title\">.*?</h3>~", '', $content);
+            $content = preg_replace("~<h2\sclass=\"section-title\">.*?</h2>~", '', $content);
         }
 
         if(strpos($content, '[CONTACT_FORM]') != false) {

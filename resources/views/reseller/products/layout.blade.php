@@ -29,6 +29,49 @@
         href="https://fleetcart.envaysoft.com/storage/media/w2VuVc7ASHg8KeYCTJWDpLYZu0RjsivUCg4fTN2i.png"
         type="image/x-icon">
     <style>
+        #overlayer {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 7100;
+            background: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .loader {
+            z-index: 7700;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        @-webkit-keyframes spinner-border {
+        to {
+            transform: rotate(360deg);
+        }
+        }
+
+        @keyframes spinner-border {
+        to {
+            transform: rotate(360deg);
+        }
+        }
+        .spinner-border {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            vertical-align: text-bottom;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            -webkit-animation: spinner-border 0.75s linear infinite;
+            animation: spinner-border 0.75s linear infinite;
+        }
+
         .mini-cart-title a {
             text-decoration: none;
         }
@@ -73,6 +116,12 @@
 </head>
 
 <body class="theme-navy-blue slider_with_banners ltr">
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <!--[if lt IE 8]>
             <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -129,6 +178,12 @@
     <script src="https://fleetcart.envaysoft.com/themes/storefront/public/js/app.js?v=1.1.9"></script>
     <!-- <script src="{{ asset('js/fleetcart.js') }}"></script> -->
     @yield('scripts')
+    <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
+        });
+    </script>
 </body>
 
 </html>

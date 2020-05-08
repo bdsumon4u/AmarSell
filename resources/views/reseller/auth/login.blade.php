@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card rounded-0 shadow-sm">
                 <div class="card-header">{{ __('Reseller Login') }}</div>
 
                 <div class="card-body">
@@ -57,7 +57,7 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
+                                @if (Route::has('reseller.password.request'))
                                     <a class="btn btn-link" href="{{ route('reseller.password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
