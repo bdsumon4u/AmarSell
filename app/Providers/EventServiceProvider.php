@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Events\NewOrderRecieved;
 use App\Events\OrderStatusChanged;
+use App\Events\SendingContactEmail;
 use App\Events\TransactionCompleted;
 use App\Events\TransactionRequestRecieved;
 use App\Listeners\HasRecievedTransactionRequest;
 use App\Listeners\HasChangedOrderStatus;
 use App\Listeners\HasCompletedTransaction;
 use App\Listeners\HasRecievedNewOrder;
+use App\Listeners\SendContactEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TransactionCompleted::class => [
             HasCompletedTransaction::class,
+        ],
+        SendingContactEmail::class => [
+            SendContactEmail::class,
         ],
     ];
 

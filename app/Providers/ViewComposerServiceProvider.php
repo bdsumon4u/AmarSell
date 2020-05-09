@@ -38,6 +38,6 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer(['reseller.layout', 'reseller.aside.*', 'reseller.cart.*', 'reseller.checkout.*'], ResellerAsideComposer::class);
         View::composer(['reseller.products.partials.mini-cart', 'reseller.cart.*', 'reseller.checkout.*'], CartComposer::class);
 
-        View::composer(['layouts.welcome', 'admin.aside.*', 'components.layouts.*', 'reseller.layout', 'reseller.products.inc.header', 'reseller.products.inc.footer'], SettingComposer::class);
+        View::composer(['contact-form', 'layouts.*', 'admin.aside.*', 'components.layouts.*', 'reseller.layout', 'reseller.products.layout', 'reseller.products.product'], SettingComposer::class);
     }
 }

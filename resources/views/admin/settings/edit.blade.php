@@ -93,6 +93,12 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
+                                                        <label for="company-tagline">Company Tagline</label>
+                                                        <input type="text" name="company[tagline]" id="company-tagline" value="{{ old('company.address', $company->tagline ?? '') }}" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
                                                         <label for="company-address">Company Address</label>
                                                         <input type="text" name="company[address]" id="company-address" value="{{ old('company.address', $company->address ?? '') }}" class="form-control">
                                                     </div>

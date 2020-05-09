@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
 });
 
 Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(PageMiddleware::class);
+Route::post('/contact', 'ContactController')->name('contact');
 
 Route::group(['middleware' => 'auth:reseller'], function(){
     Route::get('/cart', 'CartController@index')->name('cart.index');

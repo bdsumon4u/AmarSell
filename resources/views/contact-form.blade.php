@@ -8,34 +8,30 @@
                     </div>
 
                     <div class="col-md-12">
-                        <form method="POST" action="https://fleetcart.envaysoft.com/en/contact" class="clearfix">
-                            <input type="hidden" name="_token" value="3jFkzirArqrFP9yrAmQkw68omIubZhJUzgwUkrqc">
+                        <form method="POST" action="{{ route('contact') }}" class="clearfix">
+                            @csrf
                             <div class="form-group ">
                                 <label for="email">Email<span>*</span></label>
-                                <input type="text" name="email" class="form-control" id="email" value="">
-
-                                
+                                <input type="text" name="email" class="form-control @error('email') is-invalid @endif" id="email" value="{{ old('email') }}">
+                                @error('email')
+                                <span class="text-danger invalid-feedback">{{ $message }}</span>
+                                @endif
                             </div>
 
                             <div class="form-group ">
                                 <label for="subject">Subject<span>*</span></label>
-                                <input type="text" name="subject" class="form-control" id="subject" value="">
-
-                                
+                                <input type="text" name="subject" class="form-control @error('subject') is-invalid @endif" id="subject" value="{{ old('subject') }}">
+                                @error('email')
+                                <span class="text-danger invalid-feedback">{{ $message }}</span>
+                                @endif
                             </div>
 
                             <div class="form-group ">
                                 <label for="message">Message<span>*</span></label>
-                                <textarea name="message" cols="30" rows="10" id="message"></textarea>
-
-                                
-                            </div>
-
-                            <div class="form-group ">
-                                <img src="https://fleetcart.envaysoft.com/captcha/image?1529766099" style="cursor:pointer;width:180px;height:50px;" title="Update Code" onclick="this.setAttribute('src','https://fleetcart.envaysoft.com/captcha/image?1529766099?_='+Math.random());var captcha=document.getElementById('captcha');if(captcha){captcha.focus()}">
-                                <input type="text" name="captcha" id="captcha" class="captcha-input">
-
-                                
+                                <textarea name="message" cols="30" rows="10" id="message" class="form-control @error('message') is-invalid @endif">{{ old('message') }}</textarea>
+                                @error('message')
+                                <span class="text-danger invalid-feedback">{{ $message }}</span>
+                                @endif
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-submit pull-right" data-loading="">
@@ -53,7 +49,7 @@
 
                         <div class="contact-text">
                             <h4>Phone</h4>
-                            <span>+990123456789</span>
+                            <span>{{ $contact->phone }}</span>
                         </div>
                     </div>
 
@@ -62,7 +58,7 @@
 
                         <div class="contact-text">
                             <h4>Email</h4>
-                            <span>admin@fleetcart.envaysoft.com</span>
+                            <span>{{ $company->email }}</span>
                         </div>
                     </div>
                 </div>

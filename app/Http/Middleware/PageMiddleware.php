@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\View;
 
 class PageMiddleware
 {
@@ -29,8 +30,11 @@ class PageMiddleware
         }
 
         if(strpos($content, '[CONTACT_FORM]') != false) {
-            $form = file_get_contents(resource_path('views/contact-form.blade.php'));
-            $content = str_replace('[CONTACT_FORM]', $form, $content);
+            $content = str_replace(
+                '[CONTACT_FORM]',
+                View::make('contact-form'),
+                $content
+            );
         }
                 
         $response->setContent($content);

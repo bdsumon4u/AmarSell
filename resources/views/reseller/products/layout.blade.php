@@ -5,28 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>
-        Shop
-        - FleetCart
-    </title>
+    @section('title')
+    <title>{{ $company->name }} - {{ $company->tagline }}</title>
+    @show
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <script>
-        window.FleetCart = {
-            csrfToken: '{{ csrf_token() }}',
-            langs: {
-                'storefront::products.loading': '{{ trans("storefront::products.loading") }}',
-            },
-        };
-    </script>
+    @section('meta')
+    <meta name="title" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    @show
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://fleetcart.envaysoft.com/themes/storefront/public/css/app.css?v=1.1.9">
     <!-- <link rel="stylesheet" href="{{ asset('css/shop.css') }}"> -->
     <link rel="shortcut icon"
-        href="https://fleetcart.envaysoft.com/storage/media/w2VuVc7ASHg8KeYCTJWDpLYZu0RjsivUCg4fTN2i.png"
+        href="{{ asset($logo->favicon) ?? '' }}"
         type="image/x-icon">
     <style>
         #overlayer {

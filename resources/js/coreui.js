@@ -15,7 +15,7 @@ import 'jquery-confirm';
 
 // Vue.component('slugify', require('./components/HotashSLUG.vue').default);
 
-import 'sumoselect';
+import 'select2';
 import Dropzone from 'dropzone';
 require('slick-carousel');
 require('slick-lightbox');
@@ -90,7 +90,7 @@ $( document ).ready(function() {
 });
 
 $(document).ready(function(){
-    $('select[selector]').SumoSelect({
+    $('select[selector]').select2({
         search: true,
     });
     

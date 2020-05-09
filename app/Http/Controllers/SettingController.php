@@ -87,21 +87,18 @@ class SettingController extends Controller
         ]);
         $settingsRepo->setMany($data);
 
-        $data = $request->validate([
-            'logo' => 'sometimes|array',
-        ]);
-
-        $logo = $settingsRepo->first('logo')->value;
-        foreach($data['logo'] as $type => $item) {
-            if(! is_null($item)) {
-                if($type == 'favicon') {
-                    $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => '46', 'width' => '46']);
-                } else {
-                    $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => 66, 'width' => 250]);
+        tap($settingsRepo->first('logo')->value, function($logo) use ($request, $settingsRepo) {
+            foreach($request->logo ?? [] as $type => $item) {
+                if(! is_null($item)) {
+                    if($type == 'favicon') {
+                        $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => '46', 'width' => '46']);
+                    } else {
+                        $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => 66, 'width' => 250]);
+                    }
                 }
             }
-        }
-        $settingsRepo->set('logo', $logo);
+            $settingsRepo->set('logo', $logo);
+        });
         
         return redirect()->back()->with('success', 'Settings Saved.');
     }

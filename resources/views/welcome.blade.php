@@ -9,9 +9,9 @@
                     class="img-fluid img-absolute">
                 <div class="row mb-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="col-lg-6 mr-auto">
-                        <h1>Make Your Business More Profitable</h1>
-                        <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-                            assumenda ea quo cupiditate facere deleniti fuga officia.</p>
+                        <h1>{{ $company->tagline ?? 'Make Your Business More Profitable' }}</h1>
+                        <!-- <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+                            assumenda ea quo cupiditate facere deleniti fuga officia.</p> -->
                         <div>
                             <a href="#become-reseller" class="btn btn-primary mr-2 mb-2">Become a Reseller</a>
                         </div>
