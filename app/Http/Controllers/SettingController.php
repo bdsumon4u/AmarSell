@@ -3,15 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Traits\ImageHelper;
+use App\Page;
 use App\Repository\SettingsRepository;
 use App\Setting;
+use CodexShaper\Menu\Models\Menu;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
     use ImageHelper;
 
-    protected $settings = ['company', 'social'];
+    protected $rules = [
+        'company' => 'sometimes|array',
+        'social' => 'sometimes|array',
+        'contact' => 'sometimes|array',
+        'page' => 'sometimes|array',
+        'footer_menu' => 'sometimes|array',
+    ];
 
     /**
      * Display a listing of the resource.
@@ -63,8 +71,11 @@ class SettingController extends Controller
      */
     public function edit(SettingsRepository $settingsRepo)
     {
-        $compact = [];
-        collect($this->settings)
+        $compact = [
+            'all_menus' => Menu::all(),
+            'all_pages' => Page::all(),
+        ];
+        collect(array_keys($this->rules))
             ->map(function($item) use(&$compact, $settingsRepo) {
                 $compact[$item] = $settingsRepo->first($item)->value ?? new Setting;
             });
@@ -80,11 +91,7 @@ class SettingController extends Controller
      */
     public function update(Request $request, SettingsRepository $settingsRepo)
     {
-        $data = $request->validate([
-            'company' => 'sometimes|array',
-            'social' => 'sometimes|array',
-            'contact' => 'sometimes|array',
-        ]);
+        $data = $request->validate($this->rules);
         $settingsRepo->setMany($data);
 
         tap($settingsRepo->first('logo')->value, function($logo) use ($request, $settingsRepo) {

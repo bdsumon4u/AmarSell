@@ -47,6 +47,9 @@
             max-width: 450px !important;
         }
     /* } */
+    .select2 {
+        width: 100% !important;
+    }
 </style>
 @endsection
 
@@ -62,6 +65,7 @@
                             <li class="nav-item rounded-0"><a class="nav-link active" data-toggle="tab" href="#item-1">General</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-2">Social</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-3">Password</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-4">Others</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-8 col-xl-9">
@@ -146,6 +150,11 @@
                                                         <input type="text" name="social[youtube]" value="{{ old('social.youtube', $social->youtube ?? '') }}" class="form-control">
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group mb-0">
+                                                    <button type="submit" class="btn btn-success">Save</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="item-3" role="tabpanel">
@@ -180,6 +189,64 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
                                                     <button type="submit" formaction="{{ route('admin.password.update') }}" class="btn btn-success">Change Password</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="item-4" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4><small class="border-bottom mb-1">Others</small></h4>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="footer-menu-title">Products Page Footer Menu Title</label>
+                                                        <input type="text" name="footer_menu[title]" value="{{ old('footer_menu.title', $footer_menu->title) }}" id="footer-menu-title" class="form-control @error('footer_menu.title') is-invalid @enderror">
+                                                        {!! $errors->first('footer_menu.title', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="footer-menu-id">Products Page Footer Menu</label>
+                                                        <select selector name="footer_menu[id]" id="footer-menu-id" class="form-control @error('footer_menu.id') is-invalid @enderror">
+                                                            <option value="">Select Correct Menu</option>
+                                                            @foreach($all_menus as $item)
+                                                            <option value="{{ $item->id }}" @if($footer_menu->id == $item->id) selected @endif>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        {!! $errors->first('footer_menu.id', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="tac_page">Terms & Conditions Page</label><span class="text-danger">*</span>
+                                                        <select selector name="page[tac]" id="tac_page" class="form-control">
+                                                            <option value="">Select Correct Page</option>
+                                                            @foreach($all_pages as $item)
+                                                            <option value="{{ $item->id }}" @if($page->tac == $item->id) selected @endif>{{ $item->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        {!! $errors->first('tcp', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="faq_page">FAQ Page</label><span class="text-danger">*</span>
+                                                        <select selector name="page[faq]" id="faq_page" class="form-control">
+                                                            <option value="">Select Correct Page</option>
+                                                            @foreach($all_pages as $item)
+                                                            <option value="{{ $item->id }}" @if($page->faq == $item->id) selected @endif>{{ $item->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        {!! $errors->first('tcp', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group mb-0">
+                                                    <button type="submit" class="btn btn-success">Save</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -57,10 +57,11 @@
                         <div class="row">
                             <div class="links">
                                 <div class="mobile-collapse">
-                                    <h4>Popular Categories</h4>
+                                    <h4>{{ $footer_menu->title }}</h4>
                                 </div>
 
-                                <ul class="list-inline">
+                                @menu(optional(\CodexShaper\Menu\Models\Menu::find($footer_menu->id))->slug)
+                                <!-- <ul class="list-inline">
                                     <li><a href="http://fleetcart.envaysoft.com/en/products?category=laptops"
                                             target="_self">Laptops</a></li>
                                     <li><a href="http://fleetcart.envaysoft.com/en/products?category=mobiles"
@@ -71,7 +72,7 @@
                                             target="_self">T-shirts</a></li>
                                     <li><a href="http://fleetcart.envaysoft.com/en/products?category=backpacks"
                                             target="_self">Backpacks</a></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -96,8 +97,7 @@
     <div class="footer-bottom p-tb-20 clearfix">
         <div class="container">
             <div class="copyright text-center">
-                Copyright © <a href="https://fleetcart.envaysoft.com/en"> FleetCart </a> 2020. All rights
-                reserved.
+                Copyright © {{ $company->name }} - 2020. Developed By <a href="https://cyber32.com">Cyber32</a>.
             </div>
         </div>
     </div>

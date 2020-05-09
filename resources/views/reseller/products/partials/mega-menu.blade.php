@@ -1,7 +1,7 @@
 <div class="megamenu-wrapper hidden-xs">
     <div class="container">
         <nav class="navbar navbar-default">
-            @menu('homepagetop')
+            @menu('header-menu')
             <!-- <ul class="nav navbar-nav">
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" target="_self">

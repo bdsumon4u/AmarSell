@@ -88,8 +88,8 @@
                                     @foreach($order->data['products'] as $product)
                                     <tr>
                                         <td class="center">{{ $loop->index + 1 }}</td>
-                                        <td class="left">{{ $product['slug'] }}</td>
-                                        <td class="center">{{ $product['code'] }}</td>
+                                        <td class="left">{{ $product['name'] }}</td>
+                                        <td class="center text-uppercase">{{ $product['code'] }}</td>
                                         <td class="right">{{ $product['quantity'] }}</td>
                                     </tr>
                                     @endforeach
