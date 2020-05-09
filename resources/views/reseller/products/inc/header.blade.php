@@ -8,7 +8,7 @@
             </button>
 
             <a href="{{ route('reseller.product.index') }}" class="website-logo pull-left">
-                <img src="https://fleetcart.envaysoft.com/storage/media/r7LLPDONYuawTltrLmtMkEio9JwnK6Cxk3Ggimfr.png"
+                <img src="{{ asset($logo->color) ?? '' }}"
                     alt="header-logo">
             </a>
 

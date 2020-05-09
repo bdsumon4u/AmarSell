@@ -4,8 +4,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="{{ asset('coreui/brand/logo.png') }}" width="89" height="25" alt="Logo">
-        <img class="navbar-brand-minimized" src="{{ asset('coreui/brand/favicon.png') }}" width="30" height="30" alt="Favicon">
+        <img class="navbar-brand-full" src="{{ asset($logo->white) ?? '' }}" width="89" height="25" alt="Logo">
+        <img class="navbar-brand-minimized" src="{{ asset($logo->favicon) ?? '' }}" width="30" height="30" alt="Favicon">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
             <a class="nav-link" href="{{ route('admin.resellers') }}">Resellers</a>
         </li>
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="{{ route('admin.settings.edit') }}">Settings</a>
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -31,7 +31,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                 aria-expanded="false">
-                <img class="img-avatar rounded-0" src="{{ asset('coreui/brand/favicon.png') }}" alt="">
+                <i class="fa fa-user r"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">

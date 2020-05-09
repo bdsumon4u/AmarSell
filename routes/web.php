@@ -72,6 +72,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('/pages/{page:slug}/edit', 'PageController@edit')->name('pages.edit');
     Route::patch('/pages/{page:slug}/edit', 'PageController@update')->name('pages.update');
     Route::delete('/pages/{page:slug}/delete', 'PageController@destroy')->name('pages.destroy');
+
+    Route::get('/settings', 'SettingController@edit')->name('settings.edit');
+    Route::patch('/settings', 'SettingController@update')->name('settings.update');
+
+    Route::patch('/password', 'PasswordController')->name('password.update');
 });
 
 Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(PageMiddleware::class);
@@ -108,7 +113,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::get('/setting', 'SettingController@edit')->name('setting.edit');
     Route::patch('/setting', 'SettingController@update')->name('setting.update');
 
-    Route::patch('/password', 'PasswordController@update')->name('password.update');
+    Route::patch('/password', 'PasswordController')->name('password.update');
 
     Route::get('/profile/{reseller}', 'ProfileController')->name('profile.show');
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');

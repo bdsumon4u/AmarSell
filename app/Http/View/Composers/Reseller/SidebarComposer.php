@@ -17,7 +17,7 @@ class SidebarComposer
             'route' => 'reseller.home',
         ],
         [
-            'icon' => 'fa fa-tachometer',
+            'icon' => 'fa fa-product-hunt',
             'style' => 'simple',
             'name' => 'Products',
             'route' => 'reseller.product.index',
@@ -74,10 +74,14 @@ class SidebarComposer
             ],
         ],
         [
-            'icon' => 'fa fa-server',
+            'icon' => 'fa fa-money',
             'style' => 'dropdown',
             'name' => 'Transactions',
             'items' => [
+                [
+                    'name' => 'Setting',
+                    'route' => 'reseller.setting.edit',
+                ],
                 [
                     'name' => 'History',
                     'route' => 'reseller.transactions.index',

@@ -95,7 +95,11 @@
         }
         .product-card .image-holder,
         .product-card .image-placeholder {
-            border: 2px solid #ddd;
+            /* border: 2px solid #ddd; */
+        }
+        .base-image-inner img {
+            height: 100% !important;
+            width: 100% !important;
         }
         .cart-list .table-responsive td:nth-child(6) {
             width: auto;

@@ -160,28 +160,27 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="password">Password</label><span class="text-danger">*</span>
-                                                        <input name="password" value="{{ old('password') }}" id="" cols="30" rows="10" class="form-control @error('password') is-invalid @enderror">
+                                                        <input type="password" name="password" value="{{ old('password') }}" id="password" class="form-control @error('password') is-invalid @enderror">
                                                         {!! $errors->first('password', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="password_confirmation">Confirm Password</label><span class="text-danger">*</span>
-                                                        <input name="password_confirmation" value="{{ old('password_confirmation') }}" id="" cols="30" rows="10" class="form-control @error('password_confirmation') is-invalid @enderror">
+                                                        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
                                                         {!! $errors->first('password_confirmation', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="old_password">Old Password</label><span class="text-danger">*</span>
-                                                        <input name="old_password" value="{{ old('old_password') }}" id="" cols="30" rows="10" class="form-control @error('old_password') is-invalid @enderror">
-                                                        {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
+                                                        <input type="password" name="old_password" value="{{ old('old_password') }}" id="old_password" class="form-control @error('old_password') is-invalid @enderror">
+                                                        {!! $errors->first('old_password', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
-                                                    @method('PATCH')
-                                                    <button type="submit" formaction="{{ route('reseller.password.update') }}" class="btn btn-success">Submit</button>
+                                                    <button type="submit" formaction="{{ route('reseller.password.update') }}" class="btn btn-success">Change Password</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -52,13 +52,13 @@ class SidebarComposer
                 ],
             ],
             [
-                'icon' => 'fa fa-columns',
+                'icon' => 'fa fa-bars',
                 'style' => 'simple',
                 'name' => 'Menus',
                 'url' => 'admin/menus',
             ],
             [
-                'icon' => 'fa fa-server',
+                'icon' => 'fa fa-file-text',
                 'style' => 'dropdown',
                 'name' => 'Pages',
                 'items' => [
@@ -127,7 +127,7 @@ class SidebarComposer
                 ],
             ],
             [
-                'icon' => 'fa fa-server',
+                'icon' => 'fa fa-money',
                 'style' => 'dropdown',
                 'name' => 'Transactions',
                 'items' => [

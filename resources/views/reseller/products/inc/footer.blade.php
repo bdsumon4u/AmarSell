@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <a href="https://fleetcart.envaysoft.com/en" class="footer-logo">
-                        <img src="https://fleetcart.envaysoft.com/storage/media/r7LLPDONYuawTltrLmtMkEio9JwnK6Cxk3Ggimfr.png"
+                        <img src="{{ asset($logo->footer ?? $logo->color) ?? '' }}"
                             class="img-responsive" alt="footer-logo">
                     </a>
 
@@ -16,17 +16,17 @@
                         <ul class="list-inline">
                             <li>
                                 <i class="fa fa-phone-square" aria-hidden="true"></i>
-                                <span class="contact-info">+990123456789</span>
+                                <span class="contact-info">{{ $contact->phone ?? '' }}</span>
                             </li>
 
                             <li>
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                <span class="contact-info">admin@fleetcart.envaysoft.com</span>
+                                <span class="contact-info">{{ $company->email ?? '' }}</span>
                             </li>
 
                             <li>
                                 <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                <span class="contact-info">Mohammadpur, Dhaka</span>
+                                <span class="contact-info">{{ $company->address ?? '' }}</span>
                             </li>
                         </ul>
                     </div>
@@ -41,13 +41,11 @@
                                 </div>
 
                                 <ul class="list-inline">
-                                    <li><a href="https://fleetcart.envaysoft.com/en/account">Dashboard</a>
+                                    <li><a href="{{ route('reseller.home') }}">Dashboard</a>
                                     </li>
-                                    <li><a href="https://fleetcart.envaysoft.com/en/account/orders">My
+                                    <li><a href="{{ route('reseller.order.index') }}">My
                                             Orders</a></li>
-                                    <li><a href="https://fleetcart.envaysoft.com/en/account/reviews">My
-                                            Reviews</a></li>
-                                    <li><a href="https://fleetcart.envaysoft.com/en/account/profile">My
+                                    <li><a href="{{ route('reseller.profile.show', auth('reseller')->user()->id) }}">My
                                             Profile</a></li>
 
                                 </ul>
@@ -82,7 +80,7 @@
         </div>
 
         <div class="footer-middle p-tb-30 clearfix">
-            {!! iconMenu('footersocial') !!}
+            {!! iconMenu('iconsocial') !!}
             <!-- <ul class="social-links list-inline">
                 <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>

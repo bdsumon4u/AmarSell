@@ -11,14 +11,9 @@ class AsideComposer
      */
     public $asideTab = [
         [
-            'title' => 'Account',
-            'id' => 'account',
-            'view' => 'reseller.aside.account',
-        ],
-        [
-            'title' => 'Transactions',
-            'id' => 'transactions',
-            'view' => 'reseller.aside.transactions',
+            'title' => 'BaseSetting',
+            'id' => 'base-setting',
+            'view' => 'admin.aside.base-setting',
         ],
     ];
 
@@ -30,6 +25,6 @@ class AsideComposer
      */
     public function compose(View $view)
     {
-        $view->with('asideTab', []);
+        $view->with('asideTab', $this->asideTab);
     }
 }

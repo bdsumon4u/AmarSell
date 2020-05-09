@@ -13,6 +13,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
+    <style>
+        .footer ul {
+            margin-bottom: 0;
+        }
+        .footer ul li {
+            display: inline-block;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .footer ul li i {
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -35,8 +48,9 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-6 col-md-3 col-xl-4  d-block">
-                        <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">imagine<span
-                                    class="text-primary">.</span> </a></h1>
+                        <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">
+                            <img src="{{ asset($logo->white) ?? '' }}" alt="Logo" style="height: 50px; width: 240px;">
+                        </h1>
                     </div>
                     <div class="col-12 col-md-9 col-xl-8 main-menu">
                         <nav class="site-navigation position-relative text-right" role="navigation">
@@ -58,13 +72,9 @@
         @yield('content')
         <div class="footer py-5 text-center">
             <div class="container">
-                <div class="row mb-5">
+                <div class="row mb-3">
                     <div class="col-12">
-                        <p class="mb-0">
-                            <a href="#" class="p-3"><span class="fa fa-facebook"></span></a>
-                            <a href="#" class="p-3"><span class="fa fa-twitter"></span></a>
-                            <a href="#" class="p-3"><span class="fa fa-instagram"></span></a>
-                        </p>
+                        {!! iconMenu('iconsocial') !!}
                     </div>
                 </div>
                 <div class="row">

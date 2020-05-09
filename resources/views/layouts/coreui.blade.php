@@ -40,6 +40,23 @@
         .nav-dropdown-items .nav-link {
             padding-left: 5px !important;
         }
+        i.fa.fa-user.r {
+            font-size: 20px;
+            border-radius: 10px;
+            background: #efeeee;
+            padding: 5px 8px;
+            color: #444;
+            border: 3px double red;
+        }
+        label {
+            font-weight: bold;
+            font-family: cursive, monospace;
+            font-size: 14px;
+        }
+        #base-setting .form-group {
+            padding: 2px 3px;
+            border: 1px solid #ddd;
+        }
     </style>
     @yield('styles')
 </head>
@@ -77,6 +94,24 @@
     <script>
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
+
+            $('#color-logo, #white-logo, #footer-logo, #favicon-logo').change(function(e){
+                console.log('changed')
+                renderLogo(this);
+            });
+
+            function renderLogo(input) {
+                console.log('rendering')
+                if(input.files.length) {
+                    console.log('has length')
+                    var reader = new FileReader;
+                    reader.readAsDataURL(input.files[0]);
+                    reader.onload = function(e) {
+                        console.log('onload')
+                        $(input).next('img').show().attr('src', e.target.result);
+                    }
+                }
+            }
         });
     </script>
 </body>

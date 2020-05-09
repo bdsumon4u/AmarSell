@@ -8,6 +8,7 @@ use App\Http\View\Composers\CartComposer;
 use App\Http\View\Composers\Admin\HeaderComposer;
 use App\Http\View\Composers\Admin\SidebarComposer as AdminSidebarComposer;
 use App\Http\View\Composers\Admin\AsideComposer as AdminAsideComposer;
+use App\Http\View\Composers\SettingComposer;
 use App\Http\View\Composers\Reseller\SidebarComposer as ResellerSidebarComposer;
 use App\Http\View\Composers\Reseller\AsideComposer as ResellerAsideComposer;
 
@@ -36,5 +37,7 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer(['reseller.layout'], ResellerSidebarComposer::class);
         View::composer(['reseller.layout', 'reseller.aside.*', 'reseller.cart.*', 'reseller.checkout.*'], ResellerAsideComposer::class);
         View::composer(['reseller.products.partials.mini-cart', 'reseller.cart.*', 'reseller.checkout.*'], CartComposer::class);
+
+        View::composer(['layouts.welcome', 'admin.aside.*', 'components.layouts.*', 'reseller.layout', 'reseller.products.inc.header', 'reseller.products.inc.footer'], SettingComposer::class);
     }
 }

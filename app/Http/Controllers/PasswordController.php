@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Reseller;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,8 +15,8 @@ class PasswordController extends Controller
             'old_password' => 'required',
         ]);
 
-        if(Hash::check($data['old_password'], auth('reseller')->user()->password)) {
-            if(auth('reseller')->user()->update($data)) {
+        if(Hash::check($data['old_password'], auth()->user()->password)) {
+            if(auth()->user()->update($data)) {
                 return redirect()->back()->with('success', 'Password Changed Successfully.');
             }
         }
