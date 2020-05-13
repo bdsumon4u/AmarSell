@@ -12,7 +12,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'reseller_id', 'data', 'status',
+        'reseller_id', 'data', 'status', 'created_at', 'updated_at',
     ];
 
     public function setDataAttribute($data)

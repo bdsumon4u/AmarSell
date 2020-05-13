@@ -6,9 +6,13 @@ use App\Order;
 use Faker\Generator as Faker;
 
 $factory->define(Order::class, function (Faker $faker) {
-    $s = [0, 50, 100];
+    $sa = [0, 50, 60, 100];
+    $s = $sa[mt_rand(0, 3)];
+    $a = $sa[mt_rand(0, 3)];
+    $sell = 3130 + mt_rand(150, 500);
+    $date = now()->subDays(mt_rand(1, 35));
     return [
-        'reseller_id' => mt_rand(1, 3),
+        'reseller_id' => mt_rand(1, 26),
         'data' => [
             'customer_name' => $faker->name,
             'customer_email' => $faker->email,
@@ -16,29 +20,34 @@ $factory->define(Order::class, function (Faker $faker) {
             'customer_address' => $faker->address,
             'shop' => mt_rand(1, 2),
             'delivery_method' => $faker->name,
-            'sell' => 2421 + mt_rand(150, 500),
-            'shipping' => $s[mt_rand(0, 2)],
-            'advanced' => $s[mt_rand(0, 2)],
+            'sell' => $sell,
+            'shipping' => $s,
+            'advanced' => $a,
+            'payable' => $sell + $s - $a,
 
-            'price' => 2421.0,
+            'price' => 3130.0,
             'products' => [
-                193 => [
-                    'id' => 193,
+                3 => [
+                    'id' => 3,
                     'quantity' => 3,
-                    'code' => 'AiSKv8PAK7',
-                    'slug' => 'fugiat-unde-voluptatem-quia-natus-eos-animi',
-                    'wholesale' => 527,
-                    'retail' => 608,
+                    'name' => 'Arduino Uno',
+                    'code' => 'KEF01HZXTG',
+                    'slug' => 'arduino-uno',
+                    'wholesale' => 720,
+                    'retail' => 826,
                 ],
-                192 => [
-                    'id' => 192,
+                1 => [
+                    'id' => 1,
                     'quantity' => 2,
-                    'code' => 'UUcjsyrUvH',
-                    'slug' => 'perferendis-neque-eos-ut-maiores-dolores',
-                    'wholesale' => 420,
-                    'retail' => 493,
+                    'name' => 'Bijoy Biyanno Keyboard',
+                    'code' => 'FUUYN7HUKW',
+                    'slug' => 'bijoy-biyanno-keyboard',
+                    'wholesale' => 485,
+                    'retail' => 680,
                 ],
             ]
-        ]
+        ],
+        'created_at' => $date,
+        'updated_at' => $date,
     ];
 });

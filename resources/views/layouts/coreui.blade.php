@@ -72,7 +72,7 @@
         </div>
     </div>
     <x-layouts.header />
-    <div class="app-body">
+    <div class="app-body" id="app">
         <x-layouts.sidebar :menu="$menu" />
         <main class="main mt-3">
             <!-- Breadcrumb-->

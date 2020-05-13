@@ -90,9 +90,11 @@ $( document ).ready(function() {
 });
 
 $(document).ready(function(){
-    $('select[selector]').select2({
-        search: true,
-    });
+    if($('select[selector]').length) {
+        $('select[selector]').select2({
+            search: true,
+        });
+    }
     
     $('.delete-action').click(function(e) {
         e.preventDefault();
@@ -150,45 +152,58 @@ $(document).ready(function(){
         let baseImage = $('.base-image');
         let additionalImage = $('.additional-image');
 
-        baseImage.slick($.extend({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            dots: false,
-            arrows: false,
-            infinite: false,
-            fade: false,
-            draggable: false,
-            swipe: false,
-            rows: 0,
-            rtl: false,
-        }, baseImageConfig));
+        if(baseImage.length) {
+            baseImage.slick($.extend({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: false,
+                arrows: false,
+                infinite: false,
+                fade: false,
+                draggable: false,
+                swipe: false,
+                rows: 0,
+                rtl: false,
+            }, baseImageConfig));
 
-        additionalImage.slick($.extend({
-            slidesToShow: 4,
-            slideToScroll: 1,
-            dots: false,
-            arrows: true,
-            infinite: false,
-            centerMode: false,
-            focusOnSelect: true,
-            asNavFor: '.base-image',
-            rows: 0,
-            rtl: false,
-            responsive: [
-                {
-                    breakpoint: 1199,
-                    settings: {
-                        slidesToShow: 4,
-                    },
+            baseImage.slickLightbox({
+                itemSelector: '.base-image-inner',
+                useHistoryApi: true,
+                slick: {
+                    infinite: false,
+                    rtl: false,
                 },
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3,
+            });
+        }
+
+        if(additionalImage.length) {
+            additionalImage.slick($.extend({
+                slidesToShow: 4,
+                slideToScroll: 1,
+                dots: false,
+                arrows: true,
+                infinite: false,
+                centerMode: false,
+                focusOnSelect: true,
+                asNavFor: '.base-image',
+                rows: 0,
+                rtl: false,
+                responsive: [
+                    {
+                        breakpoint: 1199,
+                        settings: {
+                            slidesToShow: 4,
+                        },
                     },
-                },
-            ],
-        }, additionalImageConfig));
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 3,
+                        },
+                    },
+                ],
+            }, additionalImageConfig));
+        }
 
         $('.base-image-inner img').each((i, img) => {
             new Drift(img, {
@@ -199,15 +214,6 @@ $(document).ready(function(){
                 containInline: true,
                 hoverBoundingBox: true,
             });
-        });
-
-        baseImage.slickLightbox({
-            itemSelector: '.base-image-inner',
-            useHistoryApi: true,
-            slick: {
-                infinite: false,
-                rtl: false,
-            },
         });
     }
 

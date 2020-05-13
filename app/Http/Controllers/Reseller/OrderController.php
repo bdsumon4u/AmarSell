@@ -61,6 +61,7 @@ class OrderController extends Controller
             'advanced' => 'required|integer',
         ]);
         $data['payable'] = $data['sell'] + $data['shipping'] - $data['advanced'];
+        
         $cart = CartFacade::session($reseller->id);
         $data['price'] = $cart->getTotal();
         $products = $cart->getContent()
