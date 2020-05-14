@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('categories', 'CategoryController');
     Route::resource('products', 'ProductController');
     Route::resource('images', 'ImageController');
-    Route::get('orders', 'OrderController@index')->name('order.index');
+    Route::view('orders', 'admin.orders.list')->name('order.index');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
@@ -56,8 +56,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('/transactions/pay', 'TransactionController@pay')->name('transactions.pay');
     Route::get('/transactions/pay/{reseller}', 'TransactionController@payToReseller')->name('transactions.pay-to-reseller');
     Route::post('/transactions/pay/store', 'TransactionController@store')->name('transactions.pay.store');
-    Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
-    Route::get('/transactions/requests', 'TransactionController@requests')->name('transactions.requests');
+    Route::view('/transactions/history', 'admin.transactions.index')->name('transactions.index');
+    Route::view('/transactions/requests', 'admin.transactions.requests')->name('transactions.requests');
 
     Route::resource('images', 'ImageController');
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
@@ -100,14 +100,14 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
 
 
-    Route::get('/orders', 'OrderController@index')->name('order.index');
+    Route::view('/orders', 'reseller.orders.list')->name('order.index');
     Route::post('/order/store', 'OrderController@store')->name('order.store');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
     Route::delete('order/{order}/delete', 'OrderController@destroy')->name('order.destroy');
     
     
-    Route::get('/transactions/history', 'TransactionController@index')->name('transactions.index');
+    Route::view('/transactions/history', 'reseller.transactions.index')->name('transactions.index');
     Route::get('/transactions/request', 'TransactionController@request')->name('transactions.request');
     Route::post('/transactions/request', 'TransactionController@store')->name('transactions.store');
 

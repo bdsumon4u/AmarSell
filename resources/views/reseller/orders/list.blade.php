@@ -29,34 +29,6 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($orders as $order)
-                                <tr data-row-id="{{ $order->id }}">
-                                    <td></td>
-                                    <td>{{ $order->id }}</td>
-                                    <td>
-                                        <strong>Name:</strong> {{ $order->data['customer_name'] }}
-                                        <br>
-                                        <strong>Phone:</strong> {{ $order->data['customer_phone'] }}
-                                    </td>
-                                    <td><span class="badge badge-square badge-primary text-uppercase">{{ $order->status }}</span></td>
-                                    <td>
-                                        <strong>Buy:</strong> {{ $order->data['price'] }}
-                                        <br>
-                                        @if($order->status == 'pending')
-                                            @php $current_price = $order->current_price() @endphp
-                                            @if($order->data['price'] != $current_price)
-                                                <strong>Current:</strong> {{ $current_price }}
-                                                <br>
-                                            @endif
-                                        @endif
-                                        <strong>Sell:</strong> {{ $order->data['sell'] }}
-                                    </td>
-                                    <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" target="_blank" href="{{ route('reseller.order.show', $order->id) }}">View</a></td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -118,14 +90,6 @@
                     columns: ':visible'
                 }
             },
-            // {
-            //     extend: 'copy',
-            //     className: 'btn-light',
-            //     text: 'Copy',
-            //     exportOptions: {
-            //         columns: ':visible'
-            //     }
-            // },
             {
                 extend: 'csv',
                 className: 'btn-light',
@@ -160,9 +124,24 @@
             },
         ],
     });
-    var dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+    var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
     $('.datatable').DataTable({
-        buttons: dtButtons
+        processing: true,
+        serverSide: true,
+        ajax: "{!! route('api.orders.index', [request('status', 'pending'), auth('reseller')->user()->id]) !!}",
+        buttons: dt_buttons,
+        columns: [
+            { data: 'empty', name: 'empty' },
+            { data: 'id', name: 'id' },
+            { data: 'customer', name: 'customer' },
+            { data: 'status', name: 'status' },
+            { data: 'price', name: 'price' },
+            { data: 'ordered_at', name: 'ordered_at' },
+            { data: 'action', name: 'action' },
+        ],
+        order: [
+            [1, 'desc']
+        ],
     });
 </script>
 @endsection

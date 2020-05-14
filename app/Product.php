@@ -64,7 +64,7 @@ class Product extends Model
 
     public function getBaseImageAttribute()
     {
-        return asset($this->baseImage()->path);
+        return asset(optional($this->baseImage())->path);
     }
 
     public function getAdditionalImagesAttribute()

@@ -27,37 +27,8 @@
                                     <th>Way</th>
                                     <th>Account Number</th>
                                     <th>Transaction Number</th>
-                                    <th>Transaction</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($transactions as $transaction)
-                                <tr data-row-id="{{ $transaction->id }}">
-                                    <td></td>
-                                    <td>{{ $transaction->id }}</td>
-                                    @php $reseller = $transaction->reseller @endphp
-                                    
-                                    <td>{{ $transaction->amount }}</td>
-                                    <td>{{ $transaction->created_at->format('F j, Y') }}</td>
-                                    <td>
-                                        <strong>Method:</strong> {{ $transaction->method }}
-                                        @if($transaction->method == 'Bank')
-                                        <br>
-                                        <strong>Bank Name:</strong> {{ $transaction->bank_name }}
-                                        <br>
-                                        <strong>Account Name:</strong> {{ $transaction->account_name }}
-                                        <br>
-                                        <strong>Branch:</strong> {{ $transaction->branch }}
-                                        <br>
-                                        <strong>Routing No:</strong> {{ $transaction->routing_no }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $transaction->account_number }}</td>
-                                    <td>{{ $transaction->transaction_number }}</td>
-                                    <td>{{ ucfirst($transaction->status) }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -87,11 +58,11 @@
                 searchable: false,
                 targets: 0,
             },
-            // {
-            //     orderable: false,
-            //     searchable: false,
-            //     targets: -1
-            // },
+            {
+                orderable: false,
+                searchable: false,
+                targets: -1
+            },
         ],
         select: {
             style:    'multi+shift',
@@ -161,9 +132,24 @@
             },
         ],
     });
-    var dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+    var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
     $('.datatable').DataTable({
-        buttons: dtButtons
+        processing: true,
+        serverSide: true,
+        ajax: "{!! route('api.transactions.index', [request('status', 'paid'), auth('reseller')->user()->id]) !!}",
+        buttons: dt_buttons,
+        columns: [
+            { data: 'empty', name: 'empty' },
+            { data: 'id', name: 'id' },
+            { data: 'amount', name: 'amount' },
+            { data: 'date', name: 'date' },
+            { data: 'way', name: 'way' },
+            { data: 'account_number', name: 'account_number' },
+            { data: 'transaction_number', name: 'transaction_number' },
+        ],
+        order: [
+            [1, 'desc']
+        ],
     });
 </script>
 @endsection

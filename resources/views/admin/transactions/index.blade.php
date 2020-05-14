@@ -28,43 +28,8 @@
                                     <th>Way</th>
                                     <th>Account Number</th>
                                     <th>Transaction Number</th>
-                                    <th>Remain</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($transactions as $transaction)
-                                <tr data-row-id="{{ $transaction->id }}">
-                                    <td></td>
-                                    <td>{{ $transaction->id }}</td>
-                                    @php $reseller = $transaction->reseller @endphp
-                                    <td>
-                                        <a href="{{ route('reseller.profile.show', $reseller->id) }}">
-                                            <strong>Name:</strong> {{ $reseller->name }}
-                                            <br>
-                                            <strong>Phone:</strong> {{ $reseller->phone }}
-                                        </a>
-                                    </td>
-                                    <td>{{ $transaction->amount }}</td>
-                                    <td>{{ $transaction->created_at->format('F j, Y') }}</td>
-                                    <td>
-                                        <strong>Method:</strong> {{ $transaction->method }}
-                                        @if($transaction->method == 'Bank')
-                                        <br>
-                                        <strong>Bank Name:</strong> {{ $transaction->bank_name }}
-                                        <br>
-                                        <strong>Account Name:</strong> {{ $transaction->account_name }}
-                                        <br>
-                                        <strong>Branch:</strong> {{ $transaction->branch }}
-                                        <br>
-                                        <strong>Routing No:</strong> {{ $transaction->routing_no }}
-                                        @endif
-                                    </td>
-                                    <td>{{ $transaction->account_number }}</td>
-                                    <td>{{ $transaction->transaction_number }}</td>
-                                    <td>{{ $reseller->balance }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -168,9 +133,25 @@
             },
         ],
     });
-    var dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
+    var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
     $('.datatable').DataTable({
-        buttons: dtButtons
+        processing: true,
+        serverSide: true,
+        ajax: "{!! route('api.transactions.index', request('status', 'paid')) !!}",
+        buttons: dt_buttons,
+        columns: [
+            { data: 'empty', name: 'empty' },
+            { data: 'id', name: 'id' },
+            { data: 'reseller', name: 'reseller' },
+            { data: 'amount', name: 'amount' },
+            { data: 'date', name: 'date' },
+            { data: 'way', name: 'way' },
+            { data: 'account_number', name: 'account_number' },
+            { data: 'transaction_number', name: 'transaction_number' },
+        ],
+        order: [
+            [1, 'desc']
+        ],
     });
 </script>
 @endsection

@@ -16,8 +16,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = auth('reseller')->user()->transactions;
-        return view('reseller.transactions.index', compact('transactions'));
+        $reseller = auth('reseller')->user();
+        $transactions = $reseller->transactions;
+        return view('reseller.transactions.index', compact('reseller', 'transactions'));
     }
 
     /**

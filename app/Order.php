@@ -30,6 +30,14 @@ class Order extends Model
         return Shop::find($this->data['shop']);
     }
 
+    /**
+     * Scope Status
+     */
+    public function scopeStatus($query, $status)
+    {
+        return is_null($status) ? $query : $query->where('status', $status);
+    }
+
     public function current_price()
     {
         $products = Product::whereIn('id', array_keys($this->data['products']))->get();

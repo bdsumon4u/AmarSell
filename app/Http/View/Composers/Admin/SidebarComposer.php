@@ -86,7 +86,7 @@ class SidebarComposer
                     [
                         'name' => 'Pending',
                         'route' => 'admin.order.index',
-                        'param' => 'filter[status]=pending',
+                        'param' => 'status=pending',
                         'badge' => [
                             'variant' => 'secondary',
                             'data' => $this->order_count['pending'],
@@ -95,7 +95,7 @@ class SidebarComposer
                     [
                         'name' => 'Accepted',
                         'route' => 'admin.order.index',
-                        'param' => 'filter[status]=accepted',
+                        'param' => 'status=accepted',
                         'badge' => [
                             'variant' => 'secondary',
                             'data' => $this->order_count['accepted'],
@@ -104,7 +104,7 @@ class SidebarComposer
                     [
                         'name' => 'Processing',
                         'route' => 'admin.order.index',
-                        'param' => 'filter[status]=processing',
+                        'param' => 'status=processing',
                         'badge' => [
                             'variant' => 'secondary',
                             'data' => $this->order_count['processing'],
@@ -113,7 +113,7 @@ class SidebarComposer
                     [
                         'name' => 'Transporting',
                         'route' => 'admin.order.index',
-                        'param' => 'filter[status]=transporting',
+                        'param' => 'status=transporting',
                         'badge' => [
                             'variant' => 'secondary',
                             'data' => $this->order_count['transporting'],
@@ -122,7 +122,7 @@ class SidebarComposer
                     [
                         'name' => 'Completed',
                         'route' => 'admin.order.index',
-                        'param' => 'filter[status]=completed',
+                        'param' => 'status=completed',
                     ],
                 ],
             ],
