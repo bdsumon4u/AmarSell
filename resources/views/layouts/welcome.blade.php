@@ -60,7 +60,7 @@
                             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block ml-0 pl-0">
                                 <li><a href="#home-section" class="nav-link">Home</a></li>
                                 <li><a href="#login-section" class="nav-link">Login</a></li>
-                                <li><a href="#features-section" class="nav-link">Features</a></li>
+                                <li><a href="#communicate-section" class="nav-link">Communicate</a></li>
                                 <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
                                 <li><a href="#become-reseller" class="nav-link">Become a Reseller</a></li>
                             </ul>
@@ -75,15 +75,10 @@
         @yield('content')
         <div class="footer py-5 text-center">
             <div class="container">
-                <div class="row mb-3">
-                    <div class="col-12">
-                        {!! iconMenu('iconsocial') !!}
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="mb-0">
-                            <span class="float-right d-inline w-100">Developed By<a href="https://cyber32.com" class="text-danger">&nbsp;Cyber32</a></span>
+                        <p class="mb-0 d-flex justify-content-center">
+                            <span class="d-none d-md-block">Copyright &copy; {{ $company->name }}&nbsp;|&nbsp;</span><span class="">Developed By<a href="https://cyber32.com" class="text-danger">&nbsp;Cyber32</a></span>
                         </p>
                     </div>
                 </div>
@@ -96,8 +91,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
-    <script src="{{ asset('js/landing.js') }}"></script>
     <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"></script>
+    <script src="{{ asset('js/landing.js') }}"></script>
 </body>
 
 </html>

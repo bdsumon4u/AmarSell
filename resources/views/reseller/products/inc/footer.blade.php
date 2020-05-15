@@ -81,7 +81,15 @@
         </div>
 
         <div class="footer-middle p-tb-30 clearfix">
-            {!! iconMenu('iconsocial') !!}
+            <ul class="social-links list-inline">
+                <li class="d-inline-block"><a href="mailto:{{ $company->email }}"><i class="fa fa-envelope"></i></a></li>
+                <li class="d-inline-block"><a href="tel:{{ $contact->phone }}"><i class="fa fa-phone"></i></a></li>
+                @foreach($social as $name => $item)
+                    @if($item->display ?? false)
+                    <li class="d-inline-block"><a href="{{ url($item->link) }}"><i class="fa fa-{{ $name }}"></i></a></li>
+                    @endif
+                @endforeach
+            </ul>
             <!-- <ul class="social-links list-inline">
                 <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>

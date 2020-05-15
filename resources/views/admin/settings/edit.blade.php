@@ -50,6 +50,9 @@
     .select2 {
         width: 100% !important;
     }
+    .input-group-append input {
+        min-width: 0 !important;
+    }
 </style>
 @endsection
 
@@ -123,7 +126,12 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fa fa-facebook"></i></span>
                                                         </div>
-                                                        <input type="text" name="social[facebook]" value="{{ old('social.facebook', $social->facebook ?? '') }}" class="form-control">
+                                                        <input type="text" name="social[facebook][link]" value="{{ old('social.facebook.link', $social->facebook->link ?? '') }}" class="form-control">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <input type="checkbox" name="social[facebook][display]" {{ ($social->facebook->display ?? false) ? 'checked' : '' }}>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -131,7 +139,12 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fa fa-twitter"></i></span>
                                                         </div>
-                                                        <input type="text" name="social[twitter]" value="{{ old('social.twitter', $social->twitter ?? '') }}" class="form-control">
+                                                        <input type="text" name="social[twitter][link]" value="{{ old('social.twitter.link', $social->twitter->link ?? '') }}" class="form-control">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <input type="checkbox" name="social[twitter][display]" {{ ($social->twitter->display ?? false) ? 'checked' : '' }}>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -139,7 +152,12 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fa fa-instagram"></i></span>
                                                         </div>
-                                                        <input type="text" name="social[instagram]" value="{{ old('social.instagram', $social->instagram ?? '') }}" class="form-control">
+                                                        <input type="text" name="social[instagram][link]" value="{{ old('social.instagram.link', $social->instagram->link ?? '') }}" class="form-control">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <input type="checkbox" name="social[instagram][display]" {{ ($social->instagram->display ?? false) ? 'checked' : '' }}>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -147,7 +165,12 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fa fa-youtube"></i></span>
                                                         </div>
-                                                        <input type="text" name="social[youtube]" value="{{ old('social.youtube', $social->youtube ?? '') }}" class="form-control">
+                                                        <input type="text" name="social[youtube][link]" value="{{ old('social.youtube.link', $social->youtube->link ?? '') }}" class="form-control">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <input type="checkbox" name="social[youtube][display]" {{ ($social->youtube->display ?? false) ? 'checked' : '' }}>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
