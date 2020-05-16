@@ -61,7 +61,7 @@
                                 <li><a href="#home-section" class="nav-link">Home</a></li>
                                 <li><a href="#login-section" class="nav-link">Login</a></li>
                                 <li><a href="#communicate-section" class="nav-link">Communicate</a></li>
-                                <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
+                                <li><a href="#faqs-section" class="nav-link">FAQs</a></li>
                                 <li><a href="#become-reseller" class="nav-link">Become a Reseller</a></li>
                             </ul>
                         </nav>

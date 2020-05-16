@@ -27,7 +27,14 @@
                                     <td>{{ $page->title }}</td>
                                     <td>{{ $page->slug }}</td>
                                     <td>{!! substr(strip_tags($page->content), 0, 100) !!}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" target="_blank" href="{{ route('admin.pages.edit', $page->slug) }}">Edit</a></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-block btn-primary" target="_blank" href="{{ route('admin.pages.edit', $page->slug) }}">Edit</a>
+                                        <form action="{{ route('admin.pages.destroy', $page->slug) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-block btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -1,5 +1,27 @@
 @extends('reseller.products.layout')
 
+@section('styles')
+<style>
+    #accordion {
+        background: #f1f1f1;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #accordion .btn-link {
+        font-size: 2.5rem;
+        border: none;
+    }
+    #accordion .card-body {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    #accordion ul,
+    #accordion ol {
+        margin-left: 1rem;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="content-wrapper clearfix ">
     <div class="container">

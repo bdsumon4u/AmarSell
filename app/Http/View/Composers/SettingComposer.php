@@ -16,7 +16,7 @@ class SettingComposer
     public function compose(View $view)
     {
         $settingsRepo = new SettingsRepository;
-        foreach(['company', 'social', 'contact', 'logo', 'page', 'footer_menu'] as $item) {
+        foreach(['company', 'social', 'contact', 'logo', 'footer_menu'] as $item) {
             $view->with($item, $settingsRepo->first($item)->value);
         }
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Page;
+use App\Faq;
 use Illuminate\Http\Request;
 
-class PageController extends Controller
+class FaqController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index', [
-            'pages' => Page::all(),
-        ]);
+        $faqs = Faq::all();
+        return view('admin.faqs.index', compact('faqs'));
     }
 
     /**
@@ -26,7 +25,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.create');
+        return view('admin.faqs.create');
     }
 
     /**
@@ -38,65 +37,61 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|unique:pages',
-            'slug' => 'required|unique:pages',
-            'content' => 'required',
+            'question' => 'required|max:255|unique:faqs',
+            'answer' => 'required',
         ]);
-
-        Page::create($data);
-        return redirect()->back()->with('success', 'Page Created.');
+        Faq::create($data);
+        return redirect()->route('admin.faqs.index')->with('success', 'FAQ Created Successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Page  $page
+     * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show(Faq $faq)
     {
-        return view('page', compact('page'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Page  $page
+     * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function edit(Page $page)
+    public function edit(Faq $faq)
     {
-        return view('admin.pages.edit', compact('page'));
+        return view('admin.faqs.edit', compact('faq'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Page  $page
+     * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(Request $request, Faq $faq)
     {
         $data = $request->validate([
-            'title' => 'required|unique:pages,id,' . $page->id,
-            'title' => 'required|unique:pages,id,' . $page->id,
-            'content' => 'required',
+            'question' => 'required|max:255|unique:faqs,id,' . $faq->id,
+            'answer' => 'required',
         ]);
-        $page->update($data);
-
-        return redirect()->back()->with('success', 'Page Edited');
+        $faq->update($data);
+        return redirect()->route('admin.faqs.index')->with('success', 'FAQ Updated Successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Page  $page
+     * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Page $page)
+    public function destroy(Faq $faq)
     {
-        $page->delete();
-        return redirect()->back()->with('success', 'Page Deleted Successfull.');
+        $faq->delete();
+        return redirect()->route('admin.faqs.index')->with('success', 'FAQ Deleted Successfully.');
     }
 }

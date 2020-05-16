@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Faq;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Http\View\Composers\CartComposer;
@@ -31,6 +32,10 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('faqs', function ($view) {
+            $view->with('faqs', Faq::all());
+        });
+
         // View::composer(['layouts.*', 'reseller.shop.header'], HeaderComposer::class);
         View::composer(['admin.*'], AdminAsideComposer::class);
         View::composer(['admin.*'], AdminSidebarComposer::class);

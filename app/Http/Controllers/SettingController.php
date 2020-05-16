@@ -17,7 +17,6 @@ class SettingController extends Controller
         'company' => 'sometimes|array',
         'social' => 'sometimes|array',
         'contact' => 'sometimes|array',
-        'page' => 'sometimes|array',
         'footer_menu' => 'sometimes|array',
     ];
 

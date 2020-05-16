@@ -31,39 +31,45 @@
                     <div class="row form-group">
                         <div class="col-md-12">
                             <label class="text-black" for="login-email">Email</label>
-                            <input id="login-email" type="email" class="form-control rounded-0 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <input id="login-email" type="email"
+                                class="form-control rounded-0 @error('email') is-invalid @enderror" name="email"
+                                value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                             @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="col-md-12">
                             <label class="text-black" for="login-password">Password</label>
-                            <input id="login-password" type="password" class="form-control rounded-0 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <input id="login-password" type="password"
+                                class="form-control rounded-0 @error('password') is-invalid @enderror" name="password"
+                                required autocomplete="current-password">
 
                             @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="col-md-12">
                             <div class="custom-control custom-checkbox mt-2">
-                                <input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <input type="checkbox" class="custom-control-input" id="remember" name="remember"
+                                    {{ old('remember') ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="remember">{{ __('Remember Me') }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-md-12">
-                            <input type="submit" value="Login" class="btn btn-sm btn-block btn-primary rounded-0 mr-2 mb-2">
+                            <input type="submit" value="Login"
+                                class="btn btn-sm btn-block btn-primary rounded-0 mr-2 mb-2">
 
                             @if (Route::has('reseller.password.request'))
-                                <a class="btn btn-link float-right" href="{{ route('reseller.password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
+                            <a class="btn btn-link float-right" href="{{ route('reseller.password.request') }}">
+                                {{ __('Forgot Your Password?') }}
+                            </a>
                             @endif
                         </div>
                     </div>
@@ -177,12 +183,15 @@
                 <p class="mb-4">We're always ready to help you via:</p>
                 <div class="author-box" data-aos="fade-right">
                     <ul class="list-unstyled">
-                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email }}"><i class="fa fa-envelope"></i></a></li>
-                        <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone }}"><i class="fa fa-phone"></i></a></li>
+                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email }}"><i
+                                    class="fa fa-envelope"></i></a></li>
+                        <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone }}"><i
+                                    class="fa fa-phone"></i></a></li>
                         @foreach($social as $name => $item)
-                            @if($item->display ?? false)
-                            <li class="d-inline-block"><a class="p-2" href="{{ url($item->link) }}"><i class="fa fa-{{ $name }}"></i></a></li>
-                            @endif
+                        @if($item->display ?? false)
+                        <li class="d-inline-block"><a class="p-2" href="{{ url($item->link) }}"><i
+                                    class="fa fa-{{ $name }}"></i></a></li>
+                        @endif
                         @endforeach
                     </ul>
                 </div>
@@ -190,69 +199,36 @@
         </div>
     </div>
 </div>
-<div class="site-section testimonial-wrap bg-light" id="testimonials-section">
+<div class="site-section testimonial-wrap bg-light" id="faqs-section">
     <div class="container">
         <div class="row mb-5">
             <div class="col-12 text-center">
-                <h2 class="section-title mb-3">Testimonials</h2>
+                <h2 class="section-title mb-3">Frequently Asked Questions</h2>
             </div>
         </div>
     </div>
-    <div class="slide-one-item home-slider owl-carousel">
+    <div class>
         <div>
             <div class="testimonial">
-                <figure class="mb-4 d-block align-items-center justify-content-center">
-                    <div><img src="{{ asset('images/landing/person_3.webp') }}" alt="Image"
-                            class="w-100 img-fluid mb-3 shadow"></div>
-                </figure>
-                <blockquote class="mb-3">
-                    <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde
-                        reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae
-                        illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                </blockquote>
-                <p class="text-black"><strong>John Smith</strong></p>
-            </div>
-        </div>
-        <div>
-            <div class="testimonial">
-                <figure class="mb-4 d-block align-items-center justify-content-center">
-                    <div><img src="{{ asset('images/landing/person_2.webp') }}" alt="Image"
-                            class="w-100 img-fluid mb-3 shadow"></div>
-                </figure>
-                <blockquote class="mb-3">
-                    <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde
-                        reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae
-                        illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                </blockquote>
-                <p class="text-black"><strong>Robert Aguilar</strong></p>
-            </div>
-        </div>
-        <div>
-            <div class="testimonial">
-                <figure class="mb-4 d-block align-items-center justify-content-center">
-                    <div><img src="{{ asset('images/landing/person_4.webp') }}" alt="Image"
-                            class="w-100 img-fluid mb-3 shadow"></div>
-                </figure>
-                <blockquote class="mb-3">
-                    <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde
-                        reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae
-                        illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                </blockquote>
-                <p class="text-black"><strong>Roger Spears</strong></p>
-            </div>
-        </div>
-        <div>
-            <div class="testimonial">
-                <figure class="mb-4 d-block align-items-center justify-content-center">
-                    <div><img src="{{ asset('images/landing/person_1.webp') }}" alt="Image"
-                            class="w-100 img-fluid mb-3 shadow"></div>
-                </figure>
-                <blockquote class="mb-3">
-                    <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde
-                        reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae
-                        illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                </blockquote>
-                <p class="text-black"><strong>Kyle McDonald</strong></p>
+                <div id="accordion">
+                    @foreach($faqs as $faq)
+                    <div class="card">
+                        <div class="card-header" id="heading-{{ $faq->id }}">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{ $faq->id }}"
+                                    aria-expanded="true" aria-controls="collapse-{{ $faq->id }}">
+                                    {{ $faq->question }}
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapse-{{ $faq->id }}" class="collapse" aria-labelledby="heading-{{ $faq->id }}"
+                            data-parent="#accordion">
+                            <div class="card-body text-left">{!! $faq->answer !!}</div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -272,58 +248,63 @@
                     <div class="row form-group">
                         <div class="col-md-12">
                             <label class="text-black" for="name">Name</label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror rounded-0">
-                            
+                            <input type="text" name="name" id="name" value="{{ old('name') }}"
+                                class="form-control @error('name') is-invalid @enderror rounded-0">
+
                             @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-md-12">
                             <label class="text-black" for="register-email">Email</label>
-                            <input type="email" name="email" value="{{ old('email') }}" id="register-email" class="form-control @error('email') is-invalid @enderror rounded-0">
-                            
+                            <input type="email" name="email" value="{{ old('email') }}" id="register-email"
+                                class="form-control @error('email') is-invalid @enderror rounded-0">
+
                             @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-md-12">
                             <label class="text-black" for="phone">Phone</label>
-                            <input type="phone" name="phone" value="{{ old('phone') }}" id="phone" class="form-control @error('phone') is-invalid @enderror rounded-0">
-                            
+                            <input type="phone" name="phone" value="{{ old('phone') }}" id="phone"
+                                class="form-control @error('phone') is-invalid @enderror rounded-0">
+
                             @error('phone')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-md-6">
                             <label class="text-black" for="register-password">Password</label>
-                            <input type="password" name="password" id="register-password" class="form-control @error('password') is-invalid @enderror rounded-0">
+                            <input type="password" name="password" id="register-password"
+                                class="form-control @error('password') is-invalid @enderror rounded-0">
 
                             @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                         <div class="col-md-6">
                             <label class="text-black" for="password_confirmation">Confirm Password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror rounded-0">
-                            
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                class="form-control @error('password_confirmation') is-invalid @enderror rounded-0">
+
                             @error('password_confirmation')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>

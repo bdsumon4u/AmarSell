@@ -36,6 +36,13 @@ class PageMiddleware
                 $content
             );
         }
+        if(strpos($content, '[FAQs]') != false) {
+            $content = str_replace(
+                '[FAQs]',
+                View::make('faqs'),
+                $content
+            );
+        }
                 
         $response->setContent($content);
         return $response;

@@ -243,30 +243,6 @@
                                                         {!! $errors->first('footer_menu.id', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="tac_page">Terms & Conditions Page</label><span class="text-danger">*</span>
-                                                        <select selector name="page[tac]" id="tac_page" class="form-control">
-                                                            <option value="">Select Correct Page</option>
-                                                            @foreach($all_pages as $item)
-                                                            <option value="{{ $item->id }}" @if($page->tac == $item->id) selected @endif>{{ $item->title }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        {!! $errors->first('tcp', '<span class="invalid-feedback">:message</span>') !!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="faq_page">FAQ Page</label><span class="text-danger">*</span>
-                                                        <select selector name="page[faq]" id="faq_page" class="form-control">
-                                                            <option value="">Select Correct Page</option>
-                                                            @foreach($all_pages as $item)
-                                                            <option value="{{ $item->id }}" @if($page->faq == $item->id) selected @endif>{{ $item->title }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        {!! $errors->first('tcp', '<span class="invalid-feedback">:message</span>') !!}
-                                                    </div>
-                                                </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
                                                     <button type="submit" class="btn btn-success">Save</button>

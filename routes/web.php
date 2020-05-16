@@ -1,5 +1,6 @@
 <?php
 
+use App\Faq;
 use App\Http\Middleware\PageMiddleware;
 use App\Shop;
 use App\User;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Request;
 */
 // dd(Order::find(2)->data);
 Route::get('/', function (Request $request) {
-    return view('welcome');
+    return view('welcome')->withFaqs(Faq::all());
 })->middleware('guest:reseller');
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
@@ -77,6 +78,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::patch('/settings', 'SettingController@update')->name('settings.update');
 
     Route::patch('/password', 'PasswordController')->name('password.update');
+
+    Route::resource('/faqs', 'FaqController');
 });
 
 Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(['auth:reseller', PageMiddleware::class]);

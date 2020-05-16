@@ -149,6 +149,21 @@ class SidebarComposer
                     ],
                 ],
             ],
+            [
+                'icon' => 'fa fa-question',
+                'style' => 'dropdown',
+                'name' => 'FAQs',
+                'items' => [
+                    [
+                        'name' => 'All',
+                        'route' => 'admin.faqs.index',
+                    ],
+                    [
+                        'name' => 'Add New',
+                        'route' => 'admin.faqs.create',
+                    ],
+                ],
+            ],
         ];
     }
     public function orderCount(string $status)
