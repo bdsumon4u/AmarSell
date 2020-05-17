@@ -28,6 +28,7 @@
                                     <th>Way</th>
                                     <th>Account Number</th>
                                     <th>Transaction Number</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -148,6 +149,7 @@
             { data: 'way', name: 'way' },
             { data: 'account_number', name: 'account_number' },
             { data: 'transaction_number', name: 'transaction_number' },
+            { data: 'pay', name: 'pay' },
         ],
         order: [
             [1, 'desc']

@@ -183,14 +183,14 @@
                 <p class="mb-4">We're always ready to help you via:</p>
                 <div class="author-box" data-aos="fade-right">
                     <ul class="list-unstyled">
-                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email }}"><i
+                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email ?? '' }}"><i
                                     class="fa fa-envelope"></i></a></li>
-                        <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone }}"><i
+                        <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone ?? '' }}"><i
                                     class="fa fa-phone"></i></a></li>
-                        @foreach($social as $name => $item)
+                        @foreach($social ?? [] as $name => $item)
                         @if($item->display ?? false)
-                        <li class="d-inline-block"><a class="p-2" href="{{ url($item->link) }}"><i
-                                    class="fa fa-{{ $name }}"></i></a></li>
+                        <li class="d-inline-block"><a class="p-2" href="{{ url($item->link ?? '') }}"><i
+                                    class="fa fa-{{ $name ?? '' }}"></i></a></li>
                         @endif
                         @endforeach
                     </ul>

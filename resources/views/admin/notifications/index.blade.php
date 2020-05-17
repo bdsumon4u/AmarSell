@@ -71,6 +71,7 @@
                                         @php $transaction = \App\Transaction::findOrFail($data['transaction_id']) @endphp
                                         @if($transaction->status == 'pending')
                                         <a class="btn btn-sm btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$data['reseller_id'],
+                                            'transaction_id' => $transaction->id,
                                             'amount' => $data['amount'],
                                             'method' => $data['method'],
                                             'bank_name' => $data['bank_name'],
@@ -91,7 +92,7 @@
                                             For Products:
                                             <ul class="my-2">
                                                 @foreach($order->data['products'] as $product)
-                                                <li><a href="{{ route('reseller.product.show', $product['slug']) }}">{{ $product['name'] }}</a> [Qty: {{ $product['quantity'] }}]</li>
+                                                <li><a href="{{ route('admin.products.show', $product['id']) }}">{{ $product['name'] }}</a> [Qty: {{ $product['quantity'] }}]</li>
                                                 @endforeach
                                             </ul>
                                             Has Recieved.<br>

@@ -2,6 +2,7 @@
 
 use App\Faq;
 use App\Http\Middleware\PageMiddleware;
+use App\Http\Middleware\RedirectToInstallerIfNotInstalled;
 use App\Shop;
 use App\User;
 use App\Order;
@@ -21,10 +22,17 @@ use Illuminate\Support\Facades\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('install/pre-installation', 'InstallController@preInstallation');
+Route::get('install/configuration', 'InstallController@getConfiguration');
+Route::post('install/configuration', 'InstallController@postConfiguration');
+Route::get('install/complete', 'InstallController@complete');
+
+
 // dd(Order::find(2)->data);
 Route::get('/', function (Request $request) {
     return view('welcome')->withFaqs(Faq::all());
-})->middleware('guest:reseller');
+})->middleware([RedirectToInstallerIfNotInstalled::class, 'guest:reseller']);
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('getpass', 'Auth\LoginController@login')->name('login');

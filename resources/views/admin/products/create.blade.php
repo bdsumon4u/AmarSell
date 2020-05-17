@@ -96,12 +96,14 @@
                                                 'src' => [
                                                     'label' => 'Product Name',
                                                     'name' => 'name',
-                                                    'id' => 'name'
+                                                    'id' => 'name',
+                                                    'default' => old('name'),
                                                 ],
                                                 'emt' => [
                                                     'label' => 'SLUG',
                                                     'name' => 'slug',
                                                     'id' => 'slug',
+                                                    'default' => old('slug'),
                                                 ]
                                             ])
                                             <div class="row">

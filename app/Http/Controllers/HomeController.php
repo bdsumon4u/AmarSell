@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Transaction;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('reseller')->latest()->take(20)->get();
-        return view('admin.dashboard', compact('orders'));
+        $orders = Order::with('reseller')->status('pending')->latest()->take(10)->get();
+        $transactions = Transaction::with('reseller')->status('pending')->latest()->take(10)->get();
+        return view('admin.dashboard', compact('orders', 'transactions'));
     }
 }

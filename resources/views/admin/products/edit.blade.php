@@ -98,13 +98,13 @@
                                                     'label' => 'Product Name',
                                                     'name' => 'name',
                                                     'id' => 'name',
-                                                    'default' => $product->name,
+                                                    'default' => old('name', $product->name),
                                                 ],
                                                 'emt' => [
                                                     'label' => 'SLUG',
                                                     'name' => 'slug',
                                                     'id' => 'slug',
-                                                    'default' => $product->slug,
+                                                    'default' => old('slug', $product->slug),
                                                 ]
                                             ])
                                             <div class="row">

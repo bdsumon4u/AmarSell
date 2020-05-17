@@ -11,29 +11,24 @@
 
 @section('content')
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-6">
         <div class="orders-table">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Recent Orders</strong></div>
+                <div class="card-header"><strong>Pending Orders</strong></div>
                 <div class="card-body">
                     <div class="table-responive">
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th></th>
                                     <th>ID</th>
                                     <th>Reseller</th>
-                                    <th>Customer</th>
-                                    <th>Status</th>
-                                    <th>Price</th>
-                                    <th>Ordered At</th>
+                                    <th>At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($orders as $order)
                                 <tr data-row-id="{{ $order->id }}">
-                                    <td></td>
                                     <td>{{ $order->id }}</td>
                                     <td>
                                         <a href="">
@@ -42,26 +37,59 @@
                                             <strong>Phone:</strong> {{ $order->reseller->phone }}
                                         </a>
                                     </td>
-                                    <td>
-                                        <strong>Name:</strong> {{ $order->data['customer_name'] }}
-                                        <br>
-                                        <strong>Phone:</strong> {{ $order->data['customer_phone'] }}
-                                    </td>
-                                    <td><span class="badge badge-square badge-primary text-uppercase">{{ $order->status }}</span></td>
-                                    <td>
-                                        <strong>Buy:</strong> {{ $order->data['price'] }}
-                                        <br>
-                                        @if($order->status == 'pending')
-                                            @php $current_price = $order->current_price() @endphp
-                                            @if($order->data['price'] != $current_price)
-                                                <strong>Current:</strong> {{ $current_price }}
-                                                <br>
-                                            @endif
-                                        @endif
-                                        <strong>Sell:</strong> {{ $order->data['sell'] }}
-                                    </td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
                                     <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.order.show', $order->id) }}">View</a></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="transactions-table">
+            <div class="card rounded-0 shadow-sm">
+                <div class="card-header"><strong>Pending Transactions</strong></div>
+                <div class="card-body">
+                    <div class="table-responive">
+                        <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Reseller</th>
+                                    <th>Amount</th>
+                                    <th>At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($transactions as $transaction)
+                                <tr data-row-id="{{ $transaction->id }}">
+                                    <td>{{ $transaction->id }}</td>
+                                    <td>
+                                        <a href="">
+                                            <strong>Name:</strong> {{ $transaction->reseller->name }}
+                                            <br>
+                                            <strong>Phone:</strong> {{ $transaction->reseller->phone }}
+                                        </a>
+                                    </td>
+                                    <td>{{ theMoney($transaction->amount) }}</td>
+                                    <td>{{ $transaction->created_at->format('d-M-Y') }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$transaction->reseller->id,
+                                            'transaction_id' => $transaction->id,
+                                            'amount' => $transaction->amount,
+                                            'method' => $transaction->method,
+                                            'bank_name' => $transaction->bank_name,
+                                            'account_name' => $transaction->account_name,
+                                            'branch' => $transaction->branch,
+                                            'routing_no' => $transaction->routing_no,
+                                            'account_type' => $transaction->account_type,
+                                            'account_number' => $transaction->account_number,
+                                        ]) }}">Pay</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -90,12 +118,6 @@
         columnDefs: [
             {
                 orderable: false,
-                className: 'select-checkbox',
-                searchable: false,
-                targets: 0,
-            },
-            {
-                orderable: false,
                 searchable: false,
                 targets: -1
             },
@@ -108,69 +130,9 @@
         scrollX: true,
         pagingType: 'numbers',
         pageLength: 25,
-        dom: 'lBfrtip<"actions">',
-        buttons: [
-            {
-                extend: 'selectAll',
-                className: 'btn-primary',
-                text: 'Select All',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'selectNone',
-                className: 'btn-primary',
-                text: 'Deselect All',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'copy',
-                className: 'btn-light',
-                text: 'Copy',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'csv',
-                className: 'btn-light',
-                text: 'CSV',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'excel',
-                className: 'btn-light',
-                text: 'Excel',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'print',
-                className: 'btn-light',
-                text: 'Print',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-            {
-                extend: 'colvis',
-                className: 'btn-light',
-                text: 'Columns',
-                exportOptions: {
-                    columns: ':visible'
-                }
-            },
-        ],
+        dom: 'ft<"actions">',
     });
-    var dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
     $('.datatable').DataTable({
-        buttons: dtButtons
     });
 </script>
 @endsection

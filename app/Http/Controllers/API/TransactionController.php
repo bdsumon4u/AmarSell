@@ -51,7 +51,20 @@ class TransactionController extends Controller
                         <strong>Routing No:</strong> " . $row->routing_no;
                         return $ret;
                     })
-                    ->rawColumns(['reseller', 'way'])
+                    ->addColumn('pay', function($row) {
+                        return '<a class="btn btn-sm btn-block btn-primary" href="' . route('admin.transactions.pay-to-reseller', [$row->reseller->id,
+                            'transaction_id' => $row->id,
+                            'amount' => $row->amount,
+                            'method' => $row->method,
+                            'bank_name' => $row->bank_name,
+                            'account_name' => $row->account_name,
+                            'branch' => $row->branch,
+                            'routing_no' => $row->routing_no,
+                            'account_type' => $row->account_type,
+                            'account_number' => $row->account_number,
+                        ]) . '">Pay</a>';
+                    })
+                    ->rawColumns(['reseller', 'way', 'pay'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;

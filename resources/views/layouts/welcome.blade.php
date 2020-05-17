@@ -2,10 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>{{ $company->name }} &mdash; {{ $company->tagline }}</title>
+    <meta name="title" content="{{ $company->tagline ?? '' }}">
+    <meta name="keywords" content="">
+    <meta name="description" content="{{ $company->tagline ?? '' }}">
+    <meta property="og:title" content="{{ $company->tagline ?? '' }}">
+    <meta property="og:description" content="{{ $company->tagline ?? '' }}">
+    <meta property="og:image" content="">
+    <title>{{ $company->name ?? '' }} &mdash; {{ $company->tagline ?? '' }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
@@ -14,9 +19,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js">
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <link rel="shortcut icon"
-        href="{{ asset($logo->favicon) ?? '' }}"
+        href="{{ asset($logo->favicon ?? '') ?? '' }}"
         type="image/x-icon">
     <style>
+        #accordion .card-header {
+            padding: 0;
+        }
+        #accordion .btn-link {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        #accordion .btn-link:hover,
+        #accordion .btn-link:hover {
+            text-decoration: none;
+            color: crimson;
+        }
         .footer ul {
             margin-bottom: 0;
         }
@@ -52,7 +71,7 @@
                 <div class="row align-items-center">
                     <div class="col-6 col-md-3 col-xl-4  d-block">
                         <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">
-                            <img src="{{ asset($logo->white) ?? '' }}" alt="Logo" style="height: 50px; width: 240px;">
+                            <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="Logo" style="height: 50px; width: 240px;">
                         </h1>
                     </div>
                     <div class="col-12 col-md-9 col-xl-8 main-menu">
@@ -78,7 +97,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="mb-0 d-flex justify-content-center">
-                            <span class="d-none d-md-block">Copyright &copy; {{ $company->name }}&nbsp;|&nbsp;</span><span class="">Developed By<a href="https://cyber32.com" class="text-danger">&nbsp;Cyber32</a></span>
+                            <span class="d-none d-md-block">Copyright &copy; {{ $company->name ?? '' }}&nbsp;|&nbsp;</span><span class="">Developed By<a href="https://cyber32.com" class="text-danger">&nbsp;Cyber32</a></span>
                         </p>
                     </div>
                 </div>

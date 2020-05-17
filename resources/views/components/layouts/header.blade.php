@@ -4,8 +4,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="{{ asset($logo->white) ?? '' }}" width="89" height="25" alt="Logo">
-        <img class="navbar-brand-minimized" src="{{ asset($logo->favicon) ?? '' }}" width="30" height="30" alt="Favicon">
+        <img class="navbar-brand-full" src="{{ asset($logo->white ?? '') ?? '' }}" width="89" height="25" alt="Logo">
+        <img class="navbar-brand-minimized" src="{{ asset($logo->favicon ?? '') ?? '' }}" width="30" height="30" alt="Favicon">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@
                     <span class="badge badge-danger">{{ $unreadCount }}</span>
                     @endif
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('admin.settings.edit') }}">
                     <i class="fa fa-wrench"></i> Settings</a>
                 <a class="dropdown-item" href="{{ route('admin.transactions.requests') }}">
                     <i class="fa fa-usd"></i> Payment Requests

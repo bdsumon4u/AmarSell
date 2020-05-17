@@ -49,7 +49,7 @@ class ProductController extends Controller
             'slug' => 'required|max:255',
             'stock' => 'required_if:should_track,1',
             'description' => 'required',
-            'meta_title' => 'required',
+            'meta_title' => 'nullable',
             'meta_keywords' => 'nullable|array',
             'meta_description' => 'nullable',
             'categories' => 'required|array',

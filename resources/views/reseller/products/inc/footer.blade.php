@@ -57,10 +57,10 @@
                         <div class="row">
                             <div class="links">
                                 <div class="mobile-collapse">
-                                    <h4>{{ $footer_menu->title }}</h4>
+                                    <h4>{{ $footer_menu->title ?? '' }}</h4>
                                 </div>
 
-                                @menu(optional(\CodexShaper\Menu\Models\Menu::find($footer_menu->id))->slug)
+                                @menu(optional(\CodexShaper\Menu\Models\Menu::find(optional($footer_menu)->id))->slug)
                                 <!-- <ul class="list-inline">
                                     <li><a href="http://fleetcart.envaysoft.com/en/products?category=laptops"
                                             target="_self">Laptops</a></li>
@@ -84,7 +84,7 @@
             <ul class="social-links list-inline">
                 <li class="d-inline-block"><a href="mailto:{{ $company->email }}"><i class="fa fa-envelope"></i></a></li>
                 <li class="d-inline-block"><a href="tel:{{ $contact->phone }}"><i class="fa fa-phone"></i></a></li>
-                @foreach($social as $name => $item)
+                @foreach($social ?? [] as $name => $item)
                     @if($item->display ?? false)
                     <li class="d-inline-block"><a href="{{ url($item->link) }}"><i class="fa fa-{{ $name }}"></i></a></li>
                     @endif

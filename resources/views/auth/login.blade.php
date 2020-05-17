@@ -7,7 +7,7 @@
             <div class="card-group">
                 <div class="card p-4">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.login') }}">
+                        <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>

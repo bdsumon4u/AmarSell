@@ -17,7 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/coreui.css') }}" rel="stylesheet">
     <link rel="shortcut icon"
-        href="{{ asset($logo->favicon) ?? '' }}"
+        href="{{ asset($logo->favicon ?? '') ?? '' }}"
         type="image/x-icon">
     <style>
         #overlayer {
@@ -68,8 +68,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img class="navbar-brand-full" src="{{ asset($logo->white) }}" width="89" height="25" alt="Logo">
-            <img class="navbar-brand-minimized" src="{{ asset($logo->favicon) }}" width="30" height="30" alt="Favicon">
+            <img class="navbar-brand-full" src="{{ asset($logo->white ?? '') }}" width="89" height="25" alt="Logo">
+            <img class="navbar-brand-minimized" src="{{ asset($logo->favicon ?? '') }}" width="30" height="30" alt="Favicon">
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>

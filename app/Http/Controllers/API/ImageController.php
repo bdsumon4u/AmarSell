@@ -23,6 +23,9 @@ class ImageController extends Controller
                     ->addColumn('preview', function($row){
                         return '<img src="'. asset($row->path) .'" class="img-preview img-responsive img-thumbnail" width="150" height="150">';
                     })
+                    ->addColumn('size', function($row) {
+                        return bytesToHuman($row->size);
+                    })
                     ->addColumn('action', function($row){
                         $btn = '<a href="" class="select-item btn btn-light btn-sm">Select</a>';
                         return $btn;

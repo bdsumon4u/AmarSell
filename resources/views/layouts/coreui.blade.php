@@ -17,7 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/coreui.css') }}" rel="stylesheet">
     <link rel="shortcut icon"
-        href="{{ asset($logo->favicon) ?? '' }}"
+        href="{{ asset($logo->favicon ?? '') ?? '' }}"
         type="image/x-icon">
     <style>
         #overlayer {

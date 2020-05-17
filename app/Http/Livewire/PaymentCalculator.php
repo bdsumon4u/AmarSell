@@ -39,16 +39,18 @@ class PaymentCalculator extends Component
 
     public function chMethod()
     {
-        $arr = Arr::first($this->reseller->payment, function($payment) {
-            return $payment->method == $this->method;
-        });
-        
-        // dd($arr);
-        $this->bank_name = $arr->bank_name ?? '';
-        $this->account_name = $arr->account_name ?? '';
-        $this->type = $arr->type ?? '';
-        $this->branch = $arr->branch ?? '';
-        $this->routing_no = $arr->routing_no ?? '';
-        $this->number = $arr->number;
+        if($this->method != 0) {
+            $arr = Arr::first($this->reseller->payment, function($payment) {
+                return $payment->method == $this->method;
+            });
+            
+            // dd($arr);
+            $this->bank_name = $arr->bank_name ?? '';
+            $this->account_name = $arr->account_name ?? '';
+            $this->type = $arr->type ?? '';
+            $this->branch = $arr->branch ?? '';
+            $this->routing_no = $arr->routing_no ?? '';
+            $this->number = $arr->number;
+        }
     }
 }
