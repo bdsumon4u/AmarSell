@@ -2,7 +2,7 @@
 
 @section('styles')
 <style>
-    form {
+    form#drop-imgs {
         margin-bottom: 0;
         display: flex;
         align-items: center;

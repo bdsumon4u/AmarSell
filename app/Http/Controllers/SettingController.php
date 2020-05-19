@@ -8,6 +8,7 @@ use App\Repository\SettingsRepository;
 use App\Setting;
 use CodexShaper\Menu\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -96,10 +97,18 @@ class SettingController extends Controller
         tap($settingsRepo->first('logo')->value, function($logo) use ($request, $settingsRepo) {
             foreach($request->logo ?? [] as $type => $item) {
                 if(! is_null($item)) {
+                    $oldPath = $logo->$type;
                     if($type == 'favicon') {
-                        $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => '46', 'width' => '46']);
+                        $newPath = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => '46', 'width' => '46']);
                     } else {
-                        $logo->$type = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => 66, 'width' => 250]);
+                        $newPath = $this->uploadImage($item, ['dir' => 'images/logo', 'height' => '66', 'width' => '250']);
+                    }
+
+                    if($newPath) {
+                        if(file_exists(public_path($oldPath))) {
+                            unlink(\public_path($oldPath));
+                        }
+                        $logo->$type = $newPath;
                     }
                 }
             }

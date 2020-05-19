@@ -31,7 +31,7 @@
                                 <tr data-row-id="{{ $order->id }}">
                                     <td>{{ $order->id }}</td>
                                     <td>
-                                        <a href="">
+                                        <a href="{{ route('reseller.profile.show', $order->reseller->id) }}">
                                             <strong>Name:</strong> {{ $order->reseller->name }}
                                             <br>
                                             <strong>Phone:</strong> {{ $order->reseller->phone }}

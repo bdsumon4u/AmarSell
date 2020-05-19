@@ -25,10 +25,10 @@ class Store
                 'phone' => '01xxxxxxxxx',
             ],
             'logo' => [
-                'white' => 'white',
-                'color' => 'color',
-                'footer' => 'footer',
-                'favicon' => 'favicon',
+                'white' => asset('images/logo/default-white.png'),
+                'color' => asset('images/logo/default-color.png'),
+                'footer' => asset('images/logo/default-footer.png'),
+                'favicon' => asset('images/logo/default-favicon.png'),
             ]
         ]);
     }

@@ -51,7 +51,7 @@ class ImageController extends Controller
 
         $images = Image::whereIn('id', $data['IDs'])->get();
         foreach($images as $image) {
-            dump(storage_path($image->path));
+            // dump(storage_path($image->path));
             if(unlink(public_path($image->path))) {
                 $image->delete();
             }
