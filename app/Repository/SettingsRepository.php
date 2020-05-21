@@ -3,26 +3,25 @@
 namespace App\Repository;
 
 use App\Setting;
+use Illuminate\Support\Facades\Cache;
 
 class SettingsRepository
 {
     public function set($name, $value)
     {
-        return Setting::updateOrCreate([
-            'name' => $name,
-        ], [
-            'value' => $value,
-        ]);
+        return Cache::put('settings', array_merge(cache('settings', []), [
+            $name => Setting::updateOrCreate([
+                'name' => $name,
+            ], [
+                'value' => $value,
+            ])->value
+        ]));
     }
 
     public function setMany($data)
     {
         foreach($data as $name => $value) {
-            Setting::updateOrCreate([
-                'name' => $name,
-            ], [
-                'value' => $value,
-            ]);
+            $this->set($name, $value);
         }
     }
 

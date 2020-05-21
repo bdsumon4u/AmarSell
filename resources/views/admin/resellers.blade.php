@@ -38,7 +38,7 @@
                                     <td></td>
                                     <td>{{ $reseller->id }}</td>
                                     <td>
-                                        <a href="{{ route('reseller.profile.show', $reseller->id) }}">
+                                        <a href="{{ route('admin.reseller', $reseller->id) }}">
                                             <strong>Name:</strong> {{ $reseller->name }}
                                             <br>
                                             <strong>Phone:</strong> {{ $reseller->phone }}

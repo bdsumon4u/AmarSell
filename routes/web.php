@@ -74,6 +74,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 
     Route::get('/resellers', 'ResellerController')->name('resellers');
+    Route::get('/reseller/{reseller}', function (Reseller $reseller) {
+        return view('admin.reseller', ['reseller' => $reseller]);
+    })->name('reseller');
 
     Route::get('/pages', 'PageController@index')->name('pages.index');
     Route::get('/pages/create', 'PageController@create')->name('pages.create');

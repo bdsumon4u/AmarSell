@@ -74,7 +74,7 @@
                     <div class="col-sm-6 col-md-8 col-xl-9">
                         <div class="row">
                             <div class="col">
-                                <form action="{{ route('admin.settings.update') }}" method="post" enctype="multipart/form-data">
+                                <form id="setting-form" action="{{ route('admin.settings.update') }}" method="post" enctype="multipart/form-data">
                                     <div class="tab-content">
                                         @csrf
                                         @method('PATCH')
@@ -191,21 +191,21 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="password">Password</label><span class="text-danger">*</span>
-                                                        <input type="password" name="password" value="{{ old('password') }}" id="" class="form-control @error('password') is-invalid @enderror">
+                                                        <input type="password" name="password" value="{{ old('password') }}" id="password" class="form-control @error('password') is-invalid @enderror">
                                                         {!! $errors->first('password', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="password_confirmation">Confirm Password</label><span class="text-danger">*</span>
-                                                        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" id="" class="form-control @error('password_confirmation') is-invalid @enderror">
+                                                        <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror">
                                                         {!! $errors->first('password_confirmation', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="old_password">Old Password</label><span class="text-danger">*</span>
-                                                        <input type="password" name="old_password" value="{{ old('old_password') }}" id="" class="form-control @error('old_password') is-invalid @enderror">
+                                                        <input type="password" name="old_password" value="{{ old('old_password') }}" id="old_password" class="form-control @error('old_password') is-invalid @enderror">
                                                         {!! $errors->first('old_password', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
@@ -243,6 +243,19 @@
                                                         {!! $errors->first('footer_menu.id', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="">Courier <a href="" id="add-courier"><strong>&plus;New</strong></a></label>
+                                                        @foreach($courier ?? [] as $id => $name)
+                                                        <div class="input-group">
+                                                            <input type="text" name="courier[]" value="{{ $name }}" class="form-control">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text bg-danger remove-courier">&minus;</span>
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
                                                     <button type="submit" class="btn btn-success">Save</button>
@@ -260,4 +273,36 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $('#setting-form').keyup(function(e) {
+            return e.which !== 13  
+        });
+
+        $('#add-courier').click(function(e) {
+            e.preventDefault();
+            
+            var id = 1, len = 0;
+            if(len = ($(this).parents('.form-group').children('.input-group').length >= 1)) {
+                id += len;
+            }
+
+            $(this).parents('.form-group').append(`<div class="input-group">
+                                                        <input type="text" name="courier[]" value="" class="form-control">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text bg-danger remove-courier">&minus;</span>
+                                                        </div>
+                                                    </div>`).children('.input-group').last().hide().fadeIn(350);
+        });
+
+        $(document).on('click', '.remove-courier', function(){
+            $(this).parents('.input-group').fadeOut(350, function() {
+                $(this).remove();
+            });
+        });
+    });
+</script>
 @endsection

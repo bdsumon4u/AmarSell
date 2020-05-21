@@ -16,9 +16,12 @@ class SettingComposer
      */
     public function compose(View $view)
     {
-        $settings = Setting::all()->groupBy('name')->map(function ($item) {
-            return $item->last()->value;
-        })->toArray();
+        $settings = cache('settings', function () {
+            return Setting::all()->groupBy('name')->map(function ($item) {
+                return $item->last()->value;
+            })->toArray();
+        });
+        // dd($settings);
         foreach($settings as $key => $val) {
             $view->with($key, $val);
         }

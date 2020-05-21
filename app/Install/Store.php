@@ -25,11 +25,12 @@ class Store
                 'phone' => '01xxxxxxxxx',
             ],
             'logo' => [
-                'white' => asset('images/logo/default-white.png'),
-                'color' => asset('images/logo/default-color.png'),
-                'footer' => asset('images/logo/default-footer.png'),
-                'favicon' => asset('images/logo/default-favicon.png'),
-            ]
+                'white' => asset('images/defaults/white-logo.png'),
+                'color' => asset('images/defaults/color-logo.png'),
+                'footer' => asset('images/defaults/footer-logo.png'),
+                'favicon' => asset('images/defaults/favicon-logo.png'),
+            ],
+            'footer_menu' => [],
         ]);
     }
 }

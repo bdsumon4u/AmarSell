@@ -13,12 +13,6 @@ class SidebarComposer
 
     public function __construct()
     {
-        $this->order_count = [
-            'pending' => $this->orderCount('pending'),
-            'accepted' => $this->orderCount('accepted'),
-            'processing' => $this->orderCount('processing'),
-            'transporting' => $this->orderCount('transporting'),
-        ];
         $this->menu = [
             [
                 'icon' => 'fa fa-tachometer',
@@ -87,37 +81,21 @@ class SidebarComposer
                         'name' => 'Pending',
                         'route' => 'admin.order.index',
                         'param' => 'status=pending',
-                        'badge' => [
-                            'variant' => 'secondary',
-                            'data' => $this->order_count['pending'],
-                        ],
                     ],
                     [
                         'name' => 'Accepted',
                         'route' => 'admin.order.index',
                         'param' => 'status=accepted',
-                        'badge' => [
-                            'variant' => 'secondary',
-                            'data' => $this->order_count['accepted'],
-                        ],
                     ],
                     [
                         'name' => 'Processing',
                         'route' => 'admin.order.index',
                         'param' => 'status=processing',
-                        'badge' => [
-                            'variant' => 'secondary',
-                            'data' => $this->order_count['processing'],
-                        ],
                     ],
                     [
                         'name' => 'Transporting',
                         'route' => 'admin.order.index',
                         'param' => 'status=transporting',
-                        'badge' => [
-                            'variant' => 'secondary',
-                            'data' => $this->order_count['transporting'],
-                        ],
                     ],
                     [
                         'name' => 'Completed',
@@ -142,10 +120,6 @@ class SidebarComposer
                     [
                         'name' => 'Requests',
                         'route' => 'admin.transactions.requests',
-                        'badge' => [
-                            'variant' => 'secondary',
-                            'data' => Transaction::where(['status' => 'pending'])->count(),
-                        ],
                     ],
                 ],
             ],
@@ -165,10 +139,6 @@ class SidebarComposer
                 ],
             ],
         ];
-    }
-    public function orderCount(string $status)
-    {
-        return Order::where('status', $status)->count();
     }
 
     /**

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @section('title')
-    <title>{{ $company->name }} - {{ $company->tagline }}</title>
+    <title>{{ $company->name ?? config('app.name') }} - {{ $company->tagline ?? 'Make Your Business More Profitable.' }}</title>
     @show
 
     <meta name="csrf-token" content="{{ csrf_token() }}">

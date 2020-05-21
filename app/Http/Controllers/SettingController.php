@@ -19,6 +19,7 @@ class SettingController extends Controller
         'social' => 'sometimes|array',
         'contact' => 'sometimes|array',
         'footer_menu' => 'sometimes|array',
+        'courier' => 'sometimes|array',
     ];
 
     /**
@@ -92,9 +93,8 @@ class SettingController extends Controller
     public function update(Request $request, SettingsRepository $settingsRepo)
     {
         $data = $request->validate($this->rules);
-        $settingsRepo->setMany($data);
 
-        tap($settingsRepo->first('logo')->value, function($logo) use ($request, $settingsRepo) {
+        tap($settingsRepo->first('logo')->value, function($logo) use ($request, &$data) {
             foreach($request->logo ?? [] as $type => $item) {
                 if(! is_null($item)) {
                     $oldPath = $logo->$type;
@@ -112,8 +112,9 @@ class SettingController extends Controller
                     }
                 }
             }
-            $settingsRepo->set('logo', $logo);
+            $data['logo'] = $logo;
         });
+        $settingsRepo->setMany($data);
         
         return redirect()->back()->with('success', 'Settings Saved.');
     }

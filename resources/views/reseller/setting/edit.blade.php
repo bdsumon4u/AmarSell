@@ -67,7 +67,7 @@
                     <div class="col-sm-6 col-md-8 col-xl-9">
                         <div class="row">
                             <div class="col">
-                                <form action="{{ route('reseller.setting.update') }}" method="post">
+                                <form id="setting-form" action="{{ route('reseller.setting.update') }}" method="post">
                                     <div class="tab-content">
                                         @csrf
                                         @method('PATCH')
@@ -114,33 +114,30 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group" id="ways">
-                                                        <label for="payment">Transaction Ways</label>
+                                                        <label for="payment">Ways <a href="" id="add-way"><strong>&plus;New</strong></a></label>
                                                         @foreach($user->payment ?? [] as $payment)
                                                         <div class="input-group" data-id="{{ $loop->index }}">
                                                             <select name="payment[{{ $loop->index }}][method]" class="form-control payment_method @error('payment.'.$loop->index.'.method') is-invalid @enderror">
-                                                                <option value="">Select Method</option>
+                                                                <option value="">Select Method*</option>
                                                                 @php $old_method = old('payment.'.$loop->index.'.method', $payment->method ?? '') @endphp
                                                                 @foreach(config('transaction.ways') as $way)
                                                                     <option value="{{ $way }}" @if($way == $old_method) selected @endif>{{ $way }}</option>
                                                                 @endforeach
                                                             </select>
                                                             @if(($payment->method ?? '') == 'Bank')
-                                                                <input type="text" name="payment[{{ $loop->index }}][bank_name]" placeholder="Bank Name" value="{{ old('payment.'.$loop->index.'.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
-                                                                <input type="text" name="payment[{{ $loop->index }}][account_name]" placeholder="Account Name" value="{{ old('payment.'.$loop->index.'.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
+                                                                <input type="text" name="payment[{{ $loop->index }}][bank_name]" placeholder="Bank Name*" value="{{ old('payment.'.$loop->index.'.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
+                                                                <input type="text" name="payment[{{ $loop->index }}][account_name]" placeholder="Account Name*" value="{{ old('payment.'.$loop->index.'.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
                                                                 <input type="text" name="payment[{{ $loop->index }}][branch]" placeholder="Branch" value="{{ old('payment.'.$loop->index.'.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
                                                                 <input type="text" name="payment[{{ $loop->index }}][routing_no]" placeholder="Routing No" value="{{ old('payment.'.$loop->index.'.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
                                                             @endif
-                                                            <input type="text" name="payment[{{ $loop->index }}][type]" placeholder="Account Type" value="{{ old('payment.'.$loop->index.'.type', $payment->type) }}" class="form-control @error('payment_number') is-invalid @enderror">
-                                                            <input type="text" name="payment[{{ $loop->index }}][number]" placeholder="Payment Number" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                            <input type="text" name="payment[{{ $loop->index }}][type]" placeholder="Account Type*" value="{{ old('payment.'.$loop->index.'.type', $payment->type) }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                            <input type="text" name="payment[{{ $loop->index }}][number]" placeholder="Payment Number*" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text bg-danger remove-way">&minus;</span>
                                                             </div>
                                                         </div>
                                                         @endforeach
                                                     </div>
-                                                </div>
-                                                <div class="col mb-3">
-                                                    <a href="" id="add-way">Add New Way</a>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group mb-0">
@@ -200,6 +197,10 @@
 @section('scripts')
 <script>
     $(document).ready(function(){
+        $('#setting-form').on('submit', function(e) {
+            return e.which != 13;
+        });
+
         $('#add-way').click(function(e) {
             e.preventDefault();
             var last = $('#ways').children('.input-group').last();
@@ -211,35 +212,35 @@
 
             $('#ways').append(`<div class="input-group" data-id="`+id+`">
                 <select name="payment[`+id+`][method]" class="payment_method form-control @error('payment.`+id+`.method') is-invalid @enderror">
-                    <option value="">Select Method</option>
+                    <option value="">Select Method*</option>
                     @php $old_method = old('payment.`+id+`.method', $payment->method ?? '') @endphp
                     @foreach(config('transaction.ways') as $way)
                         <option value="{{ $way }}">{{ $way }}</option>
                     @endforeach
                 </select>
-                <input type="text" name="payment[`+id+`][type]" placeholder="Account Type" value="{{ old('payment.`+id+`.type') }}" class="form-control @error('payment_number') is-invalid @enderror">
-                <input type="text" name="payment[`+id+`][number]" placeholder="Payment Number" value="{{ old('payment.`+id+`.number') }}" class="form-control @error('payment_number') is-invalid @enderror">
+                <input type="text" name="payment[`+id+`][type]" placeholder="Account Type*" value="{{ old('payment.`+id+`.type') }}" class="form-control @error('payment_number') is-invalid @enderror">
+                <input type="text" name="payment[`+id+`][number]" placeholder="Payment Number*" value="{{ old('payment.`+id+`.number') }}" class="form-control @error('payment_number') is-invalid @enderror">
                 <div class="input-group-append">
                     <span class="input-group-text bg-danger remove-way">&minus;</span>
                 </div>
             </div>`);
+        });
 
-            $('.remove-way').click(function(e) {
-                e.preventDefault();
-                $(this).parents('.input-group').fadeOut(300, function(){
-                    $(this).remove();
-                })
-            });
-        })
+        $('.remove-way').click(function(e) {
+            e.preventDefault();
+            $(this).parents('.input-group').fadeOut(300, function(){
+                $(this).remove();
+            })
+        });
 
         $(document).on('change', '.payment_method', function(){
-            console.log('changed')
+            // console.log('changed')
             var id = $(this).parents('.input-group').data('id');
             console.log(id)
             if($(this).val() == 'Bank') {
                 $(this).after(`
-                    <input type="text" name="payment[`+id+`][bank_name]" placeholder="Bank Name" value="{{ old('payment.`+id+`.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
-                    <input type="text" name="payment[`+id+`][account_name]" placeholder="Account Name" value="{{ old('payment.`+id+`.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
+                    <input type="text" name="payment[`+id+`][bank_name]" placeholder="Bank Name*" value="{{ old('payment.`+id+`.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
+                    <input type="text" name="payment[`+id+`][account_name]" placeholder="Account Name*" value="{{ old('payment.`+id+`.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
                     <input type="text" name="payment[`+id+`][branch]" placeholder="Branch" value="{{ old('payment.`+id+`.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
                     <input type="text" name="payment[`+id+`][routing_no]" placeholder="Routing No" value="{{ old('payment.`+id+`.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
                 `);

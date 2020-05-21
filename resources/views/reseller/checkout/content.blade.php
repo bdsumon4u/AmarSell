@@ -93,8 +93,16 @@
                                             Delivery Method<span>*</span>
                                         </label>
 
-                                        <input type="text" name="delivery_method" class="form-control" id="delivery-method" value="{{ old('delivery_method') }}">
-
+                                        @if(count($courier) == 1)
+                                        <input type="text" name="delivery_method" id="delivery_method" class="form-control" value="{{ old('delivery_method', reset($courier)) }}" readonly>
+                                        @else
+                                        <select name="delivery_method" id="delivery_method" class="form-control" @if(count($courier) == 1) readonly @endif>
+                                            <option value="">Select Method</option>
+                                            @foreach($courier as $name)
+                                            <option value="{{ $name }}" @if(old('courier') == $name) selected @endif>{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @endif
                                         {!! $errors->first('delivery_method', '<span class="error-message">:message</span>') !!}
                                     </div>
                                 </div>

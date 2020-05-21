@@ -86,7 +86,7 @@
                 <li class="d-inline-block"><a href="tel:{{ $contact->phone }}"><i class="fa fa-phone"></i></a></li>
                 @foreach($social ?? [] as $name => $item)
                     @if($item->display ?? false)
-                    <li class="d-inline-block"><a href="{{ url($item->link) }}"><i class="fa fa-{{ $name }}"></i></a></li>
+                    <li class="d-inline-block"><a href="{{ url($item->link ?? '') }}"><i class="fa fa-{{ $name }}"></i></a></li>
                     @endif
                 @endforeach
             </ul>
