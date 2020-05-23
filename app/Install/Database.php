@@ -5,6 +5,7 @@ namespace App\Install;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
+use MenuDatabaseSeeder;
 
 class Database
 {
@@ -51,5 +52,6 @@ class Database
     private function migrateDatabase()
     {
         Artisan::call('migrate', ['--force' => true]);
+        Artisan::call('db:seed', ['--class' => MenuDatabaseSeeder::class]);
     }
 }

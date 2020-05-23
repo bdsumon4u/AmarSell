@@ -11,7 +11,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="amount">Amount</label>
-                        <input type="text" name="amount" wire:model.debounce.250ms="amount" wire:keyup="calc" value="{{ old('amount', request('amount', $amount)) }}" class="form-control @error('amount') is-invalid @enderror">
+                        <input type="text" name="amount" wire:model.debounce.250ms="amount" wire:keyup="calc" value="{{ old('amount', request('amount', $amount)) }}" class="form-control @error('amount') is-invalid @enderror" @if(!empty(request('method'))) readonly @endif>
                         @error('amount')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

@@ -49,7 +49,7 @@
 
                         <div class="contact-text">
                             <h4>Phone</h4>
-                            <span>{{ $contact->phone }}</span>
+                            <span>{{ $contact->phone ?? '' }}</span>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
 
                         <div class="contact-text">
                             <h4>Email</h4>
-                            <span>{{ $company->email }}</span>
+                            <span>{{ $company->email ?? '' }}</span>
                         </div>
                     </div>
                 </div>

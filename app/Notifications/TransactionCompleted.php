@@ -2,10 +2,11 @@
 
 namespace App\Notifications;
 
+use App\Reseller;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class TransactionCompleted extends Notification
 {
@@ -31,7 +32,14 @@ class TransactionCompleted extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        $via = ['database'];
+        if(
+            $notifiable instanceof Reseller
+            && filter_var($notifiable->email, FILTER_VALIDATE_EMAIL)
+        ) {
+            array_push($via, 'mail');
+        }
+        return $via;
     }
 
     /**
@@ -43,9 +51,10 @@ class TransactionCompleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->markdown('emails.transaction_completed', [
+                'data' => $this->event->transaction->toArray(),
+                'type' => $this->event->type,
+            ]);
     }
 
     /**

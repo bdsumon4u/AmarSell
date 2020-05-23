@@ -4,5 +4,5 @@
 {{ $data['message'] }}
 
 From,<br>
-{{ $data['email'] }}
+{!! nl2br($data['email']) !!}
 @endcomponent

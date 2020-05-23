@@ -88,7 +88,7 @@
 
                                     @case('new-order-recieved')
                                         @if($order = \App\Order::find($data['order_id']))
-                                            A New Order From Reseller <a href="{{ route('reseller.profile.show', $data['reseller_id']) }}">{{ $data['reseller_name'] }}</a> [ Phone: <strong>{{ $data['reseller_phone'] }}</strong> ] [ Balance: <strong>{{ theMoney($data['reseller_balance']) }}</strong> ]<br>
+                                            A New Order From Reseller <a href="{{ route('admin.reseller', $data['reseller_id']) }}">{{ $data['reseller_name'] }}</a> [ Phone: <strong>{{ $data['reseller_phone'] }}</strong> ] [ Balance: <strong>{{ theMoney($data['reseller_balance']) }}</strong> ]<br>
                                             For Products:
                                             <ul class="my-2">
                                                 @foreach($order->data['products'] as $product)

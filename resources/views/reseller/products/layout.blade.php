@@ -20,9 +20,11 @@
     @show
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fleetcart.css') }}">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://tonnicollection.com/themes/storefront/public/css/app.css?v=1.1.9">
+    <!-- <link rel="stylesheet" href="https://tonnicollection.com/themes/storefront/public/css/app.css?v=1.1.9"> -->
     <!-- <link rel="stylesheet" href="{{ asset('css/shop.css') }}"> -->
     <link rel="shortcut icon"
         href="{{ asset($logo->favicon ?? '') ?? '' }}"
@@ -174,14 +176,15 @@
 
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
 <!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<!-- <script src="{{ asset('js/app.js') }}"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <script src="https://tonnicollection.com/themes/storefront/public/js/app.js?v=1.1.9"></script>
-    <!-- <script src="{{ asset('js/fleetcart.js') }}"></script> -->
+    <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script> -->
+    <!-- <script src="https://tonnicollection.com/themes/storefront/public/js/app.js?v=1.1.9"></script> -->
+    <script src="{{ asset('js/fleetcart.js') }}"></script>
     @yield('scripts')
-    <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"></script>
     <script>
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");

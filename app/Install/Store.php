@@ -31,6 +31,11 @@ class Store
                 'favicon' => asset('images/defaults/favicon-logo.png'),
             ],
             'footer_menu' => [],
+            'courier' => [
+                'Sundarban',
+                'SA Paribahan',
+                'Korotua',
+            ],
         ]);
     }
 }

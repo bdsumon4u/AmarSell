@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Reseller;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -32,9 +33,12 @@ class OrderStatusChanged extends Notification
     public function via($notifiable)
     {
         $via = ['database'];
-        // if(filter_var($notifiable->email, FILTER_VALIDATE_EMAIL)) {
-        //     $via += ['mail'];
-        // }
+        if(
+            $notifiable instanceof Reseller
+            && filter_var($notifiable->email, FILTER_VALIDATE_EMAIL)
+        ) {
+            array_push($via, 'mail');
+        }
         return $via;
     }
 
@@ -47,8 +51,10 @@ class OrderStatusChanged extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->line('Dear valuable reseller,')
+                    ->line('One of your order status has changed')
+                    ->line('from "' . $this->event->before . '" to "' . $this->event->order->status . '"')
+                    ->action("Order #{$this->event->order->id}", route('reseller.order.show', $this->event->order->id))
                     ->line('Thank you for using our application!');
     }
 

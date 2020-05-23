@@ -43,23 +43,23 @@ $(function () {
     /*      sticky nav
     /*----------------------------------------*/
 
-    let stickyNavTop = $('.header-wrapper').offset().top;
+    // let stickyNavTop = $('.header-wrapper').offset().top;
 
-    let stickyNav = () => {
-        let scrollTop = $(window).scrollTop();
+    // let stickyNav = () => {
+    //     let scrollTop = $(window).scrollTop();
 
-        if (scrollTop > stickyNavTop) {
-            $('.header-inner, .autocomplete-suggestions').addClass('sticky');
+    //     if (scrollTop > stickyNavTop) {
+    //         $('.header-inner, .autocomplete-suggestions').addClass('sticky');
 
-            return;
-        }
+    //         return;
+    //     }
 
-        $('.header-inner, .autocomplete-suggestions').removeClass('sticky');
-    };
+    //     $('.header-inner, .autocomplete-suggestions').removeClass('sticky');
+    // };
 
-    $(window).on('load scroll', () => {
-        stickyNav();
-    });
+    // $(window).on('load scroll', () => {
+    //     stickyNav();
+    // });
 
     /*----------------------------------------*/
     /*      content wrapper minimum height
@@ -76,41 +76,41 @@ $(function () {
     /*      search box
     /*----------------------------------------*/
 
-    function autocomplete(selector, options) {
-        $(selector).autocomplete(Object.assign({
-            dataType: 'json',
-            triggerSelectOnValidInput: false,
-            transformResult(response) {
-                let products = response.data.map((product) => {
-                    return {
-                        value: product.name.toLowerCase(),
-                        label: product.name.toLowerCase(),
-                    };
-                });
+    // function autocomplete(selector, options) {
+    //     $(selector).autocomplete(Object.assign({
+    //         dataType: 'json',
+    //         triggerSelectOnValidInput: false,
+    //         transformResult(response) {
+    //             let products = response.data.map((product) => {
+    //                 return {
+    //                     value: product.name.toLowerCase(),
+    //                     label: product.name.toLowerCase(),
+    //                 };
+    //             });
 
-                return { suggestions: products };
-            },
-            onSelect() {
-                $(selector).closest('#search-box-form').submit();
-            },
-        }, options));
-    }
+    //             return { suggestions: products };
+    //         },
+    //         onSelect() {
+    //             $(selector).closest('#search-box-form').submit();
+    //         },
+    //     }, options));
+    // }
 
-    autocomplete('.search-box .search-box-input', {
-        serviceUrl() {
-            return route('products.index', { category: $('.search-box-select').val(), perPage: 10 });
-        },
-    });
+    // autocomplete('.search-box .search-box-input', {
+    //     serviceUrl() {
+    //         return route('products.index', { category: $('.search-box-select').val(), perPage: 10 });
+    //     },
+    // });
 
-    autocomplete('.mobile-search .search-box-input', {
-        appendTo: '.mobile-search .dropdown-menu',
-        serviceUrl() {
-            return route('products.index', { perPage: 5 });
-        },
-        beforeRender(container) {
-            container.addClass('mobile-search-suggestions');
-        },
-    });
+    // autocomplete('.mobile-search .search-box-input', {
+    //     appendTo: '.mobile-search .dropdown-menu',
+    //     serviceUrl() {
+    //         return route('products.index', { perPage: 5 });
+    //     },
+    //     beforeRender(container) {
+    //         container.addClass('mobile-search-suggestions');
+    //     },
+    // });
 
     $('#search-box-form').on('submit', function (e) {
         e.preventDefault();
@@ -625,9 +625,9 @@ $(function () {
     /*      tooltip
     /*----------------------------------------*/
 
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger: 'hover',
-    });
+    // $('[data-toggle="tooltip"]').tooltip({
+    //     trigger: 'hover',
+    // });
 
     /*----------------------------------------*/
     /*      footer mobile collapse

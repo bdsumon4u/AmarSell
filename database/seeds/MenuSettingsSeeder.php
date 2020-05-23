@@ -18,7 +18,7 @@ class MenuSettingsSeeder extends Seeder
         $settings->apply_child_as_parent = 0;
         $settings->levels                = [
             'root'  => [
-                'style' => 'vertical', // horizontal | vertical
+                'style' => 'vertical nav navbar-nav', // horizontal | vertical
             ],
             'child' => [
                 'show'     => 'onClick', // onclick | onHover
