@@ -7,5 +7,6 @@ return [
         'processing',
         'transporting',
         'completed',
+        'returned',
     ],
 ];

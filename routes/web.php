@@ -95,6 +95,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::patch('/password', 'PasswordController')->name('password.update');
 
     Route::resource('/faqs', 'FaqController');
+
+
+    Route::get('/admins', 'AdminController@index')->name('admins.index');
+    Route::get('/admins/create', 'AdminController@create')->name('admins.create');
+    Route::post('/admins/create', 'AdminController@store')->name('admins.store');
+    Route::delete('/admins/{user}/destroy', 'AdminController@destroy')->name('admins.destroy');
 });
 
 Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(['auth:reseller', PageMiddleware::class]);

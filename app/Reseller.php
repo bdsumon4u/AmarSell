@@ -6,12 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use App\Notifications\Reseller\VerifyEmail;
 use App\Notifications\Reseller\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
 class Reseller extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password', 'payment',
+        'name', 'email', 'phone', 'password', 'payment', 'verified_at',
     ];
 
     /**

@@ -4,16 +4,15 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header">Edit <strong>Reseller</strong></div>
+            <div class="card-header">Add New <strong>Admin</strong></div>
             <div class="card-body">
-                <form action="{{ route('admin.resellers.update', $reseller->id) }}" method="post">
+                <form action="{{ route('admin.admins.store') }}" method="post">
                     @csrf
-                    @method('PATCH')
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" value="{{ old('name', $reseller->name) }}" id="name" class="form-control @error('name') is-invalid @enderror">
+                                <input type="text" name="name" value="{{ old('name') }}" id="name" class="form-control @error('name') is-invalid @enderror">
                                 @error('name')
                                     <strong class="invalid-feedback">{{ $message }}</strong>
                                 @enderror
@@ -22,7 +21,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" name="email" value="{{ old('email', $reseller->email) }}" id="email" class="form-control @error('email') is-invalid @enderror">
+                                <input type="text" name="email" value="{{ old('email') }}" id="email" class="form-control @error('email') is-invalid @enderror">
                                 @error('email')
                                     <strong class="invalid-feedback">{{ $message }}</strong>
                                 @enderror
@@ -30,23 +29,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" name="phone" value="{{ old('phone', $reseller->phone) }}" id="phone" class="form-control @error('phone') is-invalid @enderror">
-                                @error('phone')
+                                <label for="password">Password</label>
+                                <input type="password" name="password" value="{{ old('password') }}" id="phone" class="form-control @error('password') is-invalid @enderror">
+                                @error('password')
+                                    <strong class="invalid-feedback">{{ $message }}</strong>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password_confirmation">Confirm Password</label>
+                                <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" id="phone" class="form-control @error('password_confirmation') is-invalid @enderror">
+                                @error('password_confirmation')
                                     <strong class="invalid-feedback">{{ $message }}</strong>
                                 @enderror
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name="verified" id="verified" class="custom-control-input" @if($reseller->verified_at) checked @endif>
-                                    <label for="verified" class="custom-control-label">Verified</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">Create</button>
                         </div>
                     </div>
                 </form>

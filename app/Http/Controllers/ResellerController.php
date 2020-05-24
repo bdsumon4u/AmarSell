@@ -31,7 +31,10 @@ class ResellerController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
+            'verified' => 'sometimes|nullable',
         ]);
+        $data['verified_at'] = isset($data['verified']) ? now()->toDateTimeString() : NULL;
+
         $reseller->update($data);
         return redirect()->back()->with('success', 'Reseller Profile Updated.');
     }

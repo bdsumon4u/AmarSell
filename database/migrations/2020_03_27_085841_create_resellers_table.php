@@ -22,6 +22,8 @@ class CreateResellersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('verified_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
