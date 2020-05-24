@@ -25,6 +25,18 @@ class SidebarComposer
                 'name' => 'BASE',
             ],
             [
+                'icon' => 'fa fa-gg',
+                'style' => 'simple',
+                'name' => 'Admins',
+                'route' => 'admin.admins.index',
+            ],
+            [
+                'icon' => 'fa fa-users',
+                'style' => 'simple',
+                'name' => 'Resellers',
+                'route' => 'admin.resellers.index',
+            ],
+            [
                 'icon' => 'fa fa-columns',
                 'style' => 'simple',
                 'name' => 'Categories',

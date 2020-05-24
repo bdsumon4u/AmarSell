@@ -34,7 +34,7 @@ class SettingSeeder extends Seeder
                     'white' => asset('images/defaults/white-logo.png'),
                     'color' => asset('images/defaults/color-logo.png'),
                     'footer' => asset('images/defaults/footer-logo.png'),
-                    'favicon' => asset('images/defaults/favicon-logo.png'),
+                    'favicon' => asset('images/defaults/favicon.png'),
                 ]),
             ],
             [
