@@ -39,7 +39,7 @@ class PaymentCalculator extends Component
 
     public function chMethod()
     {
-        if($this->method != 0) {
+        if(! empty($this->method)) {
             $arr = Arr::first($this->reseller->payment, function($payment) {
                 return $payment->method == $this->method;
             });

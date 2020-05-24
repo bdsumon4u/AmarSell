@@ -23,7 +23,7 @@
                         <input type="hidden" name="method" value="{{ old('method', request('method')) }}">
                         <!-- <input type="text" name="method" wire:model.debounce.250ms="method" value="{{ old('method', $method) }}" class="form-control @error('method') is-invalid @enderror"> -->
                         <select name="method" wire:model.debounce.250ms="method" value="{{ old('method', request('method', $method)) }}" wire:change="chMethod" class="form-control @error('method') is-invalid @enderror" @if(!empty(request('method'))) disabled @endif>
-                            <option value="0">Select Method</option>
+                            <option value="">Select Method</option>
                             @if($reseller->payment_methods)
                                 @foreach($reseller->payment_methods as $payment)
                                 <option value="{{ $payment->method }}">{{ $payment->method }}</option>

@@ -14,7 +14,14 @@ class FaqController extends Controller
      */
     public function index()
     {
-        $faqs = Faq::all();
+        $faqs = cache('faqs', function () {
+            $faqs = Faq::all();
+            $faqs->each(function (Faq $faq) {
+                cache(["faq.{$faq->id}" => $faq]);
+            });
+            cache(['faqs' => $faqs]);
+            return $faqs;
+        });
         return view('admin.faqs.index', compact('faqs'));
     }
 
@@ -40,7 +47,8 @@ class FaqController extends Controller
             'question' => 'required|max:255|unique:faqs',
             'answer' => 'required',
         ]);
-        Faq::create($data);
+        $faq = Faq::create($data);
+        cache(["faq.{$faq->id}" => $faq]);
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ Created Successfully.');
     }
 
@@ -61,8 +69,11 @@ class FaqController extends Controller
      * @param  \App\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function edit(Faq $faq)
+    public function edit($faq)
     {
+        $faq = cache("faq.{$faq}", function () use ($faq) {
+            return Faq::findOrFail($faq);
+        });
         return view('admin.faqs.edit', compact('faq'));
     }
 

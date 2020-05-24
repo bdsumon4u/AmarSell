@@ -31,7 +31,14 @@ Route::get('install/complete', 'InstallController@complete');
 
 // dd(Order::find(2)->data);
 Route::get('/', function (Request $request) {
-    return view('welcome')->withFaqs(Faq::all());
+    $faqs = cache('faqs', function () {
+        $faqs = Faq::all();
+        $faqs->each(function ($faq) {
+            cache(["faq.{$faq->id}" => $faq]);
+        });
+        return $faqs;
+    });
+    return view('welcome')->withFaqs($faqs);
 })->middleware([RedirectToInstallerIfNotInstalled::class, 'guest:reseller']);
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');

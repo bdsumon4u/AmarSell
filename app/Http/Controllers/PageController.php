@@ -14,8 +14,16 @@ class PageController extends Controller
      */
     public function index()
     {
+        $pages = cache('pages', function () {
+            $pages = Page::all();
+            $pages->each(function ($page) {
+                cache(["page.{$page->slug}" => $page]);
+            });
+            cache(['pages' => $pages]);
+            return $pages;
+        });
         return view('admin.pages.index', [
-            'pages' => Page::all(),
+            'pages' => $pages,
         ]);
     }
 
@@ -43,7 +51,8 @@ class PageController extends Controller
             'content' => 'required',
         ]);
 
-        Page::create($data);
+        $page = Page::create($data);
+        cache(["page.{$page->slgu}" => $page]);
         return redirect()->back()->with('success', 'Page Created.');
     }
 
@@ -53,8 +62,11 @@ class PageController extends Controller
      * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show($page)
     {
+        $page = cache("page.$page", function () use ($page) {
+            return Page::where('slug', $page)->last();
+        });
         return view('page', compact('page'));
     }
 
@@ -64,8 +76,11 @@ class PageController extends Controller
      * @param  \App\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function edit(Page $page)
+    public function edit($page)
     {
+        $page = cache("page.$page", function () use ($page) {
+            return Page::where('slug', $page)->first();
+        });
         return view('admin.pages.edit', compact('page'));
     }
 

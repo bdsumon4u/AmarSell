@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reseller_id');
+            $table->unsignedBigInteger('reseller_id')->index();
             $table->integer('amount');
             $table->string('method');
             $table->string('bank_name')->nullable();
@@ -25,7 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->string('account_type');
             $table->string('account_number');
             $table->string('transaction_number')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('pending')->index();
             $table->timestamps();
         });
     }
