@@ -42,9 +42,15 @@
                                 <td>{{ theMoney($reseller->completed_sell) }}</td>
                             </tr>
                             <tr>
-                                <th>Total Withdraw:</th>
+                                <th>Total Paid:</th>
                                 <td>{{ theMoney($reseller->paid) }}</td>
                             </tr>
+                            @if($reseller->lastPaid->created_at)
+                            <tr>
+                                <th>Last Paid:</th>
+                                <td>{{ theMoney($reseller->lastPaid->amount) }}</td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th>Current Balance:</th>
                                 <td>{{ theMoney($reseller->balance) }}</td>

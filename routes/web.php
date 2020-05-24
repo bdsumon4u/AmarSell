@@ -80,10 +80,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::patch('/notifications/read/{notification?}', 'NotificationController@update')->name('notifications.update');
     Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 
-    Route::get('/resellers', 'ResellerController')->name('resellers');
-    Route::get('/reseller/{reseller}', function (Reseller $reseller) {
-        return view('admin.reseller', ['reseller' => $reseller]);
-    })->name('reseller');
+    Route::resource('/resellers', 'ResellerController');
 
     Route::get('/pages', 'PageController@index')->name('pages.index');
     Route::get('/pages/create', 'PageController@create')->name('pages.create');
@@ -117,7 +114,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
     Route::get('/products/category/{slug}/id/{category}', 'ProductController@index')->name('product.by-category');
-    Route::get('/products', 'ProductController@index')->name('product.index');
+    Route::get('/products', 'ProductController@index')->name('product.index')->middleware('iverified');
     Route::get('/product/{product:slug}', 'ProductController@show')->name('product.show');
 
 

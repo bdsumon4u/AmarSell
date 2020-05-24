@@ -31,7 +31,7 @@
                                 <tr data-row-id="{{ $order->id }}">
                                     <td>{{ $order->id }}</td>
                                     <td>
-                                        <a href="{{ route('admin.reseller', $order->reseller->id) }}">
+                                        <a href="{{ route('admin.resellers.show', $order->reseller->id) }}">
                                             <strong>Name:</strong> {{ $order->reseller->name }}
                                             <br>
                                             <strong>Phone:</strong> {{ $order->reseller->phone }}
@@ -69,7 +69,7 @@
                                 <tr data-row-id="{{ $transaction->id }}">
                                     <td>{{ $transaction->id }}</td>
                                     <td>
-                                        <a href="">
+                                        <a href="{{ route('admin.resellers.show', $transaction->reseller->id) }}">
                                             <strong>Name:</strong> {{ $transaction->reseller->name }}
                                             <br>
                                             <strong>Phone:</strong> {{ $transaction->reseller->phone }}

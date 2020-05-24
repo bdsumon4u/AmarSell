@@ -82,14 +82,14 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="name">Name</label><span class="text-danger">*</span>
-                                                        <input name="name" value="{{ old('name', $user->name) }}" id="" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror">
+                                                        <input name="name" value="{{ old('name', $user->name) }}" id="" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror" disabled>
                                                         {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="email">Email</label><span class="text-danger">*</span>
-                                                        <input name="email" value="{{ old('email', $user->email) }}" id="" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror">
+                                                        <input name="email" value="{{ old('email', $user->email) }}" id="" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" disabled>
                                                         {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>

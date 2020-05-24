@@ -44,6 +44,7 @@ class CategoryController extends Controller
         ]);
 
         Category::create($data);
+        cache(['categories.formatted' => Category::formatted()]);
         return redirect()->back()->with('success', 'Category Has Created.');
     }
 
@@ -85,6 +86,7 @@ class CategoryController extends Controller
         ]);
 
         $category->update($data);
+        cache(['categories.formatted' => Category::formatted()]);
         return redirect()->back()->with('success', 'Category Has Updated.');
     }
 
@@ -96,9 +98,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->delete())
+        if($category->delete()) {
             return redirect()->back()->with('success', 'Category Has Deleted.');
+            cache(['categories.formatted' => Category::formatted()]);
+        }
         return redirect()->back();
-        
     }
 }

@@ -28,9 +28,9 @@ class ProductController extends Controller
         //     $products = Product::latest();
         // }
         // $products = $request->has('s') ? $products->where('name', 'like', '%' . $request->s . '%') : $products;
-        $products_count = $products->count();
+        // $products_count = $products->count();
         $products = $products->paginate(12)->appends($request->query());
-        return view('reseller.products.index', compact('products', 'products_count'));
+        return view('reseller.products.index', compact('products'));
     }
 
     /**

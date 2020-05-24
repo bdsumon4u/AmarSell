@@ -24,4 +24,7 @@ Route::group(['namespace' => 'API', 'as' => 'api.'], function() {
 
     Route::get('orders/{status?}/{reseller?}', 'OrderController@index')->name('orders.index');
     Route::get('transactions/{status?}/{reseller?}', 'TransactionController@index')->name('transactions.index');
+
+    Route::get('resellers', 'ResellerController@index')->name('resellers.index');
+    Route::get('resellers/edit', 'ResellerController@edit')->name('resellers.edit');
 });

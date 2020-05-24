@@ -37,8 +37,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         });
 
         // View::composer(['layouts.*', 'reseller.shop.header'], HeaderComposer::class);
-        View::composer(['admin.*'], AdminAsideComposer::class);
-        View::composer(['admin.*'], AdminSidebarComposer::class);
+        View::composer(['admin.*', 'layouts.*'], AdminAsideComposer::class);
+        View::composer(['admin.*', 'layouts.*'], AdminSidebarComposer::class);
         View::composer(['reseller.layout'], ResellerSidebarComposer::class);
         View::composer(['reseller.layout'], ResellerAsideComposer::class);
         View::composer(['reseller.products.partials.mini-cart', 'reseller.cart.*', 'reseller.checkout.*'], CartComposer::class);

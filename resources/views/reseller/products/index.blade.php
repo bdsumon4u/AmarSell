@@ -13,7 +13,7 @@
                 <div class="search-result-title pull-left">
                     <h3>Shop</h3>
 
-                    <span>{{ $products_count }} products found</span>
+                    <span>{{ $products->count() }} products found</span>
                 </div>
             </div>
 

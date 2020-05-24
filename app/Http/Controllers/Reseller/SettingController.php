@@ -16,8 +16,8 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+            // 'name' => 'required',
+            // 'email' => 'required|email',
             'phone' => 'required',
             'payment' => 'required|array',
             'payment.*' => 'required|array',

@@ -13,8 +13,31 @@ class ResellerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
-        return view('admin.resellers')->withResellers(Reseller::all());
+        return view('admin.resellers.index')
+            // ->withResellers(Reseller::all())
+            ;
+    }
+
+    public function edit(Reseller $reseller)
+    {
+        return view('admin.resellers.edit', compact('reseller'));
+    }
+
+    public function update(Request $request, Reseller $reseller)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+        ]);
+        $reseller->update($data);
+        return redirect()->back()->with('success', 'Reseller Profile Updated.');
+    }
+
+    public function show(Reseller $reseller)
+    {
+        return view('admin.resellers.show', compact('reseller'));
     }
 }

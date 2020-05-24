@@ -11,6 +11,7 @@
 
 @section('content')
 <div class="row">
+    @iverified
     <div class="col-md-6">
         <div class="orders-table">
             <div class="card rounded-0 shadow-sm">
@@ -77,6 +78,17 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="col-12">
+        <div class="alert alert-warning">
+            Your Account Is Not Verified.<br>
+            Create Your Shop(s) & Setup Your Payment Option(s).<br>
+            We'll verify you soon.<br>
+            After verifing your account, you'll be able to use our services.<br>
+            Contact Us for any query.
+        </div>
+    </div>
+    @endiverified
 </div>
 @endsection
 
