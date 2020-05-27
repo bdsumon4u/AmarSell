@@ -86,35 +86,9 @@ class SidebarComposer
             ],
             [
                 'icon' => 'fa fa-th-list',
-                'style' => 'dropdown',
+                'style' => 'simple',
                 'name' => 'Orders',
-                'items' => [
-                    [
-                        'name' => 'Pending',
-                        'route' => 'admin.order.index',
-                        'param' => 'status=pending',
-                    ],
-                    [
-                        'name' => 'Accepted',
-                        'route' => 'admin.order.index',
-                        'param' => 'status=accepted',
-                    ],
-                    [
-                        'name' => 'Processing',
-                        'route' => 'admin.order.index',
-                        'param' => 'status=processing',
-                    ],
-                    [
-                        'name' => 'Transporting',
-                        'route' => 'admin.order.index',
-                        'param' => 'status=transporting',
-                    ],
-                    [
-                        'name' => 'Completed',
-                        'route' => 'admin.order.index',
-                        'param' => 'status=completed',
-                    ],
-                ],
+                'route' => 'admin.order.index',
             ],
             [
                 'icon' => 'fa fa-money',
@@ -129,10 +103,10 @@ class SidebarComposer
                         'name' => 'History',
                         'route' => 'admin.transactions.index',
                     ],
-                    [
-                        'name' => 'Requests',
-                        'route' => 'admin.transactions.requests',
-                    ],
+                    // [
+                    //     'name' => 'Requests',
+                    //     'route' => 'admin.transactions.requests',
+                    // ],
                 ],
             ],
             [

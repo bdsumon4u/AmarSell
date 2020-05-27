@@ -37079,6 +37079,15 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window
 //     el: '#app',
 // });
 
+
+$(document, window).on('click', 'a:not([href^="#"])', function (e) {
+  if (e) {
+    console.log(e);
+  }
+
+  return true;
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

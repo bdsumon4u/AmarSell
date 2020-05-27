@@ -118,7 +118,7 @@
         @unless($is_reseller)
         <div class="d-flex mt-2 justify-content-between">
             @if($order->status == 'pending')
-            <input type="hidden" name="status" value="accepted">
+            <input type="hidden" name="status" value="processing">
             @else
             <select name="status" id="status" class="form-control mr-1">
                 @foreach(config('order.statuses') as $status)

@@ -21,12 +21,12 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>ID</th>
+                                    <th width="10">ID</th>
                                     <th>Customer</th>
                                     <th>Status</th>
                                     <th>Price</th>
                                     <th>Ordered At</th>
-                                    <th>Action</th>
+                                    <th width="15">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -128,7 +128,7 @@
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{!! route('api.orders.index', [request('status', 'pending'), auth('reseller')->user()->id]) !!}",
+        ajax: "{!! route('api.orders.reseller') !!}",
         buttons: dt_buttons,
         columns: [
             { data: 'empty', name: 'empty' },

@@ -30,3 +30,10 @@ require('./bootstrap');
 // const app = new Vue({
 //     el: '#app',
 // });
+
+$(document, window).on('click', 'a:not([href^="#"])', function (e) {
+    if (e) {
+        console.log(e);
+    }
+    return true;
+});

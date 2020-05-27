@@ -6,7 +6,7 @@
         <div class="card rounded-0 shadow-sm">
             <div class="card-header">All <strong>Admins</strong></div>
             <div class="card-body">
-                <a href="{{ route('admin.admins.create') }}" class="btn mb-2 btn-success">Create New</a>
+                <a href="{{ route('admin.admins.create') }}" class="btn mb-2 btn-success">Add New</a>
                 <table class="table table-bordered">
                     <thead>
                         <tr>

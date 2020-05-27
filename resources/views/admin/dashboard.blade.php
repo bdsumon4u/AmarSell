@@ -22,7 +22,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Reseller</th>
-                                    <th>At</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -51,7 +51,7 @@
     <div class="col-md-6">
         <div class="transactions-table">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Pending Transactions</strong></div>
+                <div class="card-header"><strong>Recent Transactions</strong></div>
                 <div class="card-body">
                     <div class="table-responive">
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
@@ -60,7 +60,7 @@
                                     <th>ID</th>
                                     <th>Reseller</th>
                                     <th>Amount</th>
-                                    <th>At</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

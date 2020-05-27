@@ -9,6 +9,7 @@ use App\Order;
 use App\Product;
 use App\Reseller;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 
@@ -129,6 +130,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
     Route::delete('order/{order}/delete', 'OrderController@destroy')->name('order.destroy');
+    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel'); #--#--#
     
     
     Route::view('/transactions/history', 'reseller.transactions.index')->name('transactions.index');
@@ -147,3 +149,9 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
 });
 
 MenuBuilder::routes();
+
+Route::get('/clear', function () {
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+});

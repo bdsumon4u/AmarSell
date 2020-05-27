@@ -22,7 +22,8 @@ Route::group(['namespace' => 'API', 'as' => 'api.'], function() {
     Route::get('images', 'ImageController@index')->name('images.index');
     Route::delete('images/destroy', 'ImageController@destroy')->name('images.destroy');
 
-    Route::get('orders/{status?}/{reseller?}', 'OrderController@index')->name('orders.index');
+    Route::get('admin/orders/{status?}/{reseller?}', 'OrderController@admin')->name('orders.admin');
+    Route::get('reseller/orders/{status?}/{reseller?}', 'OrderController@reseller')->name('orders.reseller');
     Route::get('transactions/{status?}/{reseller?}', 'TransactionController@index')->name('transactions.index');
 
     Route::get('resellers', 'ResellerController@index')->name('resellers.index');

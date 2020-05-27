@@ -14,7 +14,7 @@
             <td>{{ theMoney($reseller->completed_sell) }}</td>
         </tr>
         <tr>
-            <th>Total Withdraw:</th>
+            <th>Total Paid:</th>
             <td>{{ theMoney($reseller->paid) }}</td>
         </tr>
         <tr>

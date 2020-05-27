@@ -157,10 +157,12 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         $completed_shipping = $completed->sum(function($order){ return $order->data['shipping']; });
 
         $completed_buy = $completed->sum(function($order){ return $order->data['buy_price']; });
-        $non_pending_charges = $non_pending->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
+        // $non_pending_charges = $non_pending->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
+        $completed_charges = $completed->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
 
 
-        $balance = $this->completed_sell - $completed_advanced - $completed_buy - $non_pending_charges + $completed_shipping - ($this->paid);
+        // $balance = $this->completed_sell - $completed_advanced - $completed_buy - $non_pending_charges + $completed_shipping - ($this->paid);
+        $balance = $this->completed_sell - $completed_advanced - $completed_buy - $completed_charges + $completed_shipping - ($this->paid);
 
         return $balance;
     }

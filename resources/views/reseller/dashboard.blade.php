@@ -23,8 +23,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Customer</th>
-                                    <th>At</th>
-                                    <th>Action</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +36,6 @@
                                         <strong>Phone:</strong> {{ $order->data['customer_phone'] }}
                                     </td>
                                     <td>{{ $order->created_at->format('d-M-Y') }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('reseller.order.show', $order->id) }}">View</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -50,16 +48,15 @@
     <div class="col-md-6">
         <div class="transactions-table">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Pending Transactions</strong></div>
+                <div class="card-header"><strong>Recent Transactions</strong></div>
                 <div class="card-body">
                     <div class="table-responive">
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Reseller</th>
                                     <th>Amount</th>
-                                    <th>At</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

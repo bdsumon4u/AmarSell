@@ -43,35 +43,9 @@ class SidebarComposer
         ],
         [
             'icon' => 'fa fa-th-list',
-            'style' => 'dropdown',
+            'style' => 'simple',
             'name' => 'Orders',
-            'items' => [
-                [
-                    'name' => 'Pending',
-                    'route' => 'reseller.order.index',
-                    'param' => 'filter[status]=pending',
-                ],
-                [
-                    'name' => 'Accepted',
-                    'route' => 'reseller.order.index',
-                    'param' => 'filter[status]=accepted',
-                ],
-                [
-                    'name' => 'Processing',
-                    'route' => 'reseller.order.index',
-                    'param' => 'filter[status]=processing',
-                ],
-                [
-                    'name' => 'Transporting',
-                    'route' => 'reseller.order.index',
-                    'param' => 'filter[status]=transporting',
-                ],
-                [
-                    'name' => 'Completed',
-                    'route' => 'reseller.order.index',
-                    'param' => 'filter[status]=completed',
-                ],
-            ],
+            'route' => 'reseller.order.index',
         ],
         [
             'icon' => 'fa fa-money',
@@ -86,10 +60,10 @@ class SidebarComposer
                     'name' => 'History',
                     'route' => 'reseller.transactions.index',
                 ],
-                [
-                    'name' => 'Money Request',
-                    'route' => 'reseller.transactions.request',
-                ],
+                // [
+                //     'name' => 'Money Request',
+                //     'route' => 'reseller.transactions.request',
+                // ],
             ],
         ],
     ];

@@ -3,9 +3,8 @@
 return [
     'statuses' => [
         'pending',
-        'accepted',
         'processing',
-        'transporting',
+        'shipping',
         'completed',
         'returned',
     ],

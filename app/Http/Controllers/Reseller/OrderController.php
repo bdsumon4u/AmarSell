@@ -104,14 +104,20 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $products = Product::whereIn('id', array_keys($order->data['products']))->get();
-        $cp = $order->current_price();
-        return view('reseller.orders.show', compact('order', 'products', 'cp'));
+        if($order->status == 'completed' | $order->status == 'returned') {
+            $products = Product::whereIn('id', array_keys($order->data['products']))->get();
+            $cp = $order->current_price();
+            return view('reseller.orders.show', compact('order', 'products', 'cp'));
+        }
+        return redirect()->back()->with('error', 'You Can not view the order until status completed/returned.');
     }
 
     public function invoice(Order $order)
     {
-        return view('reseller.orders.invoice', compact('order'));
+        if($order->status == 'completed' | $order->status == 'returned') {
+            return view('reseller.orders.invoice', compact('order'));
+        }
+        return redirect()->back()->with('error', 'You Can not view the invoice until status completed/returned.');
     }
 
     /**
@@ -155,5 +161,19 @@ class OrderController extends Controller
             return redirect()->route('reseller.order.index')->with('success', 'Order Cancelled.');
         }
         return redirect()->route('reseller.order.index')->with('error', "Order Can\'t be Cancelled.");
+    }
+
+    public function cancel(Order $order)
+    {
+        if($order->status == 'pending') {
+            foreach($order->data['products'] as $item) {
+                $product = Product::findOrFail($item['id']);
+                $product->stock = is_numeric($product->stock) ? $product->stock + $item['quantity'] : $product->stock;
+                $product->save();
+            }
+            $order->delete();
+            return redirect()->back()->with('success', 'Order Cancelled');
+        }
+        return redirect()->back()->with('error', "Order Can\'t be Cancelled.");
     }
 }
