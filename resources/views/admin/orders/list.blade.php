@@ -129,7 +129,7 @@
     $('.datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{!! route('api.orders.admin') !!}",
+        ajax: "{!! route('api.orders.admin', request()->only(['status', 'reseller'])) !!}",
         buttons: dt_buttons,
         columns: [
             { data: 'empty', name: 'empty' },

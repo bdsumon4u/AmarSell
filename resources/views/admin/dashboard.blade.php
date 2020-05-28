@@ -61,7 +61,7 @@
                                     <th>Reseller</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +77,7 @@
                                     </td>
                                     <td>{{ theMoney($transaction->amount) }}</td>
                                     <td>{{ $transaction->created_at->format('d-M-Y') }}</td>
-                                    <td>
+                                    <!-- <td>
                                         <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$transaction->reseller->id,
                                             'transaction_id' => $transaction->id,
                                             'amount' => $transaction->amount,
@@ -89,7 +89,7 @@
                                             'account_type' => $transaction->account_type,
                                             'account_number' => $transaction->account_number,
                                         ]) }}">Pay</a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 @endforeach
                             </tbody>

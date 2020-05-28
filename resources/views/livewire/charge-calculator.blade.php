@@ -115,22 +115,24 @@
             </div>
         </div>
 
-        @unless($is_reseller)
-        <div class="d-flex mt-2 justify-content-between">
-            @if($order->status == 'pending')
-            <input type="hidden" name="status" value="processing">
-            @else
-            <select name="status" id="status" class="form-control mr-1">
-                @foreach(config('order.statuses') as $status)
-                <option value="{{ $status }}" @if($status == $order->status) selected @endif class="text-capitalize">{{ ucfirst($status) }}</option>
-                @endforeach
-            </select>
-            @endif
-            <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
-        </div>
-        @elseif($order->status == 'pending')
-        @method('DELETE')
-        <button type="submit" formaction="{{ route('reseller.order.destroy', $order->id) }}" class="btn btn-danger ml-1">Cancel</button>
+        @unless($order->status == 'completed' || $order->status == 'returned')
+            @unless($is_reseller)
+            <div class="d-flex mt-2 justify-content-between">
+                @if($order->status == 'pending')
+                <input type="hidden" name="status" value="processing">
+                @else
+                <select name="status" id="status" class="form-control mr-1">
+                    @foreach(config('order.statuses') as $status)
+                    <option value="{{ $status }}" @if($status == $order->status) selected @endif class="text-capitalize">{{ ucfirst($status) }}</option>
+                    @endforeach
+                </select>
+                @endif
+                <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
+            </div>
+            @elseif($order->status == 'pending')
+                @method('DELETE')
+                <button type="submit" formaction="{{ route('reseller.order.destroy', $order->id) }}" class="btn btn-danger ml-1">Cancel</button>
+            @endunless
         @endunless
     </form>
 </div>

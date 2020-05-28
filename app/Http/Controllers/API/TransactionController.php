@@ -15,7 +15,7 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $status, ?Reseller $reseller)
+    public function index(Request $request, $status = 'paid', ?Reseller $reseller)
     {
         if($reseller->getKey()) {
             $orders = $reseller->transactions()->getQuery();
@@ -41,10 +41,8 @@ class TransactionController extends Controller
                     ->addColumn('way', function($row){
                         $ret = "<strong>Method:</strong> " . $row->method;
                         if($row->method == 'Bank')
-                        $ret .= "<br>
-                        <strong>Bank Name:</strong> " . $row->bank_name .
-                        "<br>
-                        <strong>Account Name:</strong> " . $row->account_name .
+                        $ret .= " [ <strong>" . $row->bank_name . "</strong> ] <br>
+                        <strong>Name:</strong> " . $row->account_name .
                         "<br>
                         <strong>Branch:</strong> " . $row->branch .
                         "<br>

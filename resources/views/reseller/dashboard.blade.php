@@ -57,7 +57,6 @@
                                     <th>ID</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

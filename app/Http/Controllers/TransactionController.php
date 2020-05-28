@@ -97,7 +97,7 @@ class TransactionController extends Controller
                 'status' => 'paid',
             ]);
             $transaction_type = 'request';
-        } else $transaction = Transaction::create($data);
+        } else $transaction = Transaction::create($data + ['status' => 'paid']);
 
         event(new TransactionCompleted($transaction, $transaction_type));
 

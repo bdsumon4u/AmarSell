@@ -34,15 +34,15 @@
                                 <td>{{ theMoney($reseller->total_sell) }}</td>
                             </tr>
                             <tr>
-                                <th>Pending Sell:</th>
+                                <th><a href="{{ route('admin.order.index', ['status' => 'pending', 'reseller' => $reseller->id]) }}">Pending Sell</a>:</th>
                                 <td>{{ theMoney($reseller->pending_sell) }}</td>
                             </tr>
                             <tr>
-                                <th>Completed Sell:</th>
+                                <th><a href="{{ route('admin.order.index', ['status' => 'completed', 'reseller' => $reseller->id]) }}">Completed Sell</a>:</th>
                                 <td>{{ theMoney($reseller->completed_sell) }}</td>
                             </tr>
                             <tr>
-                                <th>Total Paid:</th>
+                                <th><a href="{{ route('admin.transactions.index', ['status' => 'paid', 'reseller' => $reseller->id]) }}">Total Paid</a>:</th>
                                 <td>{{ theMoney($reseller->paid) }}</td>
                             </tr>
                             @if($reseller->lastPaid->created_at)

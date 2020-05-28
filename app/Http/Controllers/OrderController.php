@@ -89,6 +89,10 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         // dump($order->data);
+        if($order->status == 'completed' || $order->status == 'returned') {
+            return back()->with('error', 'Order Can\'t be Updated');
+        }
+        
         tap($request->validate([
             'buy_price' => 'required',
             'payable' => 'required',
@@ -111,7 +115,7 @@ class OrderController extends Controller
             }
         });
 
-        return redirect('/dashboard')->with('success', 'Order Updated');
+        return back()->with('success', 'Order Updated');
     }
 
     /**

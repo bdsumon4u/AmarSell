@@ -1,6 +1,6 @@
 <div class="card rounded-0 shadow-sm">
     @php $is_reseller = ($user = auth('reseller')->user()) && ($user->id ?? 0) == request()->user('reseller')->id @endphp
-    <div class="card-header">Py To <strong>{{ $reseller->name }}</strong></div>
+    <div class="card-header">Pay To <strong>{{ $reseller->name }}</strong></div>
     <div class="card-body">
         <form action="{{ route($is_reseller ? 'reseller.transactions.store' : 'admin.transactions.pay.store') }}" method="post">
             @csrf
