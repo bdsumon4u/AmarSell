@@ -17,12 +17,14 @@ class Order extends Model
 
     public function setDataAttribute($data)
     {
-        $this->attributes['data'] = serialize($data);
+        // $this->attributes['data'] = serialize($data);
+        $this->attributes['data'] = json_encode($data);
     }
 
     public function getDataAttribute($data)
     {
-        return unserialize($data);
+        // return unserialize($data);
+        return json_decode($data, true);
     }
 
     public function getShopAttribute()
@@ -36,6 +38,14 @@ class Order extends Model
     public function scopeStatus($query, $status)
     {
         return is_null($status) ? $query : $query->where('status', $status);
+    }
+
+    /**
+     * Scope WithinDate
+     */
+    public function scopewithinDT($query, $timezone)
+    {
+        return $query->whereBetween('data->completed_at', $timezone);
     }
 
     public function current_price()

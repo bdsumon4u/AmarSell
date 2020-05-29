@@ -36,7 +36,7 @@ class ResellerController extends Controller
         $data['verified_at'] = isset($data['verified']) ? now()->toDateTimeString() : NULL;
 
         $reseller->update($data);
-        return redirect()->back()->with('success', 'Reseller Profile Updated.');
+        return redirect()->route('admin.resellers.index')->with('success', 'Reseller Profile Updated.');
     }
 
     public function show(Reseller $reseller)

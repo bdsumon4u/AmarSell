@@ -80,13 +80,14 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reseller(Request $request, $status = null, ?Reseller $reseller)
+    public function reseller(Request $request, ?Reseller $reseller, $status = null)
     {
         if($reseller->getKey()) {
             $orders = $reseller->orders()->getQuery();
         } else {
-            $orders = Order::query();
+            return false;
         }
+
         if ($request->ajax()) {
             return Datatables::of($orders->status($status)->latest()->with('reseller')->get())
                     ->addIndexColumn()

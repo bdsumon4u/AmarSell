@@ -1,14 +1,5 @@
 @extends('layouts.ready')
 
-@section('styles')
-<style>
-    table th,
-    table td {
-        /* vertical-align: middle !important; */
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="row">
     <div class="col-sm-12">
@@ -21,11 +12,11 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>ID</th>
+                                    <th width="30">ID</th>
                                     <th>Reseller</th>
-                                    <th>Last Paid</th>
+                                    <!-- <th>Last Paid</th> -->
                                     <th>Balance</th>
-                                    <th>Pay</th>
+                                    <th width="125">Pay</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,15 +31,15 @@
                                             <strong>Phone:</strong> {{ $reseller->phone }}
                                         </a>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         @if($reseller->lastPaid->created_at)
                                             {{ theMoney($reseller->lastPaid->amount) }}
                                             <br>
                                             {{ $reseller->lastPaid->created_at->format('F j, Y') }}
                                         @endif
-                                    </td>
+                                    </td> -->
                                     <td>{{ theMoney($reseller->balance) }}</td>
-                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', $reseller->id) }}">Pay</a></td>
+                                    <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$reseller->id, 'amount' => $reseller->payNow]) }}">Pay {{ theMoney($reseller->payNow) }}</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -156,7 +147,8 @@
         ],
     });
     var dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
-    $('.datatable').DataTable({
+    $('.datatable')
+    .DataTable({
         buttons: dtButtons
     });
 </script>

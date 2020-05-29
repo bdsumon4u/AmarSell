@@ -118,7 +118,9 @@
         pageLength: 25,
         dom: 'ft<"actions">',
     });
-    $('.datatable').DataTable({
+    $('.datatable').on('draw.dt', function () {
+        $(this).css('width', '100%');
+    }).DataTable({
     });
 </script>
 @endsection

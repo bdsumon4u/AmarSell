@@ -100,10 +100,12 @@ class OrderController extends Controller
             'packaging' => 'required',
             'delivery_charge' => 'required',
             'cod_charge' => 'required',
+            'profit' => 'required',
             'status' => 'required',
         ]), function($data) use($order, $request){
             $before = $order->status;
             $order->status = $data['status'];
+            $data['completed_at'] = $data['status'] == 'completed' ? now()->toDateTimeString() : NULL;
             unset($data['status']);
             foreach($order->data as $key => $val) {
                 $data[$key] = isset($data[$key]) ? $data[$key] : $val;

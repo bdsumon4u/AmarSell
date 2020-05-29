@@ -53,7 +53,7 @@ class OrderStatusChanged extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->line('Dear valuable reseller,')
                     ->line('One of your order status has changed')
-                    ->line('from "' . $this->event->before . '" to "' . $this->event->order->status . '"')
+                    ->line('from "' . ucwords($this->event->before) . '" to "' . ucwords($this->event->order->status) . '"')
                     ->action("Order #{$this->event->order->id}", route('reseller.order.show', $this->event->order->id))
                     ->line('Thank you for using our application!');
     }

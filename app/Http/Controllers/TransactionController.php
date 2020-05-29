@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\TransactionCompleted;
+use App\Order;
 use App\Reseller;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -30,7 +31,34 @@ class TransactionController extends Controller
      */
     public function pay()
     {
-        $resellers = Reseller::all()->sortByDesc('balance');
+        $fOfMonth = now()->firstOfMonth();
+        $mOfMonth = $fOfMonth->copy()->addDays(15);
+        $lOfMonth = now()->lastOfMonth();
+
+        $timezone = date('d') >= 1 && date('d') <= 15 ? [
+            $mOfMonth->toDateTimeString(), $lOfMonth->toDateTimeString()
+        ] : [
+            $fOfMonth->toDateTimeString(), $mOfMonth->toDateTimeString()
+        ];
+
+
+        $resellers = Reseller::with(['transactions', 'orders'])->get()->sortByDesc('balance');
+        $resellers = $resellers->filter(function (Reseller $reseller) use ($timezone) {
+            if(! is_null($reseller->payment) && ( is_null($c_a = $reseller->lastPaid->created_at) || $c_a <= $timezone[0] )) {
+                if($reseller->balance > 0) {
+                    $reseller->payNow = $reseller->orders()
+                                        ->withinDT($timezone)
+                                        ->get()
+                                        ->sum(function (Order $item) {
+                                            return $item->data['profit'] - $item->data['advanced'];
+                                        });
+                    if ($reseller->payNow > 0) {
+                        return $reseller;
+                    }
+                }
+            }
+        });
+
         // $resellers = $this->paginate($resellers, $resellers->count(), 10);
         return view('admin.transactions.pay', compact('resellers'));
     }

@@ -18,6 +18,9 @@ class CartController extends Controller
      */
     public function index()
     {
+        if(auth('reseller')->user()->shops->isEmpty()) {
+            return redirect()->route('reseller.home')->with('error', 'Create Shop First.');
+        }
         return view('reseller.cart.index');
     }
     
@@ -67,6 +70,9 @@ class CartController extends Controller
      */
     public function checkout(Request $request)
     {
+        if(auth('reseller')->user()->shops->isEmpty()) {
+            return redirect()->route('reseller.home')->with('error', 'Create Shop First.');
+        }
         return view('reseller.checkout.index', [
             'sell' => $request->sell,
             'shipping' => $request->shipping,

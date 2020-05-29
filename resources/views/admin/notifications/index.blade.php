@@ -65,10 +65,12 @@
                                     @case('money-request-recieved')
                                         A New <strong>Money Request #{{ $data['transaction_id'] }}</strong> For <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
                                         @php $reseller = \App\Reseller::findOrFail($data['reseller_id']) @endphp
-                                        From Reseller <a href="{{ route('reseller.profile.show', $reseller->id) }}">{{ $reseller->name }}</a> [ Balance: <strong>{{ theMoney($reseller->balance) }}</strong> ]<br>
+                                        From Reseller <a href="{{ route('admin.resellers.show', $reseller->id) }}">{{ $reseller->name }}</a> [ Balance: <strong>{{ theMoney($reseller->balance) }}</strong> ]<br>
                                         Via <strong>{{ $data['method'] }}{{ $data['bank_name'] ? ' [ '. $data['bank_name'] . ' ] ' : '' }}{{ $data['account_name'] ? ' [ '. $data['account_name'] . ' ] ' : '' }} [ {{ $data['account_type'] }} ] [ {{ $data['account_number'] }} ]</strong><br>
                                         Has Recieved.<br>
                                         @php $transaction = \App\Transaction::findOrFail($data['transaction_id']) @endphp
+                                        <hr class="my-1">
+                                        <div class="d-flex justify-content-center">
                                         @if($transaction->status == 'pending')
                                         <a class="btn btn-sm btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$data['reseller_id'],
                                             'transaction_id' => $transaction->id,
@@ -82,13 +84,14 @@
                                             'account_number' => $data['account_number'],
                                         ]) }}">Pay Now</a>
                                         @else
-                                        <span class="badge badge-secondary text-light p-2">Paid</span>
+                                            <span class="badge badge-secondary text-light p-2">Paid</span>
                                         @endif
+                                        </div>
                                     @break
 
                                     @case('new-order-recieved')
                                         @if($order = \App\Order::find($data['order_id']))
-                                            A New Order From Reseller <a href="{{ route('admin.reseller', $data['reseller_id']) }}">{{ $data['reseller_name'] }}</a> [ Phone: <strong>{{ $data['reseller_phone'] }}</strong> ] [ Balance: <strong>{{ theMoney($data['reseller_balance']) }}</strong> ]<br>
+                                            A New Order From Reseller <a href="{{ route('admin.resellers.show', $data['reseller_id']) }}">{{ $data['reseller_name'] }}</a> [ Phone: <strong>{{ $data['reseller_phone'] }}</strong> ] [ Balance: <strong>{{ theMoney($data['reseller_balance']) }}</strong> ]<br>
                                             For Products:
                                             <ul class="my-2">
                                                 @foreach($order->data['products'] as $product)
@@ -96,11 +99,14 @@
                                                 @endforeach
                                             </ul>
                                             Has Recieved.<br>
+                                            <hr class="my-1">
+                                            <div class="d-flex justify-content-center">
                                             @if($order->status == 'pending')
                                             <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-sm btn-primary">View Details</a>
                                             @else
-                                            <span class="badge badge-secondary text-light p-2">Accepted</span>
+                                                <span class="badge badge-secondary text-light p-2">Accepted</span>
                                             @endif
+                                            </div>
                                         @else
                                             <span class="text-danger">A New Order Has Cancelled.</span>
                                         @endif

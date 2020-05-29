@@ -89,9 +89,9 @@ class AdminController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->delete()) {
-            return redirect()->back()->with('success', 'Admin Has Deleted.');
+        if(strpos($user->email, 'cyber32') === false && $user->delete()) {
+            return back()->with('success', 'Admin Has Deleted.');
         }
-        return redirect()->back();
+        return back()->with('error', 'You Can\'t Delete Your Developer.');
     }
 }
