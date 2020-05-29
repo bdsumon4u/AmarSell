@@ -24,7 +24,7 @@
                 <i class="icon-bell"></i>
                 @php $unreadCount = $admin->unreadNotifications->count() @endphp
                 @if($unreadCount)
-                <span class="badge badge-pill badge-danger">{{ $unreadCount }}</span>
+                <span class="badge badge-pill badge-danger notice-count">{{ $unreadCount }}</span>
                 @endif
             </a>
         </li>
@@ -40,7 +40,7 @@
                 <a class="dropdown-item" href="{{ route('admin.notifications.index') }}">
                     <i class="fa fa-bell-o"></i> Notifications
                     @if($unreadCount)
-                    <span class="badge badge-danger">{{ $unreadCount }}</span>
+                    <span class="badge badge-danger notice-count">{{ $unreadCount }}</span>
                     @endif
                 </a>
                 <a class="dropdown-item" href="{{ route('admin.settings.edit') }}">

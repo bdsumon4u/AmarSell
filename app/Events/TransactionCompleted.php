@@ -7,10 +7,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TransactionCompleted
+class TransactionCompleted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,6 +36,18 @@ class TransactionCompleted
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel("reseller-{$this->order->reseller->id}-notice-count");
+    }
+
+    public function broadcastAs()
+    {
+        return 'reseller.notice.count';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'notice_count' => $this->order->reseller->unreadNotifications->count() + 1,
+        ];
     }
 }

@@ -7,10 +7,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewOrderRecieved
+class NewOrderRecieved implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -35,6 +36,18 @@ class NewOrderRecieved
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel("admin-notice-count");
+    }
+
+    public function broadcastAs()
+    {
+        return 'admin.notice.count';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'notice_count' => 'increment',
+        ];
     }
 }

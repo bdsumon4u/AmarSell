@@ -92,9 +92,13 @@
     </div>
     <x-layouts.footer />
     <script src="{{ asset('js/coreui.js') }}"></script>
-    @yield('scripts')
-    <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"></script>
     <script>
+        Echo.channel('admin-notice-count')
+            .listen('.admin.notice.count', function (data) {
+                console.log(data);
+                var now = $('.notice-count').first().text();
+                $('.notice-count').text(parseInt(now) + 1);
+            });
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
 
@@ -117,6 +121,7 @@
             }
         });
     </script>
+    @yield('scripts')
 </body>
 
 </html>

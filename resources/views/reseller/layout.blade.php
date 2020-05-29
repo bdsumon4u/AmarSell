@@ -85,7 +85,7 @@
                     <i class="icon-bell"></i>
                     @php $unreadCount = $reseller->unreadNotifications->count() @endphp
                     @if($unreadCount)
-                    <span class="badge badge-pill badge-danger">{{ $unreadCount }}</span>
+                    <span class="badge badge-pill badge-danger notice-count">{{ $unreadCount }}</span>
                     @endif
                 </a>
             </li>
@@ -101,7 +101,7 @@
                     <a class="dropdown-item" href="{{ route('reseller.notifications.index') }}">
                         <i class="fa fa-bell-o"></i> Notifications
                         @if($unreadCount)
-                        <span class="badge badge-danger">{{ $unreadCount }}</span>
+                        <span class="badge badge-danger notice-count">{{ $unreadCount }}</span>
                         @endif
                     </a>
                     <a class="dropdown-item" href="{{ route('reseller.profile.show', auth('reseller')->user()->id) }}">
@@ -152,8 +152,12 @@
     <x-layouts.footer />
     <script src="{{ asset('js/coreui.js') }}"></script>
     @yield('scripts')
-    <script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js"></script>
     <script>
+        Echo.channel(`reseller-{{ auth('reseller')->user()->id }}-notice-count`)
+            .listen('.reseller.notice.count', function (data) {
+                console.log(data);
+                $('.notice-count').text(data.notice_count);
+            });
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
         });

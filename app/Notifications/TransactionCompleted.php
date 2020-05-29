@@ -37,7 +37,7 @@ class TransactionCompleted extends Notification implements ShouldQueue
             $notifiable instanceof Reseller
             && filter_var($notifiable->email, FILTER_VALIDATE_EMAIL)
         ) {
-            array_push($via, 'mail');
+            // array_push($via, 'mail');
         }
         return $via;
     }
