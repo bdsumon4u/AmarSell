@@ -99,6 +99,43 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12">
+        <div class="pending-resellers">
+            <div class="card rounded-0 shadow-sm">
+                <div class="card-header"><strong>Pending Resellers</strong></div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($resellers as $reseller)
+                            <tr>
+                                <td></td>
+                                <td>{{ $reseller->id }}</td>
+                                <td>{{ $reseller->name }}</td>
+                                <td>{{ $reseller->email }}</td>
+                                <td>{{ $reseller->phone }}</td>
+                                <td><span class="badge badge-{{ $reseller->verified_at ? 'success' : 'secondary' }}">{{ $reseller->verified_at ? 'Verified' : 'Non-Verified' }}</span></td>
+                                <td>
+                                    <a href="{{ route('admin.resellers.edit', $reseller->id) }}" class="btn btn-sm btn-light">Edit</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -130,7 +167,7 @@
         scrollX: true,
         pagingType: 'numbers',
         pageLength: 25,
-        dom: 'ft<"actions">',
+        dom: 'lft<"actions">',
     });
     $('.datatable').DataTable({
     });

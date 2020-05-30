@@ -90,6 +90,9 @@ class OrderController extends Controller
                     $product->stock = is_numeric($product->stock) ? ($product->stock >= $item->quantity ? $product->stock - $item->quantity : 0) : $product->stock;
                     return $product->save();
                 });
+                
+            $user_id = auth('reseller')->user()->id;
+            CartFacade::session($user_id)->clear();
             event(new NewOrderRecieved($order, $reseller));
         }
 

@@ -29,6 +29,12 @@ Route::get('install/configuration', 'InstallController@getConfiguration');
 Route::post('install/configuration', 'InstallController@postConfiguration');
 Route::get('install/complete', 'InstallController@complete');
 
+Route::get('/dev', function () {
+    Artisan::call('config:cache');
+    Artisan::call('view:cache');
+    Artisan::call('cache:clear');
+    dd('DONE');
+});
 
 // dd(Order::find(2)->data);
 Route::get('/', function (Request $request) {

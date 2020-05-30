@@ -130,6 +130,11 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         return $this->orders->where('status', 'completed');
     }
 
+    public function getReturnedOrdersAttribute()
+    {
+        return $this->orders->where('status', 'returned');
+    }
+
     public function getTotalSellAttribute()
     {
         return $this->orders->sum(function($order){ return $order->data['sell']; });
@@ -152,6 +157,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
     {
         $non_pending = $this->non_pending_orders;
         $completed = $this->completed_orders;
+        $returned = $this->returned_orders;
 
         $completed_advanced = $completed->sum(function($order){ return $order->data['advanced']; });
         $completed_shipping = $completed->sum(function($order){ return $order->data['shipping']; });
@@ -159,10 +165,11 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         $completed_buy = $completed->sum(function($order){ return $order->data['buy_price']; });
         // $non_pending_charges = $non_pending->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
         $completed_charges = $completed->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
+        $returned_charges = $returned->sum(function($order){ return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge']; });
 
 
         // $balance = $this->completed_sell - $completed_advanced - $completed_buy - $non_pending_charges + $completed_shipping - ($this->paid);
-        $balance = $this->completed_sell - $completed_advanced - $completed_buy - $completed_charges + $completed_shipping - ($this->paid);
+        $balance = $this->completed_sell - $completed_advanced - $completed_buy - $completed_charges - $returned_charges + $completed_shipping - ($this->paid);
 
         return $balance;
     }
