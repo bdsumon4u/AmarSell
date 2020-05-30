@@ -73,7 +73,7 @@
                                         </label>
 
                                         @if($shops->count() == 1)
-                                        <input type="text" name="shop" id="reseller-shop" class="form-control" value="{{ old('shop', $shops->first()->name) }}" readonly>
+                                        <input type="text" name="shop" id="reseller-shop" class="form-control" value="{{ old('shop') ? $shops->find(old('shop'))->name : $shops->first()->name }}" readonly>
                                         <input type="hidden" name="shop" value="{{ old('shop', $shops->first()->id) }}" readonly>
                                         @else
                                         <select name="shop" id="reseller-shop" class="form-control" @if($shops->count() == 1) readonly @endif>
@@ -116,7 +116,7 @@
                 <div class="cart-list-sidebar order-review">
                     <div class="cart-total">
                         @include('reseller.cart.sidebar')
-                        <button type="submit" class="btn btn-primary btn-checkout" data-loading>
+                        <button type="submit" class="btn btn-primary btn-checkout" data-loading="Loading">
                             Place Order
                         </button>
                     </div>

@@ -1,5 +1,13 @@
 <?php
 
+if (! function_exists('isRunningInLocalhost')) {
+    function isRunningInLocalhost() {
+        return strpos(env('APP_URL'), '127.0.0.1') !== false
+            || strpos(env('APP_URL'), '::1') !== false
+            || strpos(env('APP_URL'), 'localhost') !== false;
+    }
+}
+
 return [
 
     'installed' => env('APP_INSTALLED', false),
@@ -56,7 +64,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => isRunningInLocalhost() ? null : (env('APP_URL') . '/public'),
 
     /*
     |--------------------------------------------------------------------------
