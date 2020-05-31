@@ -27,10 +27,6 @@ trait CategoryModelHelper
      */
     public static function formatted()
     {
-        return cache('categories.formatted', function () {
-            $formatted = self::whereNull('parent_id')->with('childrens')->get();
-            cache(['categories.formatted' => $formatted]);
-            return $formatted;
-        });
+        return self::whereNull('parent_id')->with('childrens')->get();
     }
 }

@@ -30,15 +30,15 @@
                     <table class="table table-sm table-borderless table-striped table-hover">
                         <tbody>
                             <tr>
-                                <th>Total Sell:</th>
+                                <th>Total Orders:</th>
                                 <td>{{ theMoney($reseller->total_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'pending', 'reseller' => $reseller->id]) }}">Pending Sell</a>:</th>
+                                <th><a href="{{ route('admin.order.index', ['status' => 'pending', 'reseller' => $reseller->id]) }}">Pending Orders</a>:</th>
                                 <td>{{ theMoney($reseller->pending_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'completed', 'reseller' => $reseller->id]) }}">Completed Sell</a>:</th>
+                                <th><a href="{{ route('admin.order.index', ['status' => 'completed', 'reseller' => $reseller->id]) }}">Completed Orders</a>:</th>
                                 <td>{{ theMoney($reseller->completed_sell) }}</td>
                             </tr>
                             <tr>

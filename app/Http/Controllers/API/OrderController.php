@@ -82,6 +82,10 @@ class OrderController extends Controller
                     ->addColumn('ordered_at', function($row){
                         return $row->created_at->format('F j, Y');
                     })
+                    ->addColumn('completed_returned_at', function($row){
+                        $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
+                        return isset($row->data[$col]) ? date('F j, Y', strtotime($row->data[$col])) : 'Not Yet';
+                    })
                     ->addColumn('action', function($row){
                         $btn = '<a class="btn btn-sm btn-block btn-primary" target="_blank" href="' . route('admin.order.show', $row->id) . '">View</a>';
                         return $btn;
@@ -160,8 +164,9 @@ class OrderController extends Controller
                     ->addColumn('ordered_at', function($row){
                         return $row->created_at->format('F j, Y');
                     })
-                    ->addColumn('completed_at', function($row){
-                        return isset($row->data['completed_at']) ? date('F j, Y', strtotime($row->data['completed_at'])) : 'Not Yet';
+                    ->addColumn('completed_returned_at', function($row){
+                        $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
+                        return isset($row->data[$col]) ? date('F j, Y', strtotime($row->data[$col])) : 'Not Yet';
                     })
                     ->addColumn('action', function($row){
                         if ($row->status == 'pending') {

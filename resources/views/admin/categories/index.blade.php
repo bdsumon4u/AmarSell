@@ -28,6 +28,9 @@
         color: deeppink;
         text-decoration: none;
     }
+    .select2 {
+        width: 100% !important;
+    }
 </style>
 @endsection
 

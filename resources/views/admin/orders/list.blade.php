@@ -27,6 +27,7 @@
                                     <th>Status</th>
                                     <th>Price</th>
                                     <th>Ordered At</th>
+                                    <th>Completed/Returned</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -139,6 +140,7 @@
             { data: 'status', name: 'status' },
             { data: 'price', name: 'price' },
             { data: 'ordered_at', name: 'ordered_at' },
+            { data: 'completed_returned_at', name: 'completed_returned_at' },
             { data: 'action', name: 'action' },
         ],
         order: [

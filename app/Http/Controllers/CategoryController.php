@@ -14,7 +14,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::formatted();
+        $categories = cache('categories.formatted', function () {
+            $formatted = Category::formatted();
+            cache(['categories.formatted' => $formatted]);
+            return $formatted;
+        });
         // dd($categories);
         return view('admin.categories.index', compact('categories'));
     }

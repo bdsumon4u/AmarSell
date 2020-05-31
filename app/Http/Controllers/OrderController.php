@@ -107,6 +107,7 @@ class OrderController extends Controller
             $before = $order->status;
             $order->status = $data['status'];
             $data['completed_at'] = $data['status'] == 'completed' ? now()->toDateTimeString() : NULL;
+            $data['returned_at'] = $data['status'] == 'returned' ? now()->toDateTimeString() : NULL;
             unset($data['status']);
             foreach($order->data as $key => $val) {
                 $data[$key] = isset($data[$key]) ? $data[$key] : $val;
