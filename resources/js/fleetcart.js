@@ -383,74 +383,74 @@ $(function () {
     /*      product slider
     /*----------------------------------------*/
 
-    let productSlider = $('.product-slider');
-    let productSlider2 = $('.product-slider-2');
+    // let productSlider = $('.product-slider');
+    // let productSlider2 = $('.product-slider-2');
 
-    productSlider.slick({
-        autoplay: false,
-        autoplaySpeed: 10000,
-        dots: false,
-        arrows: true,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        rtl: isRTL,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                },
-            },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 681,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 501,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
+    // productSlider.slick({
+    //     autoplay: false,
+    //     autoplaySpeed: 10000,
+    //     dots: false,
+    //     arrows: true,
+    //     slidesToShow: 5,
+    //     slidesToScroll: 5,
+    //     rtl: isRTL,
+    //     responsive: [
+    //         {
+    //             breakpoint: 1200,
+    //             settings: {
+    //                 slidesToShow: 4,
+    //                 slidesToScroll: 4,
+    //             },
+    //         },
+    //         {
+    //             breakpoint: 992,
+    //             settings: {
+    //                 slidesToShow: 3,
+    //                 slidesToScroll: 3,
+    //             },
+    //         },
+    //         {
+    //             breakpoint: 681,
+    //             settings: {
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 2,
+    //             },
+    //         },
+    //         {
+    //             breakpoint: 501,
+    //             settings: {
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //             },
+    //         },
+    //     ],
+    // });
 
-    productSlider2.slick({
-        autoplay: false,
-        autoplaySpeed: 10000,
-        dots: false,
-        arrows: true,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        rtl: isRTL,
-        responsive: [
-            {
-                breakpoint: 681,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 501,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
+    // productSlider2.slick({
+    //     autoplay: false,
+    //     autoplaySpeed: 10000,
+    //     dots: false,
+    //     arrows: true,
+    //     slidesToShow: 3,
+    //     slidesToScroll: 3,
+    //     rtl: isRTL,
+    //     responsive: [
+    //         {
+    //             breakpoint: 681,
+    //             settings: {
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 2,
+    //             },
+    //         },
+    //         {
+    //             breakpoint: 501,
+    //             settings: {
+    //                 slidesToShow: 1,
+    //                 slidesToScroll: 1,
+    //             },
+    //         },
+    //     ],
+    // });
 
     /*----------------------------------------*/
     /*      tab product slider
@@ -513,90 +513,6 @@ $(function () {
         slidesToScroll: 1,
         rows: 0,
         rtl: isRTL,
-    });
-
-    /*----------------------------------------*/
-    /*      landscape product slider
-    /*----------------------------------------*/
-
-    let landscapeProducts = $('.landscape-products');
-
-    landscapeProducts.slick({
-        infinite: true,
-        autoplay: false,
-        autoplaySpeed: 10000,
-        dots: false,
-        arrows: true,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        rtl: isRTL,
-        responsive: [
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 481,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    });
-
-    /*----------------------------------------*/
-    /*      brands slider
-    /*----------------------------------------*/
-
-    let brands = $('.brands');
-
-    brands.slick({
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        dots: false,
-        arrows: false,
-        rtl: isRTL,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                },
-            },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                },
-            },
-            {
-                breakpoint: 601,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-        ],
     });
 
     /*----------------------------------------*/
@@ -775,25 +691,25 @@ $(function () {
             ],
         }, additionalImageConfig));
 
-        $('.base-image-inner img').each((i, img) => {
-            new Drift(img, {
-                sourceAttribute: 'src',
-                paneContainer: document.querySelector('.product-details'),
-                inlinePane: 991,
-                inlineOffsetY: -80,
-                containInline: true,
-                hoverBoundingBox: true,
-            });
-        });
+        // $('.base-image-inner img').each((i, img) => {
+        //     new Drift(img, {
+        //         sourceAttribute: 'src',
+        //         paneContainer: document.querySelector('.product-details'),
+        //         inlinePane: 991,
+        //         inlineOffsetY: -80,
+        //         containInline: true,
+        //         hoverBoundingBox: true,
+        //     });
+        // });
 
-        baseImage.slickLightbox({
-            itemSelector: '.base-image-inner',
-            useHistoryApi: true,
-            slick: {
-                infinite: false,
-                rtl: isRTL,
-            },
-        });
+        // baseImage.slickLightbox({
+        //     itemSelector: '.base-image-inner',
+        //     useHistoryApi: true,
+        //     slick: {
+        //         infinite: false,
+        //         rtl: isRTL,
+        //     },
+        // });
     }
 
     productImage();

@@ -29,6 +29,9 @@ class CartController extends Controller
      */
     public function add(Request $request, Product $product)
     {
+        if(auth('reseller')->user()->shops->isEmpty()) {
+            return redirect()->route('reseller.home')->with('error', 'Create Shop First.');
+        }
         $data = $request->has('qty') ? ['quantity' => $request->qty] : [];
         $data += [
             'quantity' => 1,

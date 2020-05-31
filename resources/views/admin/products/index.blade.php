@@ -14,7 +14,7 @@
         <div class="card rounded-0 shadow-sm">
             <div class="card-header py-2">All <strong>Products</strong></div>
             <div class="card-body p-2">
-                <div class="row justify-content-center">
+                <div class="row justify-content-between">
                     @foreach($products as $product)
                     <div class="col-md-4 col-lg-3 products">
                         <div class="product-item">
@@ -28,6 +28,9 @@
                         </div>
                     </div>
                     @endforeach
+                    <div class="col-md-12">
+                        {{ $products->links() }}
+                    </div>
                 </div>
             </div>
         </div>

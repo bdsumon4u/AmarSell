@@ -38,6 +38,13 @@
     .price-box .right strong + span {
         margin-left: 2px;
     }
+    .slick-initialized .slick-list {
+        overflow: hidden;
+    }
+    .slick-initialized .slick-slide {
+        display: block;
+        float: left;
+    }
 </style>
 @endsection
 
@@ -61,12 +68,12 @@
             <div class="col-sm-12 col-md-9">
                 <div class="product-details-wrapper">
                     <div class="row">
-                        <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7">
+                        <div class="col-lg-5 col-md-6 col-sm-5 col-xs-7">
                             <div class="product-image">
                                 <div class="base-image">
                                     <a class="base-image-inner"
                                         href="{{ $product->base_image }}">
-                                        <img src="{{ $product->base_image }}"
+                                        <img width="320" src="{{ $product->base_image }}"
                                             alt="Base Image">
                                         <span><i class="fa fa-search-plus" aria-hidden="true"></i></span>
                                     </a>
@@ -94,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                        <div class="col-lg-7 col-md-6 col-sm-7 col-xs-12">
                             <div class="product-details">
                                 <h1 class="product-name">{{ $product->name }}</h1>
 

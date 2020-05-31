@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::formatted();
-        $products = Product::latest()->paginate(20);
+        $products = Product::latest()->paginate(8);
         return view('admin.products.index', compact('categories', 'products'));
     }
 
