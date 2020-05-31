@@ -107,12 +107,12 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        if($order->status == 'completed' | $order->status == 'returned') {
+        // if($order->status == 'completed' | $order->status == 'returned') {
             $products = Product::whereIn('id', array_keys($order->data['products']))->get();
             $cp = $order->current_price();
             return view('reseller.orders.show', compact('order', 'products', 'cp'));
-        }
-        return redirect()->back()->with('error', 'You Can not view the order until status completed/returned.');
+        // }
+        // return redirect()->back()->with('error', 'You Can not view the order until status completed/returned.');
     }
 
     public function invoice(Order $order)

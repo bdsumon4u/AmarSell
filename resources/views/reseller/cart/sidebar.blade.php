@@ -2,7 +2,7 @@
 <h3>Cart Totals</h3>
 
     <span class="item-amount">
-        <label for="">Cart Subtotal</label>
+        <label for="">Buy Price</label>
         <span>{{ $subTotal }}</span>
     </span>
 

@@ -101,6 +101,7 @@ class OrderController extends Controller
             'delivery_charge' => 'required',
             'cod_charge' => 'required',
             'profit' => 'required',
+            'booking_number' => 'nullable',
             'status' => 'required',
         ]), function($data) use($order, $request){
             $before = $order->status;

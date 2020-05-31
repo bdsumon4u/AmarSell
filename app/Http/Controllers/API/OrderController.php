@@ -56,7 +56,28 @@ class OrderController extends Controller
                         return $ret;
                     })
                     ->addColumn('status', function($row){
-                        return '<span class="badge badge-square badge-' . ($row->status == 'pending' ? 'primary' : 'success') . ' text-uppercase">' . $row->status . '</span>';
+                        switch ($row->status) {
+                            case 'pending':
+                                $variant = 'secondary';
+                                break;
+                            case 'processing':
+                                $variant = 'warning';
+                                break;
+                            case 'shipping':
+                                $variant = 'primary';
+                                break;
+                            case 'completed':
+                                $variant = 'success';
+                                break;
+                            case 'returned':
+                                $variant = 'danger';
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+                        return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
                     ->addColumn('ordered_at', function($row){
                         return $row->created_at->format('F j, Y');
@@ -113,7 +134,28 @@ class OrderController extends Controller
                         return $ret;
                     })
                     ->addColumn('status', function($row){
-                        return '<span class="badge badge-square badge-' . ($row->status == 'pending' ? 'primary' : 'success') . ' text-uppercase">' . $row->status . '</span>';
+                        switch ($row->status) {
+                            case 'pending':
+                                $variant = 'secondary';
+                                break;
+                            case 'processing':
+                                $variant = 'warning';
+                                break;
+                            case 'shipping':
+                                $variant = 'primary';
+                                break;
+                            case 'completed':
+                                $variant = 'success';
+                                break;
+                            case 'returned':
+                                $variant = 'danger';
+                                break;
+                            
+                            default:
+                                # code...
+                                break;
+                        }
+                        return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
                     ->addColumn('ordered_at', function($row){
                         return $row->created_at->format('F j, Y');

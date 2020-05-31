@@ -164,7 +164,7 @@
                                             $iw = $item['wholesale']
                                         @endphp
                                         <tr>
-                                            <td><a href="{{ route('reseller.product.show', $item['slug']) }}">{{ $item['code'] }}</a></td>
+                                            <td><a class="text-uppercase" href="{{ route('reseller.product.show', $item['slug']) }}">{{ $item['code'] }}</a></td>
                                             <td>
                                                 <strong>Buy: </strong>{{ $iw }}
                                                 @if($iw != $pw)
@@ -207,9 +207,11 @@
     <div class="col-md-4">
         <div class="card rounded-0 shadow-sm">
             <div class="card-header"><strong>Calculations</strong>
+                @if($order->status == 'completed' | $order->status == 'returned')
                 <div class="card-header-actions">
                     <a href="{{ url()->current() }}/invoice" class="btn btn-sm btn-light card-header-action">Invoice</a>
                 </div>
+                @endif
             </div>
             <div class="card-body">
                 @livewire('charge-calculator', [

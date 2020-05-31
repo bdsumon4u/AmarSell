@@ -45,17 +45,17 @@ class TransactionController extends Controller
         $resellers = Reseller::with(['transactions', 'orders'])->get()->sortByDesc('balance');
         $resellers = $resellers->filter(function (Reseller $reseller) use ($timezone) {
             if(! is_null($reseller->payment) && ( is_null($c_a = $reseller->lastPaid->created_at) || $c_a <= $timezone[0] )) {
-                if($reseller->balance > 0) {
+                // if($reseller->balance > 0) {
                     $reseller->payNow = $reseller->orders()
                                         ->withinDT($timezone)
                                         ->get()
                                         ->sum(function (Order $item) {
                                             return $item->data['profit'] - $item->data['advanced'];
                                         });
-                    if ($reseller->payNow > 0) {
+                    // if ($reseller->payNow > 0) {
                         return $reseller;
-                    }
-                }
+                    // }
+                // }
             }
         });
 

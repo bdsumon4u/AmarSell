@@ -102,7 +102,7 @@
     <div class="col-md-12">
         <div class="pending-resellers">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Pending Resellers</strong></div>
+                <div class="card-header"><strong>Non-Verified</strong> Resellers</div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                         <thead>

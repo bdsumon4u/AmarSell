@@ -55,6 +55,7 @@
                     {!! $errors->first('sell', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
+            @if(! $is_reseller || ($is_reseller && ($order->status == 'completed' | $order->status == 'returned')))
             <div class="col-sm-12 box-header">
                 <h5><span>Charges</span></h5>
             </div>
@@ -113,26 +114,39 @@
                     {!! $errors->first('profit', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
-        </div>
+            @endif
+            <div class="col-md-12">
+                <div class="form-group {{ $errors->has('booking_number') ? 'has-error': '' }}">
+                    <label for="booking_number">
+                        Booking Number
+                    </label>
 
-        @unless($order->status == 'completed' || $order->status == 'returned')
-            @unless($is_reseller)
-            <div class="d-flex mt-2 justify-content-between">
-                @if($order->status == 'pending')
-                <input type="hidden" name="status" value="processing">
-                @else
-                <select name="status" id="status" class="form-control mr-1">
-                    @foreach(config('order.statuses') as $status)
-                    <option value="{{ $status }}" @if($status == $order->status) selected @endif class="text-capitalize">{{ ucfirst($status) }}</option>
-                    @endforeach
-                </select>
-                @endif
-                <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
+                    <input type="text" name="booking_number" class="form-control" id="booking_number" value="{{ old('booking_number', $booking_number) }}" @if($is_reseller) readonly @endif>
+
+                    {!! $errors->first('booking_number', '<span class="error-message">:message</span>') !!}
+                </div>
             </div>
-            @elseif($order->status == 'pending')
-                @method('DELETE')
-                <button type="submit" formaction="{{ route('reseller.order.destroy', $order->id) }}" class="btn btn-danger ml-1">Cancel</button>
+            @unless($order->status == 'completed' || $order->status == 'returned')
+            <div class="col-md-12">
+                @unless($is_reseller)
+                <div class="d-flex mt-2 justify-content-between">
+                    @if($order->status == 'pending')
+                    <input type="hidden" name="status" value="processing">
+                    @else
+                    <select name="status" id="status" class="form-control mr-1">
+                        @foreach(config('order.statuses') as $status)
+                        <option value="{{ $status }}" @if($status == $order->status) selected @endif class="text-capitalize">{{ ucfirst($status) }}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                    <button type="submit" class="btn btn-success ml-1">{{ $order->status == 'pending' ? 'Accept' : 'Update' }}</button>
+                </div>
+                @elseif($order->status == 'pending')
+                    @method('DELETE')
+                    <button type="submit" formaction="{{ route('reseller.order.destroy', $order->id) }}" class="btn btn-danger ml-1">Cancel</button>
+                @endunless
+            </div>
             @endunless
-        @endunless
+        </div>
     </form>
 </div>

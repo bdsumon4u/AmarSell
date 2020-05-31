@@ -36,7 +36,7 @@ class TransactionCompleted implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel("reseller-{$this->order->reseller->id}-notice-count");
+        return new Channel("reseller-{$this->transaction->reseller->id}-notice-count");
     }
 
     public function broadcastAs()

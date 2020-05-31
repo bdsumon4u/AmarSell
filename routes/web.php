@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('install/pre-installation', 'InstallController@preInstallation');
 Route::get('install/configuration', 'InstallController@getConfiguration');
 Route::post('install/configuration', 'InstallController@postConfiguration');

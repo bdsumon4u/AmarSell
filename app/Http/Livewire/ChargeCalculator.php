@@ -19,6 +19,8 @@ class ChargeCalculator extends Component
     public $delivery_charge;
     public $cod_charge;
 
+    public $booking_number;
+
     public $payable;
     public $profit;
 
@@ -37,6 +39,8 @@ class ChargeCalculator extends Component
         $this->packaging = $order->data['packaging'] ?? $quantity * 10;
         $this->delivery_charge = $order->data['delivery_charge'] ?? 100;
         $this->cod_charge = $order->data['cod_charge'] ?? 0;
+
+        $this->booking_number = $order->data['booking_number'] ?? null;
     }
     public function render()
     {

@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <div class="card rounded-0 shadow-sm">
             <div class="card-header">Product: <strong>{{ $product->name }}</strong>
                 <div class="card-header-actions">
@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="product-details-wrapper">
                     <div class="row">
-                        <div class="col-lg-4 col-md-5 col-sm-5 col-xs-7">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-7">
                             <div class="product-image">
                                 <div class="base-image">
                                     <a class="base-image-inner"
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                             <div class="product-details">
                                 <h1 class="product-name">{{ $product->name }}</h1>
 
