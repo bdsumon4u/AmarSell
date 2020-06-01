@@ -87,7 +87,7 @@ class OrderController extends Controller
                         return isset($row->data[$col]) ? date('F j, Y', strtotime($row->data[$col])) : 'Not Yet';
                     })
                     ->addColumn('action', function($row){
-                        $btn = '<a class="btn btn-sm btn-block btn-primary" target="_blank" href="' . route('admin.order.show', $row->id) . '">View</a>';
+                        $btn = '<a class="btn btn-sm btn-block btn-primary" target="popup" href="' . route('admin.order.show', $row->id) . '" onclick="window.open(\'' . route('admin.order.show', $row->id) . '\', \'popup\', \'width= 600, height= 600\')">View</a>';
                         return $btn;
                     })
                     ->rawColumns(['reseller', 'customer', 'status', 'price', 'action'])
@@ -172,7 +172,7 @@ class OrderController extends Controller
                         if ($row->status == 'pending') {
                             $btn = '<a class="btn btn-sm btn-danger" href="' . route('reseller.order.cancel', $row->id) . '">Cancel</a>';
                         } else {
-                            $btn = '<a class="btn btn-sm btn-primary" target="_blank" href="' . route('reseller.order.show', $row->id) . '">View</a>';
+                            $btn = '<a class="btn btn-sm btn-primary" target="popup" href="' . route('reseller.order.show', $row->id) . '" onclick="window.open(\'' . route('reseller.order.show', $row->id) . '\', \'popup\', \'width=600, height=600\')">View</a>';
                         }
                         return $btn;
                     })

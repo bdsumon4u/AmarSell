@@ -209,7 +209,7 @@
             <div class="card-header"><strong>Calculations</strong>
                 @if($order->status == 'completed' | $order->status == 'returned')
                 <div class="card-header-actions">
-                    <a href="{{ url()->current() }}/invoice" class="btn btn-sm btn-light card-header-action">Invoice</a>
+                    <a href="{{ url()->current() }}/invoice" class="btn btn-sm btn-outline-secondary card-header-action">Invoice</a>
                 </div>
                 @endif
             </div>
