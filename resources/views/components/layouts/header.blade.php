@@ -45,10 +45,10 @@
                 </a>
                 <a class="dropdown-item" href="{{ route('admin.settings.edit') }}">
                     <i class="fa fa-wrench"></i> Settings</a>
-                <a class="dropdown-item" href="{{ route('admin.transactions.requests') }}">
+                <!-- <a class="dropdown-item" href="{{ route('admin.transactions.requests') }}">
                     <i class="fa fa-usd"></i> Payment Requests
-                    <span class="badge badge-secondary">{{ \App\Transaction::where('status', 'pending')->count() }}</span>
-                </a>
+                    <span class="badge badge-secondary"></span>
+                </a> -->
                 <a class="dropdown-item" href="{{ route($provider == 'users' ? 'logout' : $provider.'.logout') }}"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

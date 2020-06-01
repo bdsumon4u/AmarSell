@@ -103,6 +103,7 @@
                     {!! $errors->first('payable', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
+            @unless($order->status == 'returned')
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('profit') ? 'has-error': '' }}">
                     <label for="profit">
@@ -114,6 +115,17 @@
                     {!! $errors->first('profit', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
+            @else
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="loss">
+                        Loss
+                    </label>
+
+                    <input type="text" name="loss" class="form-control bg-danger" id="loss" value="{{ old('loss', $loss) }}" readonly>
+                </div>
+            </div>
+            @endif
             @endif
             <div class="col-md-12">
                 <div class="form-group {{ $errors->has('booking_number') ? 'has-error': '' }}">

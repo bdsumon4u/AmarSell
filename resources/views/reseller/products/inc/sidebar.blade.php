@@ -9,4 +9,5 @@
             </li>
         @endforeach
     </ul>
+    @menu('header-menu')
 </div>

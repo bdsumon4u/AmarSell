@@ -58,14 +58,56 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        switch ($order->status) {
+            case 'pending':
+                $variant = 'secondary';
+                break;
+            case 'processing':
+                $variant = 'warning';
+                break;
+            case 'shipping':
+                $variant = 'primary';
+                break;
+            case 'completed':
+                $variant = 'success';
+                break;
+            case 'returned':
+                $variant = 'danger';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
         $products = Product::whereIn('id', array_keys($order->data['products']))->get();
         $cp = $order->current_price();
-        return view('admin.orders.show', compact('order', 'products', 'cp'));
+        return view('admin.orders.show', compact('order', 'products', 'cp', 'variant'));
     }
 
     public function invoice(Order $order)
     {
-        return view('admin.orders.invoice', compact('order'));
+        switch ($order->status) {
+            case 'pending':
+                $variant = 'secondary';
+                break;
+            case 'processing':
+                $variant = 'warning';
+                break;
+            case 'shipping':
+                $variant = 'primary';
+                break;
+            case 'completed':
+                $variant = 'success';
+                break;
+            case 'returned':
+                $variant = 'danger';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        return view('admin.orders.invoice', compact('order', 'variant'));
     }
 
     /**
@@ -116,6 +158,11 @@ class OrderController extends Controller
             $order->data = $data;
             if($order->save()) {
                 event(new OrderStatusChanged(['order' => $order, 'before' => $before]));
+                foreach($order->data['products'] as $item) {
+                    $product = Product::findOrFail($item['id']);
+                    $product->stock = is_numeric($product->stock) ? $product->stock + $item['quantity'] : $product->stock;
+                    $product->save();
+                }
             }
         });
 

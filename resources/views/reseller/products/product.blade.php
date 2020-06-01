@@ -128,7 +128,7 @@
                                 <div class="clearfix"></div>
 
                                 <div class="pull-left">
-                                    <label>Availability:</label>
+                                    <label>Stock:</label>
 
                                     <span class="in-stock">{!! $product->availability !!}</span>
                                 </div>

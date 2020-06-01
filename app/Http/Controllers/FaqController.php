@@ -22,6 +22,7 @@ class FaqController extends Controller
             cache(['faqs' => $faqs]);
             return $faqs;
         });
+        $faqs = Faq::all();
         return view('admin.faqs.index', compact('faqs'));
     }
 
@@ -49,6 +50,7 @@ class FaqController extends Controller
         ]);
         $faq = Faq::create($data);
         cache(["faq.{$faq->id}" => $faq]);
+        cache(['faqs' => Faq::all()]);
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ Created Successfully.');
     }
 
@@ -91,6 +93,8 @@ class FaqController extends Controller
             'answer' => 'required',
         ]);
         $faq->update($data);
+        cache(["faq.{$faq->id}" => $faq]);
+        cache(['faqs' => Faq::all()]);
         return redirect()->route('admin.faqs.index')->with('success', 'FAQ Updated Successfully.');
     }
 

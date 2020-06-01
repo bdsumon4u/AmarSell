@@ -25,22 +25,10 @@ class SidebarComposer
                 'name' => 'BASE',
             ],
             [
-                'icon' => 'fa fa-gg',
+                'icon' => 'fa fa-th-list',
                 'style' => 'simple',
-                'name' => 'Admins',
-                'route' => 'admin.admins.index',
-            ],
-            [
-                'icon' => 'fa fa-users',
-                'style' => 'simple',
-                'name' => 'Resellers',
-                'route' => 'admin.resellers.index',
-            ],
-            [
-                'icon' => 'fa fa-columns',
-                'style' => 'simple',
-                'name' => 'Categories',
-                'route' => 'admin.categories.index',
+                'name' => 'Orders',
+                'route' => 'admin.order.index',
             ],
             [
                 'icon' => 'fa fa-server',
@@ -58,10 +46,16 @@ class SidebarComposer
                 ],
             ],
             [
-                'icon' => 'fa fa-bars',
+                'icon' => 'fa fa-columns',
                 'style' => 'simple',
-                'name' => 'Menus',
-                'url' => 'admin/menus',
+                'name' => 'Categories',
+                'route' => 'admin.categories.index',
+            ],
+            [
+                'icon' => 'fa fa-image',
+                'style' => 'simple',
+                'name' => 'Images',
+                'route' => 'admin.images.index',
             ],
             [
                 'icon' => 'fa fa-file-text',
@@ -79,16 +73,10 @@ class SidebarComposer
                 ],
             ],
             [
-                'icon' => 'fa fa-image',
+                'icon' => 'fa fa-bars',
                 'style' => 'simple',
-                'name' => 'Images',
-                'route' => 'admin.images.index',
-            ],
-            [
-                'icon' => 'fa fa-th-list',
-                'style' => 'simple',
-                'name' => 'Orders',
-                'route' => 'admin.order.index',
+                'name' => 'Menus',
+                'url' => 'admin/menus',
             ],
             [
                 'icon' => 'fa fa-money',
@@ -108,6 +96,18 @@ class SidebarComposer
                     //     'route' => 'admin.transactions.requests',
                     // ],
                 ],
+            ],
+            [
+                'icon' => 'fa fa-users',
+                'style' => 'simple',
+                'name' => 'Resellers',
+                'route' => 'admin.resellers.index',
+            ],
+            [
+                'icon' => 'fa fa-gg',
+                'style' => 'simple',
+                'name' => 'Admins',
+                'route' => 'admin.admins.index',
             ],
             [
                 'icon' => 'fa fa-question',

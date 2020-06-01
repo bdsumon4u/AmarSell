@@ -43,6 +43,9 @@
         .nav-dropdown-items .nav-link {
             padding-left: 5px !important;
         }
+        .navbar-toggler .fa {
+            color: #444;
+        }
         i.fa.fa-user.r {
             font-size: 20px;
             border-radius: 10px;

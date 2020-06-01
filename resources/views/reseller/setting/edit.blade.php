@@ -82,21 +82,21 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="name">Name</label><span class="text-danger">*</span>
-                                                        <input name="name" value="{{ old('name', $user->name) }}" id="" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror" disabled>
+                                                        <input name="name" value="{{ old('name', $user->name) }}" id="name" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror" disabled>
                                                         {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="email">Email</label><span class="text-danger">*</span>
-                                                        <input name="email" value="{{ old('email', $user->email) }}" id="" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" disabled>
+                                                        <input name="email" value="{{ old('email', $user->email) }}" id="email" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" disabled>
                                                         {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="phone">Phone</label><span class="text-danger">*</span>
-                                                        <input name="phone" value="{{ old('phone', $user->phone) }}" id="" cols="30" rows="10" class="form-control @error('phone') is-invalid @enderror">
+                                                        <input name="phone" value="{{ old('phone', $user->phone) }}" id="phone" cols="30" rows="10" class="form-control @error('phone') is-invalid @enderror">
                                                         {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
                                                 </div>
@@ -114,7 +114,8 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group" id="ways">
-                                                        <label for="payment">Ways <a href="" id="add-way"><strong>&plus;New</strong></a></label>
+                                                        <label for="payment">Payment Methods</label>
+                                                        <a href="" id="add-way" class="btn btn-primary btn-sm float-right mb-1"><strong>Add New</strong></a>
                                                         @foreach($user->payment ?? [] as $payment)
                                                         <div class="input-group" data-id="{{ $loop->index }}">
                                                             <select name="payment[{{ $loop->index }}][method]" class="form-control payment_method @error('payment.'.$loop->index.'.method') is-invalid @enderror">
@@ -128,10 +129,10 @@
                                                                 <input type="text" name="payment[{{ $loop->index }}][bank_name]" placeholder="Bank Name*" value="{{ old('payment.'.$loop->index.'.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
                                                                 <input type="text" name="payment[{{ $loop->index }}][account_name]" placeholder="Account Name*" value="{{ old('payment.'.$loop->index.'.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
                                                                 <input type="text" name="payment[{{ $loop->index }}][branch]" placeholder="Branch" value="{{ old('payment.'.$loop->index.'.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
-                                                                <input type="text" name="payment[{{ $loop->index }}][routing_no]" placeholder="Routing No" value="{{ old('payment.'.$loop->index.'.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
+                                                                <input type="text" name="payment[{{ $loop->index }}][routing_no]" placeholder="Routing No*" value="{{ old('payment.'.$loop->index.'.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
                                                             @endif
                                                             <input type="text" name="payment[{{ $loop->index }}][type]" placeholder="Account Type*" value="{{ old('payment.'.$loop->index.'.type', $payment->type) }}" class="form-control @error('payment_number') is-invalid @enderror">
-                                                            <input type="text" name="payment[{{ $loop->index }}][number]" placeholder="Payment Number*" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                            <input type="text" name="payment[{{ $loop->index }}][number]" placeholder="Account Number*" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text bg-danger remove-way">&minus;</span>
                                                             </div>
@@ -219,14 +220,14 @@
                     @endforeach
                 </select>
                 <input type="text" name="payment[`+id+`][type]" placeholder="Account Type*" value="{{ old('payment.`+id+`.type') }}" class="form-control @error('payment_number') is-invalid @enderror">
-                <input type="text" name="payment[`+id+`][number]" placeholder="Payment Number*" value="{{ old('payment.`+id+`.number') }}" class="form-control @error('payment_number') is-invalid @enderror">
+                <input type="text" name="payment[`+id+`][number]" placeholder="Account Number*" value="{{ old('payment.`+id+`.number') }}" class="form-control @error('payment_number') is-invalid @enderror">
                 <div class="input-group-append">
                     <span class="input-group-text bg-danger remove-way">&minus;</span>
                 </div>
             </div>`);
         });
 
-        $('.remove-way').click(function(e) {
+        $(document).on('click','.remove-way', function(e) {
             e.preventDefault();
             $(this).parents('.input-group').fadeOut(300, function(){
                 $(this).remove();
@@ -242,7 +243,7 @@
                     <input type="text" name="payment[`+id+`][bank_name]" placeholder="Bank Name*" value="{{ old('payment.`+id+`.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
                     <input type="text" name="payment[`+id+`][account_name]" placeholder="Account Name*" value="{{ old('payment.`+id+`.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
                     <input type="text" name="payment[`+id+`][branch]" placeholder="Branch" value="{{ old('payment.`+id+`.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
-                    <input type="text" name="payment[`+id+`][routing_no]" placeholder="Routing No" value="{{ old('payment.`+id+`.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
+                    <input type="text" name="payment[`+id+`][routing_no]" placeholder="Routing No*" value="{{ old('payment.`+id+`.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
                 `);
                 $(this).parent().find('.bank_name, .account_name, .branch, .routing_no').hide().fadeIn(300);
             } else if($(this).parent().find('.bank_name, .account_name, .branch, .routing_no').length) {

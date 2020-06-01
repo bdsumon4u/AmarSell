@@ -15,6 +15,16 @@
             <div class="card-header py-2">All <strong>Products</strong></div>
             <div class="card-body p-2">
                 <div class="row justify-content-between">
+                    <div class="col-md-5 offset-md-7">
+                        <form action="" method="get">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="search" name="s" placeholder="Product Name" value="{{ request('s') }}" class="form-control">
+                                    <div class="input-group-append"><span class="input-group-text p-0"><input type="submit" value="Search" class="h-100"></span></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     @foreach($products as $product)
                     <div class="col-md-4 col-lg-3 products">
                         <div class="product-item">

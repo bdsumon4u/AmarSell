@@ -53,6 +53,7 @@ class PageController extends Controller
 
         $page = Page::create($data);
         cache(["page.{$page->slgu}" => $page]);
+        cache(['pages' => Page::all()]);
         return redirect()->back()->with('success', 'Page Created.');
     }
 
@@ -65,7 +66,7 @@ class PageController extends Controller
     public function show($page)
     {
         $page = cache("page.$page", function () use ($page) {
-            return Page::where('slug', $page)->last();
+            return Page::where('slug', $page)->get()->last();
         });
         return view('page', compact('page'));
     }
@@ -81,6 +82,7 @@ class PageController extends Controller
         $page = cache("page.$page", function () use ($page) {
             return Page::where('slug', $page)->first();
         });
+        cache(['pages' => Page::all()]);
         return view('admin.pages.edit', compact('page'));
     }
 

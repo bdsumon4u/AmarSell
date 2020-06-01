@@ -18,10 +18,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::formatted();
-        $products = Product::latest()->paginate(8);
+        $products = Product::when($request->s, function ($query) use ($request) {
+            return $query->where('name', 'like', "%{$request->s}%");
+        })->latest()->paginate(8);
         return view('admin.products.index', compact('categories', 'products'));
     }
 
@@ -144,7 +146,7 @@ class ProductController extends Controller
         $images = [ $data['base_image'] => ['zone' => 'base'] ];
         if($data['additional_images']) {
             foreach(explode(',', $data['additional_images']) as $additional_image) {
-                $images[$additional_image] = ['zone' => 'additionals'];
+                $images[$additional_image] = $images[$additional_image] ?? ['zone' => 'additionals'];
             }
         }
         $product->images()->sync($images);

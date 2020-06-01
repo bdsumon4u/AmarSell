@@ -17,16 +17,18 @@ class TransactionCompleted implements ShouldBroadcastNow
 
     public $transaction;
     public $type;
+    public $timezone;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($transaction, $type)
+    public function __construct($transaction, $type, $timezone)
     {
         $this->transaction = $transaction;
         $this->type = $type;
+        $this->timezone = $timezone;
     }
 
     /**
@@ -47,7 +49,7 @@ class TransactionCompleted implements ShouldBroadcastNow
     public function broadcastWith()
     {
         return [
-            'notice_count' => $this->order->reseller->unreadNotifications->count() + 1,
+            'notice_count' => $this->transaction->reseller->unreadNotifications->count() + 1,
         ];
     }
 }

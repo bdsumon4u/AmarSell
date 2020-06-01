@@ -7,12 +7,12 @@
             <input type="text" name="contact[phone]" id="contact-phone" value="{{ old('contact.phone', $contact->phone ?? '') }}" class="form-control">
         </div>
         <div class="form-group">
-            <label for="color-logo">Color Logo</label>
+            <label for="color-logo">Header Logo</label>
             <input type="file" name="logo[color]" id="color-logo" class="mb-1 @if($logo->color ?? '') d-none @endif">
             <img src="{{ asset($logo->color ?? '') ?? '' }}" alt="Color Logo" class="img-responsive" style="@unless($logo->color ?? '') display:none; @endunless width:215px;height:46px;">
         </div>
         <div class="form-group">
-            <label for="white-logo">White Logo</label>
+            <label for="white-logo">Dashboard Logo</label>
             <input type="file" name="logo[white]" id="white-logo" class="mb-1 @if($logo->white ?? '') d-none @endif">
             <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="White Logo" class="img-responsive" style="@unless($logo->white ?? '') display:none; @endunless width:215px;height:46px;">
         </div>

@@ -10,9 +10,10 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $notifications = auth('reseller')->user()->notifications->groupBy(function($item) {
-            return $item->created_at->format('F j, Y');
-        });
+        // $notifications = auth('reseller')->user()->notifications->groupBy(function($item) {
+        //     return $item->created_at->format('F j, Y');
+        // });
+        $notifications = auth('reseller')->user()->notifications()->simplePaginate(10);
         return view('reseller.notifications.index', compact('notifications'));
     }
 

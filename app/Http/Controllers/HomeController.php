@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $orders = Order::with('reseller')->status('pending')->latest()->take(10)->get();
         $transactions = Transaction::with('reseller')->status('paid')->latest()->take(10)->get();
-        $resellers = Reseller::whereNull('verified_at')->take(10);
+        $resellers = Reseller::whereNull('verified_at')->take(10)->get();
         return view('admin.dashboard', compact('orders', 'transactions', 'resellers'));
     }
 }

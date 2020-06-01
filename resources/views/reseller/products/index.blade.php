@@ -4,7 +4,7 @@
 
 <section class="product-list">
     <div class="row">
-        <div class="col-md-3 col-sm-12">
+        <div class="visible-none visible-md-block visible-lg-block visible-xl-block col-md-3 col-sm-12">
             @include('reseller.products.partials.sidebar')
         </div>
 

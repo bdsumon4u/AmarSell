@@ -41,11 +41,19 @@ class Order extends Model
     }
 
     /**
-     * Scope WithinDate
+     * Scope Completed Within
      */
-    public function scopewithinDT($query, $timezone)
+    public function scopeCompletedWT($query, $timezone)
     {
         return $query->whereBetween('data->completed_at', $timezone);
+    }
+
+    /**
+     * Scope Returned Within
+     */
+    public function scopeReturnedWT($query, $timezone)
+    {
+        return $query->whereBetween('data->returned_at', $timezone);
     }
 
     public function current_price()

@@ -38,7 +38,7 @@ class TransactionCompleted extends Notification
             $notifiable instanceof Reseller
             && filter_var($notifiable->email, FILTER_VALIDATE_EMAIL)
         ) {
-            // array_push($via, 'mail');
+            array_push($via, 'mail');
         }
         return $via;
     }
@@ -51,10 +51,18 @@ class TransactionCompleted extends Notification
      */
     public function toMail($notifiable)
     {
+        $timezone = $this->event->timezone;
+        $query = $this->event->transaction->reseller->orders()->whereIn('status', ['completed', 'returned']);
+        $orders = $query->where(function ($query) use ($timezone) {
+            return $query->whereBetween('data->completed_at', $timezone)
+            ->orWhereBetween('data->returned_at', $timezone);
+        })->get();
         return (new MailMessage)
             ->markdown('emails.transaction_completed', [
                 'data' => $this->event->transaction->toArray(),
                 'type' => $this->event->type,
+                'timezone' => $timezone,
+                'orders' => $orders,
             ]);
     }
 
@@ -81,6 +89,7 @@ class TransactionCompleted extends Notification
             'routing_no' => $transaction->routing_no,
             'account_type' => $transaction->account_type,
             'account_number' => $transaction->account_number,
+            'timezone' => $this->event->timezone,
         ];
     }
 }

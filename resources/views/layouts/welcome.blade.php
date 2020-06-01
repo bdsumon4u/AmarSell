@@ -66,9 +66,9 @@
         <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-6 col-md-3 col-xl-4  d-block">
-                        <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">
-                            <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="Logo" style="height: 50px; width: 240px;">
+                    <div class="col-6 col-md-3 col-xl-4 d-block">
+                        <h1 class="mb-0 site-logo"><a href="{{ url('/') }}" class="text-black h2 mb-0">
+                            <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="Logo" style="height: 80px; width: auto;">
                         </h1>
                     </div>
                     <div class="col-12 col-md-9 col-xl-8 main-menu">
@@ -84,7 +84,7 @@
                     </div>
                     <div class="col-6 col-md-9 d-inline-block d-lg-none ml-md-0"><a href="#"
                             class="site-menu-toggle js-menu-toggle text-black float-right"><span
-                                class="fa fa-bars"></span></a></div>
+                                class="fa fa-bars fa-2x"></span></a></div>
                 </div>
             </div>
         </header>

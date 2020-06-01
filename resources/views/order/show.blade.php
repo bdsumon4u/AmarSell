@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header"><strong>Order Details</strong> <span class="badge my-1 pb-1 text-uppercase badge-primary float-right">{{ $order->status }}</span></div>
+            <div class="card-header"><strong>Order Details</strong> <span class="badge my-1 pb-1 text-uppercase badge-{{$variant}} float-right">{{ $order->status }}</span></div>
             <div class="card-body">
                 <div class="wizard">
                     <div id="" class="" role="tabpanel">

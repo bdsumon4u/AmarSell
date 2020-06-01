@@ -107,18 +107,60 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        switch ($order->status) {
+            case 'pending':
+                $variant = 'secondary';
+                break;
+            case 'processing':
+                $variant = 'warning';
+                break;
+            case 'shipping':
+                $variant = 'primary';
+                break;
+            case 'completed':
+                $variant = 'success';
+                break;
+            case 'returned':
+                $variant = 'danger';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
         // if($order->status == 'completed' | $order->status == 'returned') {
             $products = Product::whereIn('id', array_keys($order->data['products']))->get();
             $cp = $order->current_price();
-            return view('reseller.orders.show', compact('order', 'products', 'cp'));
+            return view('reseller.orders.show', compact('order', 'products', 'cp', 'variant'));
         // }
         // return redirect()->back()->with('error', 'You Can not view the order until status completed/returned.');
     }
 
     public function invoice(Order $order)
     {
+        switch ($order->status) {
+            case 'pending':
+                $variant = 'secondary';
+                break;
+            case 'processing':
+                $variant = 'warning';
+                break;
+            case 'shipping':
+                $variant = 'primary';
+                break;
+            case 'completed':
+                $variant = 'success';
+                break;
+            case 'returned':
+                $variant = 'danger';
+                break;
+            
+            default:
+                # code...
+                break;
+        }
         if($order->status == 'completed' | $order->status == 'returned') {
-            return view('reseller.orders.invoice', compact('order'));
+            return view('reseller.orders.invoice', compact('order', 'variant'));
         }
         return redirect()->back()->with('error', 'You Can not view the invoice until status completed/returned.');
     }

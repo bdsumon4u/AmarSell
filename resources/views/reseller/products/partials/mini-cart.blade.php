@@ -24,7 +24,7 @@
                         @php $product = $cartItem->attributes->product @endphp
                         <div class="mini-cart-item clearfix">
                             <div class="mini-cart-image">
-                                
+                                <img src="{{ $product->base_image }}" alt="Base Image">
                             </div>
 
                             <div class="mini-cart-details clearfix">

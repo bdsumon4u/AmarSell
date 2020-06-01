@@ -15,6 +15,22 @@ use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $fOfCurrMonth = now()->firstOfMonth();
+        $mOfCurrMonth = $fOfCurrMonth->copy()->addDays(14);
+
+        $fOfPrevMonth = now()->subMonth()->firstOfMonth();
+        $mOfPrevMonth = $fOfPrevMonth->copy()->addDays(14);
+        $lOfPrevMonth = now()->subMonth()->lastOfMonth();
+
+        $this->timezone = date('d') >= 1 && date('d') <= 15 ? [
+            $mOfPrevMonth->toDateTimeString(), $lOfPrevMonth->toDateTimeString()
+        ] : [
+            $fOfCurrMonth->toDateTimeString(), $mOfCurrMonth->toDateTimeString()
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,27 +47,24 @@ class TransactionController extends Controller
      */
     public function pay()
     {
-        $fOfMonth = now()->firstOfMonth();
-        $mOfMonth = $fOfMonth->copy()->addDays(15);
-        $lOfMonth = now()->lastOfMonth();
-
-        $timezone = date('d') >= 1 && date('d') <= 15 ? [
-            $mOfMonth->toDateTimeString(), $lOfMonth->toDateTimeString()
-        ] : [
-            $fOfMonth->toDateTimeString(), $mOfMonth->toDateTimeString()
-        ];
-
-
         $resellers = Reseller::with(['transactions', 'orders'])->get()->sortByDesc('balance');
-        $resellers = $resellers->filter(function (Reseller $reseller) use ($timezone) {
-            if(! is_null($reseller->payment) && ( is_null($c_a = $reseller->lastPaid->created_at) || $c_a <= $timezone[0] )) {
+        $resellers = $resellers->filter(function (Reseller $reseller) {
+            $lastPaidAt = optional($reseller->lastPaid->created_at)->toDateString();
+            if(! is_null($reseller->payment) && ( $lastPaidAt <= $this->timezone[1] )) {
                 // if($reseller->balance > 0) {
-                    $reseller->payNow = $reseller->orders()
-                                        ->withinDT($timezone)
-                                        ->get()
-                                        ->sum(function (Order $item) {
-                                            return $item->data['profit'] - $item->data['advanced'];
-                                        });
+                    $com = $reseller->orders()
+                        ->completedWT($this->timezone)
+                        ->get()
+                        ->sum(function (Order $item) {
+                            return $item->data['profit'] - $item->data['advanced'];
+                        });
+                    $ret = $reseller->orders()
+                        ->returnedWT($this->timezone)
+                        ->get()
+                        ->sum(function ($order) {
+                            return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge'];
+                        });
+                    $reseller->payNow = $com - $ret;
                     // if ($reseller->payNow > 0) {
                         return $reseller;
                     // }
@@ -106,6 +119,7 @@ class TransactionController extends Controller
     {
         $data = $request->validate([
             'reseller_id' => 'required|integer',
+            'transaction_id' => 'nullable|integer',
             'amount' => 'required|integer',
             'method' => 'required',
             'bank_name' => 'nullable',
@@ -114,9 +128,12 @@ class TransactionController extends Controller
             'routing_no' => 'nullable',
             'account_type' => 'required',
             'account_number' => 'required',
-            'transaction_number' => 'nullable',
+            'transaction_number' => 'required_if:transaction_id,0',
+        ], [
+            'transaction_number.required_if' => 'The transaction number field is required.',
         ]);
 
+        dd($data);
         $transaction_type = null;
         if($id = $request->transaction_id) {
             $transaction = Transaction::findOrFail($id);
@@ -127,7 +144,7 @@ class TransactionController extends Controller
             $transaction_type = 'request';
         } else $transaction = Transaction::create($data + ['status' => 'paid']);
 
-        event(new TransactionCompleted($transaction, $transaction_type));
+        event(new TransactionCompleted($transaction, $transaction_type, $this->timezone));
 
         return Redirect::back()->with('success', 'Transaction Details Stored.');
     }

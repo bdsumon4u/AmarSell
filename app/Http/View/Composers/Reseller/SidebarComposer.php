@@ -53,12 +53,12 @@ class SidebarComposer
             'name' => 'Transactions',
             'items' => [
                 [
-                    'name' => 'Setting',
-                    'route' => 'reseller.setting.edit',
-                ],
-                [
                     'name' => 'History',
                     'route' => 'reseller.transactions.index',
+                ],
+                [
+                    'name' => 'Settings',
+                    'route' => 'reseller.setting.edit',
                 ],
                 // [
                 //     'name' => 'Money Request',

@@ -22,8 +22,15 @@
                                     <tr>
                                         <td>{{ $faq->id }}</td>
                                         <td>{{ $faq->question }}</td>
-                                        <td>
-                                            <a href="{{ route('admin.faqs.edit', $faq->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                        <td width="50">
+                                            <div class="btn-group btn-group-inline">
+                                                <a href="{{ route('admin.faqs.edit', $faq->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                <form action="{{ route('admin.faqs.destroy', $faq->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
