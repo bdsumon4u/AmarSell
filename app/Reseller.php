@@ -20,7 +20,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password', 'payment', 'verified_at',
+        'name', 'email', 'phone', 'password', 'payment', 'documents', 'verified_at',
     ];
 
     /**
@@ -40,6 +40,7 @@ class Reseller extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'payment' => 'object',
+        'documents' => 'object',
     ];
 
     /**

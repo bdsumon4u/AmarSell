@@ -19,6 +19,7 @@ class CreateResellersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->text('payment')->nullable();
+            $table->text('documents')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -53,82 +53,79 @@
                 @endif
             </div>
             <div class="card-body">
-                @forelse($notifications as $day => $notification_s)
-                    <h6 class="text-center {{ $loop->first ? '' : 'mt-5' }} mb-3">{{ $day }}</h6>
-                    @foreach($notification_s as $notification)
-                        @php $unread = $notification->unread() @endphp
-                        <div class="card shadow-sm rounded-0">
-                            <div class="card-header p-2 {{ $unread ? 'border-red' : 'border--green' }}">
-                                <span class="bg-secondary p-1 text-light" style="width: 60px; display: inline-block; text-align: center;">Arrived</span> {{ $notification->created_at->format('F j, Y - h:i A') }}
-                                <span class="float-right">{{ $notification->created_at->format('h:i A') }}</span>
-                            </div>
-                            @unless($unread)
-                            <div class="card-header p-2">
-                                <span class="bg-secondary p-1 text-light" style="width: 60px; display: inline-block; text-align: center;">Seen</span> {{ $notification->updated_at->format('F j, Y - h:i A') }}
-                                <span class="float-right">{{ $notification->updated_at->format('h:i A') }}</span>
-                            </div>
-                            @endunless
-                            <div class="card-body p-2">
-                                @php $data = $notification->data @endphp
-                                @switch($data['notification'])
-                                    @case('order-status-changed')
-                                        Dear Valuable Reseller,<br>
-                                        Your <a target="_blank" href="{{ route('reseller.order.show', $data['order_id']) }}">Order #{{ $data['order_id'] }}</a> Status Has Changed From "{{ ucwords($data['before']) }}" To "{{ ucwords($data['after']) }}".<br>
-                                        Stay With Us.<br>
-                                        Thank You.
-                                    @break
-
-                                    @case('money-request-recieved')
-                                        Dear Valuable Reseller,<br>
-                                        Your <strong>Money Request #{{ $data['transaction_id'] }}</strong> For <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
-                                        Via <strong>{{ $data['method'] }}{{ $data['bank_name'] ? ' [ '. $data['bank_name'] . ' ] ' : '' }}<br>
-                                        {{ $data['account_name'] ? ' [ '. $data['account_name'] . ' ] ' : '' }} [ {{ $data['account_type'] }} ] [ {{ $data['account_number'] }} ]</strong><br>
-                                        Has Recieved.<br>
-                                        Stay With Us.<br>
-                                        Thank You.
-                                    @break
-
-                                    @case('transaction-completed')
-                                        Dear Valuable Reseller,<br>
-                                        @if($data['type'] == 'request')
-                                        Your <strong>Money Request #{{ $data['transaction_id'] }}</strong> For <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
-                                        Has Paid.<br>
-                                        @else
-                                        You're Paid <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
-                                        @endif
-                                        Via <strong>{{ $data['method'] }}{{ $data['bank_name'] ? ' [ '. $data['bank_name'] . ' ] ' : '' }}<br>
-                                        {{ $data['account_name'] ? ' [ '. $data['account_name'] . ' ] ' : '' }} [ {{ $data['account_type'] }} ] [ {{ $data['account_number'] }} ]</strong><br>
-                                        Based On Your Completed & Returned Orders<br>
-                                        From {{ date('d-M-Y', strtotime($timezone[0])) }} To {{ date('d-M-Y', strtotime($timezone[1])) }}<br>
-                                        Stay With Us.<br>
-                                        Thank You.
-                                    @break
-                                @endswitch
-                            </div>
-                            @if($unread) {{-- After Pagination To Log --}}
-                            <div class="card-footer p-2">
-                                <div class="d-flex justify-content-between">
-                                    <!-- <div class="col-md-6"> -->
-                                        @if($unread)
-                                        <form action="{{ route('reseller.notifications.update', $notification->id) }}" method="post">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="btn btn-sm btn-success">Mark As Seen</button>
-                                        </form>
-                                        @endif
-                                    <!-- </div> -->
-                                    <!-- <div class="col-md-6"> -->
-                                        <!-- <form action="{{ route('reseller.notifications.destroy', $notification->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                        </form> -->
-                                    <!-- </div> -->
-                                </div>
-                            </div>
-                            @endif
+                @forelse($notifications as $notification)
+                    @php $unread = $notification->unread() @endphp
+                    <div class="card shadow-sm rounded-0">
+                        <div class="card-header p-2 {{ $unread ? 'border-red' : 'border--green' }}">
+                            <span class="bg-secondary p-1 text-light" style="width: 60px; display: inline-block; text-align: center;">Arrived</span> {{ $notification->created_at->format('F j, Y - h:i A') }}
+                            <span class="float-right">{{ $notification->created_at->format('h:i A') }}</span>
                         </div>
-                    @endforeach
+                        @unless($unread)
+                        <div class="card-header p-2">
+                            <span class="bg-secondary p-1 text-light" style="width: 60px; display: inline-block; text-align: center;">Seen</span> {{ $notification->updated_at->format('F j, Y - h:i A') }}
+                            <span class="float-right">{{ $notification->updated_at->format('h:i A') }}</span>
+                        </div>
+                        @endunless
+                        <div class="card-body p-2">
+                            @php $data = $notification->data @endphp
+                            @switch($data['notification'])
+                                @case('order-status-changed')
+                                    Dear Valuable Reseller,<br>
+                                    Your <a target="_blank" href="{{ route('reseller.order.show', $data['order_id']) }}">Order #{{ $data['order_id'] }}</a> Status Has Changed From "{{ ucwords($data['before']) }}" To "{{ ucwords($data['after']) }}".<br>
+                                    Stay With Us.<br>
+                                    Thank You.
+                                @break
+
+                                @case('money-request-recieved')
+                                    Dear Valuable Reseller,<br>
+                                    Your <strong>Money Request #{{ $data['transaction_id'] }}</strong> For <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
+                                    Via <strong>{{ $data['method'] }}{{ $data['bank_name'] ? ' [ '. $data['bank_name'] . ' ] ' : '' }}<br>
+                                    {{ $data['account_name'] ? ' [ '. $data['account_name'] . ' ] ' : '' }} [ {{ $data['account_type'] }} ] [ {{ $data['account_number'] }} ]</strong><br>
+                                    Has Recieved.<br>
+                                    Stay With Us.<br>
+                                    Thank You.
+                                @break
+
+                                @case('transaction-completed')
+                                    Dear Valuable Reseller,<br>
+                                    @if($data['type'] == 'request')
+                                    Your <strong>Money Request #{{ $data['transaction_id'] }}</strong> For <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
+                                    Has Paid.<br>
+                                    @else
+                                    You're Paid <strong>Amount {{ theMoney($data['amount']) }}</strong><br>
+                                    @endif
+                                    Via <strong>{{ $data['method'] }}{{ $data['bank_name'] ? ' [ '. $data['bank_name'] . ' ] ' : '' }}<br>
+                                    {{ $data['account_name'] ? ' [ '. $data['account_name'] . ' ] ' : '' }} [ {{ $data['account_type'] }} ] [ {{ $data['account_number'] }} ]</strong><br>
+                                    Based On Your Completed & Returned Orders<br>
+                                    From {{ date('d-M-Y', strtotime($timezone[0])) }} To {{ date('d-M-Y', strtotime($timezone[1])) }}<br>
+                                    Stay With Us.<br>
+                                    Thank You.
+                                @break
+                            @endswitch
+                        </div>
+                        @if($unread) {{-- After Pagination To Log --}}
+                        <div class="card-footer p-2">
+                            <div class="d-flex justify-content-between">
+                                <!-- <div class="col-md-6"> -->
+                                    @if($unread)
+                                    <form action="{{ route('reseller.notifications.update', $notification->id) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-sm btn-success">Mark As Seen</button>
+                                    </form>
+                                    @endif
+                                <!-- </div> -->
+                                <!-- <div class="col-md-6"> -->
+                                    <!-- <form action="{{ route('reseller.notifications.destroy', $notification->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                    </form> -->
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                        @endif
+                    </div>
                 @empty
                 <div class="alert alert-danger mb-0"><strong>Log Box Is Empty!</strong></div>
                 @endforelse

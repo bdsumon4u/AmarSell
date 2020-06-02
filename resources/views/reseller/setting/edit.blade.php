@@ -59,18 +59,26 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-6 col-md-4 col-xl-3">
                         <ul class="nav nav-tabs list-group" role="tablist">
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('name') || $errors->has('email') || $errors->has('phone')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('payment_method') || $errors->has('payment_number')) text-danger @endif" data-toggle="tab" href="#item-2">Transaction</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('password') || $errors->has('old_password') || $errors->has('password_confirmation')) text-danger @endif" data-toggle="tab" href="#item-3">Password</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('name') || $errors->has('email') || $errors->has('phone') || $errors->has('photo')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('photo') || $errors->has('nid.front') || $errors->has('nid.back')) text-danger @endif" data-toggle="tab" href="#item-2">Documents</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('payment_method') || $errors->has('payment_number')) text-danger @endif" data-toggle="tab" href="#item-3">Transaction</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('password') || $errors->has('old_password') || $errors->has('password_confirmation')) text-danger @endif" data-toggle="tab" href="#item-4">Password</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-8 col-xl-9">
                         <div class="row">
                             <div class="col">
-                                <form id="setting-form" action="{{ route('reseller.setting.update') }}" method="post">
+                                <form id="setting-form" action="{{ route('reseller.setting.update') }}" method="post" enctype="multipart/form-data">
                                     <div class="tab-content">
                                         @csrf
                                         @method('PATCH')
+                                        
+                                        @php $verified_at = $user->verified_at ?? 0 @endphp
+                                        @php $photo = optional($user->documents)->photo @endphp
+                                        @php $nid_front = optional($user->documents)->nid_front @endphp
+                                        @php $nid_back = optional($user->documents)->nid_back @endphp
+                                        <input type="hidden" name="verified_at" value="{{ old('verified_at', $user->verified_at ?? 0) }}">
+
                                         <div class="tab-pane active" id="item-1" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -79,25 +87,43 @@
                                             </div>
                                             
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label for="name">Name</label><span class="text-danger">*</span>
-                                                        <input name="name" value="{{ old('name', $user->name) }}" id="name" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror" disabled>
-                                                        {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
+                                                <div class="col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="name">Name</label><span class="text-danger">*</span>
+                                                                <input name="name" value="{{ old('name', $user->name) }}" id="name" cols="30" rows="10" class="form-control @error('name') is-invalid @enderror" disabled>
+                                                                {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="email">Email</label><span class="text-danger">*</span>
+                                                                <input name="email" value="{{ old('email', $user->email) }}" id="email" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" disabled>
+                                                                {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="phone">Phone</label><span class="text-danger">*</span>
+                                                                <input name="phone" value="{{ old('phone', $user->phone) }}" id="phone" cols="30" rows="10" class="form-control @error('phone') is-invalid @enderror">
+                                                                {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="email">Email</label><span class="text-danger">*</span>
-                                                        <input name="email" value="{{ old('email', $user->email) }}" id="email" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" disabled>
-                                                        {!! $errors->first('email', '<span class="invalid-feedback">:message</span>') !!}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="phone">Phone</label><span class="text-danger">*</span>
-                                                        <input name="phone" value="{{ old('phone', $user->phone) }}" id="phone" cols="30" rows="10" class="form-control @error('phone') is-invalid @enderror">
-                                                        {!! $errors->first('name', '<span class="invalid-feedback">:message</span>') !!}
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label for="photo" class="d-block">Photo<span class="text-danger">*</span></label>
+                                                                @unless($verified_at)
+                                                                <input type="file" name="photo" value="{{ old('photo', $photo) }}" id="photo" cols="30" rows="10" class="@error('photo') is-invalid @enderror">
+                                                                @endunless
+                                                                <img src="{{ asset($photo) }}" alt="Photo" style="@unless($photo) display: none; @endunless width: 40mm; height: 50mm; margin-top: 2mm;">
+                                                                {!! $errors->first('photo', '<span class="invalid-feedback">:message</span>') !!}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -108,6 +134,41 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="item-2" role="tabpanel">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h4><small class="border-bottom mb-1">Documents</small></h4>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="nid-front" class="d-block">NID Front<span class="text-danger">*</span></label>
+                                                        @unless($verified_at)
+                                                        <input type="file" name="nid[front]" value="{{ old('nid.front', $nid_front) }}" id="nid-front" cols="30" rows="10" class="@error('nid.front') is-invalid @enderror">
+                                                        @endunless
+                                                        <img src="{{ asset($nid_front) }}" alt="Photo" style="@unless($nid_front) display: none; @endunless width: 8.5cm; height: 5.5cm; margin-top: 2mm;">
+                                                        {!! $errors->first('nid.front', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="nid-back" class="d-block">NID Back<span class="text-danger">*</span></label>
+                                                        @unless($verified_at)
+                                                        <input type="file" name="nid[back]" value="{{ old('nid.back', $nid_back) }}" id="nid-back" cols="30" rows="10" class="@error('nid.back') is-invalid @enderror">
+                                                        @endunless
+                                                        <img src="{{ asset($nid_back) }}" alt="Photo" style="@unless($nid_back) display: none; @endunless width: 8.5cm; height: 5.5cm; margin-top: 2mm;">
+                                                        {!! $errors->first('nid.back', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group mb-0">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="item-3" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4><small class="border-bottom mb-1">Transaction</small></h4>
@@ -147,7 +208,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="item-3" role="tabpanel">
+                                        <div class="tab-pane" id="item-4" role="tabpanel">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4><small class="border-bottom mb-1">Change Password</small></h4>
@@ -201,6 +262,29 @@
         $('#setting-form').on('submit', function(e) {
             return e.which != 13;
         });
+
+        $('#photo').on('change', function (e) {
+            renderPhoto(this);
+        });
+        $('#nid-front').on('change', function (e) {
+            renderPhoto(this);
+        });
+        $('#nid-back').on('change', function (e) {
+            renderPhoto(this);
+        });
+
+        function renderPhoto(input) {
+            console.log('rendering')
+            if(input.files.length) {
+                console.log('has length')
+                var reader = new FileReader;
+                reader.readAsDataURL(input.files[0]);
+                reader.onload = function(e) {
+                    console.log('onload')
+                    $(input).next('img').show().attr('src', e.target.result);
+                }
+            }
+        }
 
         $('#add-way').click(function(e) {
             e.preventDefault();

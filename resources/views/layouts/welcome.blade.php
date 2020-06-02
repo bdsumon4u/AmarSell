@@ -68,7 +68,7 @@
                 <div class="row align-items-center">
                     <div class="col-6 col-md-3 col-xl-4 d-block">
                         <h1 class="mb-0 site-logo"><a href="{{ url('/') }}" class="text-black h2 mb-0">
-                            <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="Logo" style="height: 80px; width: auto;">
+                            <img src="{{ asset($logo->white ?? '') ?? '' }}" alt="Logo" style="height: 60px; width: auto;">
                         </h1>
                     </div>
                     <div class="col-12 col-md-9 col-xl-8 main-menu">
