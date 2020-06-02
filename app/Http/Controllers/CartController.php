@@ -65,7 +65,7 @@ class CartController extends Controller
     {
         $user_id = auth('reseller')->user()->id;
         Cart::session($user_id)->clear();
-        return redirect()->route('shop.index')->with('success', 'Cart Cleared.');
+        return redirect()->route('reseller.product.index')->with('success', 'Cart Cleared.');
     }
 
     /**

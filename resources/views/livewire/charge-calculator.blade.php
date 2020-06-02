@@ -84,7 +84,7 @@
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('cod_charge') ? 'has-error': '' }}">
                     <label for="cod-charge">
-                        COD<span>*</span>
+                        Additional<span>*</span>
                     </label>
 
                     <input type="text" name="cod_charge" wire:model.debounce.250ms="cod_charge" wire:change="changed" class="form-control" id="cod-charge" value="{{ old('cod_charge', $cod_charge) }}" {{ $is_reseller ? 'readonly' : '' }}>
