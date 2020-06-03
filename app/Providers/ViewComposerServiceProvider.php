@@ -43,6 +43,6 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer(['reseller.layout'], ResellerAsideComposer::class);
         View::composer(['reseller.products.partials.mini-cart', 'reseller.cart.*', 'reseller.checkout.*'], CartComposer::class);
 
-        View::composer(['welcome', 'contact-form', 'layouts.*', 'admin.aside.*', 'components.layouts.header', 'components.layouts.footer', 'reseller.layout', 'reseller.products.layout', 'reseller.checkout.content', 'reseller.products.product'], SettingComposer::class);
+        View::composer(['welcome', 'contact-form', 'layouts.*', 'admin.aside.*', 'components.layouts.header', 'components.layouts.footer', 'reseller.layout', 'reseller.products.layout', 'reseller.checkout.content', 'reseller.products.product', 'livewire.charge-calculator'], SettingComposer::class);
     }
 }

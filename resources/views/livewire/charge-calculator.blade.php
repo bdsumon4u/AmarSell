@@ -127,6 +127,25 @@
                     </div>
                 @endunless
             @endif
+            <div class="col-md-12">
+                <div class="form-group {{ $errors->has('delivery_method') ? 'has-error': '' }}">
+                    <label for="delivery-method">
+                        Delivery Method
+                    </label>
+
+                    @if(count($courier) == 1)
+                    <input type="text" name="delivery_method" id="delivery_method" class="form-control" value="{{ old('delivery_method', reset($courier)) }}" readonly>
+                    @else
+                    <select name="delivery_method" id="delivery_method" class="form-control" @if(count($courier) == 1) readonly @endif @if($is_reseller) disabled @endif>
+                        <option value="">Select Method</option>
+                        @foreach($courier as $name)
+                        <option value="{{ $name }}" @if(old('delivery_method', $order->data['delivery_method']) == $name) selected @endif>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                    {!! $errors->first('delivery_method', '<span class="error-message">:message</span>') !!}
+                </div>
+            </div>
             @unless($order->status == 'pending')
             <div class="col-md-12">
                 <div class="form-group {{ $errors->has('booking_number') ? 'has-error': '' }}">

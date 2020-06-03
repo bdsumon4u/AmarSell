@@ -24,7 +24,7 @@
                                 <h5><span>Reseller Info</span></h5>
                             </div>
                             @php $reseller = $order->reseller @endphp
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group {{ $errors->has('reseller_name') ? 'has-error': '' }}">
                                     <label for="reseller-name">
                                         Name
@@ -33,6 +33,18 @@
                                     <input type="text" name="reseller_name" class="form-control" id="reseller-name" value="{{ old('reseller_name', $reseller->name) }}" readonly>
 
                                     {!! $errors->first('reseller_name', '<span class="error-message">:message</span>') !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->has('shop') ? 'has-error': '' }}">
+                                    <label for="reseller-shop">
+                                        Shop
+                                    </label>
+
+                                    <input type="text" name="shop" class="form-control" id="reseller-shop" value="{{ $order->shop->name }}" readonly>
+
+                                    {!! $errors->first('shop', '<span class="error-message">:message</span>') !!}
                                 </div>
                             </div>
 
@@ -109,35 +121,6 @@
                                     <input type="text" name="customer_address" class="form-control" id="customer-address" value="{{ old('customer_address', $order->data['customer_address']) }}" readonly>
 
                                     {!! $errors->first('customer_address', '<span class="error-message">:message</span>') !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row box-wrapper address clearfix">
-                            <div class="col-sm-12 box-header">
-                                <br>
-                                <h5><span>Order Info</span></h5>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('shop') ? 'has-error': '' }}">
-                                    <label for="reseller-shop">
-                                        Shop
-                                    </label>
-
-                                    <input type="text" name="shop" class="form-control" id="reseller-shop" value="{{ $order->shop->name }}" readonly>
-
-                                    {!! $errors->first('shop', '<span class="error-message">:message</span>') !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group {{ $errors->has('delivery_method') ? 'has-error': '' }}">
-                                    <label for="delivery-method">
-                                        Delivery Method
-                                    </label>
-
-                                    <input type="text" name="delivery_method" class="form-control" id="delivery-method" value="{{ old('delivery_method', $order->data['delivery_method']) }}" readonly>
-
-                                    {!! $errors->first('delivery_method', '<span class="error-message">:message</span>') !!}
                                 </div>
                             </div>
                         </div>
