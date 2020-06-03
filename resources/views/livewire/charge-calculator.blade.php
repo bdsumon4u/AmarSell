@@ -56,77 +56,78 @@
                 </div>
             </div>
             @if(! $is_reseller || ($is_reseller && ($order->status == 'completed' | $order->status == 'returned')))
-            <div class="col-sm-12 box-header">
-                <h5><span>Charges</span></h5>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group {{ $errors->has('packaging') ? 'has-error': '' }}">
-                    <label for="packaging-charge">
-                        Packaging
-                    </label>
-                    
-                    <input type="text" name="packaging" wire:model.debounce.250ms="packaging" wire:change="changed" class="form-control" id="packaging-charge" value="{{ old('packaging', $packaging) }}" {{ $is_reseller ? 'readonly' : '' }}>
-                    
-                    {!! $errors->first('packaging', '<span class="error-message">:message</span>') !!}
+                <div class="col-sm-12 box-header">
+                    <h5><span>Charges</span></h5>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group {{ $errors->has('delivery_charge') ? 'has-error': '' }}">
-                    <label for="delivery-charge">
-                        Delivery<span>*</span>
-                    </label>
-
-                    <input type="text" name="delivery_charge" wire:model.debounce.250ms="delivery_charge" wire:change="changed" class="form-control" id="delivery-charge" value="{{ old('delivery_charge') }}" {{ $is_reseller ? 'readonly' : '' }}>
-
-                    {!! $errors->first('delivery_charge', '<span class="error-message">:message</span>') !!}
+                <div class="col-md-4">
+                    <div class="form-group {{ $errors->has('packaging') ? 'has-error': '' }}">
+                        <label for="packaging-charge">
+                            Packaging
+                        </label>
+                        
+                        <input type="text" name="packaging" wire:model.debounce.250ms="packaging" wire:change="changed" class="form-control" id="packaging-charge" value="{{ old('packaging', $packaging) }}" {{ $is_reseller ? 'readonly' : '' }}>
+                        
+                        {!! $errors->first('packaging', '<span class="error-message">:message</span>') !!}
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group {{ $errors->has('cod_charge') ? 'has-error': '' }}">
-                    <label for="cod-charge">
-                        Additional<span>*</span>
-                    </label>
+                <div class="col-md-4">
+                    <div class="form-group {{ $errors->has('delivery_charge') ? 'has-error': '' }}">
+                        <label for="delivery-charge">
+                            Delivery<span>*</span>
+                        </label>
 
-                    <input type="text" name="cod_charge" wire:model.debounce.250ms="cod_charge" wire:change="changed" class="form-control" id="cod-charge" value="{{ old('cod_charge', $cod_charge) }}" {{ $is_reseller ? 'readonly' : '' }}>
+                        <input type="text" name="delivery_charge" wire:model.debounce.250ms="delivery_charge" wire:change="changed" class="form-control" id="delivery-charge" value="{{ old('delivery_charge') }}" {{ $is_reseller ? 'readonly' : '' }}>
 
-                    {!! $errors->first('cod_charge', '<span class="error-message">:message</span>') !!}
+                        {!! $errors->first('delivery_charge', '<span class="error-message">:message</span>') !!}
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group {{ $errors->has('payable') ? 'has-error': '' }}">
-                    <label for="payable">
-                        Payable
-                    </label>
+                <div class="col-md-4">
+                    <div class="form-group {{ $errors->has('cod_charge') ? 'has-error': '' }}">
+                        <label for="cod-charge">
+                            Additional<span>*</span>
+                        </label>
 
-                    <input type="text" name="payable" class="form-control" id="payable" value="{{ old('payable', $payable) }}" readonly>
+                        <input type="text" name="cod_charge" wire:model.debounce.250ms="cod_charge" wire:change="changed" class="form-control" id="cod-charge" value="{{ old('cod_charge', $cod_charge) }}" {{ $is_reseller ? 'readonly' : '' }}>
 
-                    {!! $errors->first('payable', '<span class="error-message">:message</span>') !!}
+                        {!! $errors->first('cod_charge', '<span class="error-message">:message</span>') !!}
+                    </div>
                 </div>
-            </div>
-            @unless($order->status == 'returned')
-            <div class="col-md-6">
-                <div class="form-group {{ $errors->has('profit') ? 'has-error': '' }}">
-                    <label for="profit">
-                        Profit
-                    </label>
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('payable') ? 'has-error': '' }}">
+                        <label for="payable">
+                            Payable
+                        </label>
 
-                    <input type="text" name="profit" class="form-control" id="profit" value="{{ old('profit', $profit) }}" readonly>
+                        <input type="text" name="payable" class="form-control" id="payable" value="{{ old('payable', $payable) }}" readonly>
 
-                    {!! $errors->first('profit', '<span class="error-message">:message</span>') !!}
+                        {!! $errors->first('payable', '<span class="error-message">:message</span>') !!}
+                    </div>
                 </div>
-            </div>
-            @else
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="loss">
-                        Loss
-                    </label>
+                @unless($order->status == 'returned')
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->has('profit') ? 'has-error': '' }}">
+                            <label for="profit">
+                                Profit
+                            </label>
 
-                    <input type="text" name="loss" class="form-control bg-danger" id="loss" value="{{ old('loss', $loss) }}" readonly>
-                </div>
-            </div>
+                            <input type="text" name="profit" class="form-control" id="profit" value="{{ old('profit', $profit) }}" readonly>
+
+                            {!! $errors->first('profit', '<span class="error-message">:message</span>') !!}
+                        </div>
+                    </div>
+                    @else
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="loss">
+                                Loss
+                            </label>
+
+                            <input type="text" name="loss" class="form-control bg-danger" id="loss" value="{{ old('loss', $loss) }}" readonly>
+                        </div>
+                    </div>
+                @endunless
             @endif
-            @endif
+            @unless($order->status == 'pending')
             <div class="col-md-12">
                 <div class="form-group {{ $errors->has('booking_number') ? 'has-error': '' }}">
                     <label for="booking_number">
@@ -138,6 +139,7 @@
                     {!! $errors->first('booking_number', '<span class="error-message">:message</span>') !!}
                 </div>
             </div>
+            @endunless
             @unless($order->status == 'completed' || $order->status == 'returned')
             <div class="col-md-12">
                 @unless($is_reseller)

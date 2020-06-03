@@ -147,6 +147,7 @@ class OrderController extends Controller
             'status' => 'required',
         ]), function($data) use($order, $request){
             $before = $order->status;
+            $data['profit'] = $data['buy_price'] - ($data['packaging'] + $data['delivery_charge'] + $data['cod_charge']);
             $order->status = $data['status'];
             $data['completed_at'] = $data['status'] == 'completed' ? now()->toDateTimeString() : NULL;
             $data['returned_at'] = $data['status'] == 'returned' ? now()->toDateTimeString() : NULL;

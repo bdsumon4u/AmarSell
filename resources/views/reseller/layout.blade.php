@@ -156,7 +156,7 @@
     <script src="{{ asset('js/coreui.js') }}"></script>
     @yield('scripts')
     <script>
-        Echo.channel(`reseller-{{ auth('reseller')->user()->id }}-notice-count`)
+        window.Echo.channel(`reseller-{{ auth('reseller')->user()->id }}-notice-count`)
             .listen('.reseller.notice.count', function (data) {
                 console.log(data);
                 $('.notice-count').text(data.notice_count);

@@ -23,8 +23,8 @@ class SettingController extends Controller
             // 'name' => 'required',
             // 'email' => 'required|email',
             'phone' => 'required',
-            'payment' => 'required|array',
-            'payment.*' => 'required|array',
+            'payment' => 'nullable|array',
+            'payment.*' => 'nullable|array',
         ];
         
         if($request->verified_at == 0) {
@@ -51,7 +51,9 @@ class SettingController extends Controller
         $data = $request->validate($rules);
         // dd($data);
         // dump($data);
-        $data['payment'] = $this->payment_filter($data['payment']);
+        if(isset($data['payment'])) {
+            $data['payment'] = $this->payment_filter($data['payment']);
+        }
 
         if($data['photo'] ?? null) {
             $data['documents']['photo'] = $this->uploadImage($data['photo'], [

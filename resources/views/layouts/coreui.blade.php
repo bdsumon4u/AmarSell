@@ -96,7 +96,7 @@
     <x-layouts.footer />
     <script src="{{ asset('js/coreui.js') }}"></script>
     <script>
-        Echo.channel('admin-notice-count')
+        window.Echo.channel('admin-notice-count')
             .listen('.admin.notice.count', function (data) {
                 console.log(data);
                 var now = $('.notice-count').first().text();
