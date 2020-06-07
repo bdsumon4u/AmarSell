@@ -43,7 +43,7 @@
                                 <th>Filename</th>
                                 <th>Mime</th>
                                 <th>Size</th>
-                                <!-- <th width="10">Action</th> -->
+                                <th width="10">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -158,7 +158,7 @@
             { data: 'filename', name: 'filename' },
             { data: 'mime', name: 'mime' },
             { data: 'size', name: 'size' },
-            // { data: 'action', name: 'action' },
+            { data: 'delete', name: 'delete' },
         ],
         order: [
             [1, 'desc']

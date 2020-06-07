@@ -71,7 +71,13 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        //
+        if($image->products->isEmpty()) {
+            if(unlink(public_path($image->path))) {
+                $image->delete();
+            }
+            return redirect()->back()->with('success', 'Image Has Deleted.');
+        }
+        return redirect()->back()->with('error', 'Error! The Image Is In Use.');
     }
 
     /**

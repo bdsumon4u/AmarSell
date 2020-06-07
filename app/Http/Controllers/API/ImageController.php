@@ -26,11 +26,15 @@ class ImageController extends Controller
                     ->addColumn('size', function($row) {
                         return bytesToHuman($row->size);
                     })
+                    ->addColumn('delete', function($row){
+                        $btn = '<a href="' . route('admin.images.show', $row->id) . '" class="select-item btn btn-danger btn-sm">Delete</a>';
+                        return $btn;
+                    })
                     ->addColumn('action', function($row){
                         $btn = '<a href="" class="select-item btn btn-light btn-sm">Select</a>';
                         return $btn;
                     })
-                    ->rawColumns(['preview', 'action'])
+                    ->rawColumns(['preview', 'delete', 'action'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;
@@ -52,8 +56,10 @@ class ImageController extends Controller
         $images = Image::whereIn('id', $data['IDs'])->get();
         foreach($images as $image) {
             // dump(storage_path($image->path));
-            if(unlink(public_path($image->path))) {
-                $image->delete();
+            if($image->products->isEmpty()) {
+                if(unlink(public_path($image->path))) {
+                    $image->delete();
+                }
             }
         }
 

@@ -31,10 +31,10 @@ class SettingSeeder extends Seeder
             [
                 'name' => 'logo',
                 'value' => json_encode([
-                    'white' => asset('images/defaults/white-logo.png'),
-                    'color' => asset('images/defaults/color-logo.png'),
-                    'footer' => asset('images/defaults/footer-logo.png'),
-                    'favicon' => asset('images/defaults/favicon.png'),
+                    'white' => 'images/defaults/white-logo.png',
+                    'color' => 'images/defaults/color-logo.png',
+                    'footer' => 'images/defaults/footer-logo.png',
+                    'favicon' => 'images/defaults/favicon.png',
                 ]),
             ],
             [

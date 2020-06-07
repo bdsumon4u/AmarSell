@@ -103,8 +103,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if($category->delete()) {
-            return redirect()->back()->with('success', 'Category Has Deleted.');
             cache(['categories.formatted' => Category::formatted()]);
+            return redirect()->route('admin.categories.index')->with('success', 'Category Has Deleted.');
         }
         return redirect()->back();
     }
