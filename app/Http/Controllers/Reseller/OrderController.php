@@ -56,6 +56,7 @@ class OrderController extends Controller
             'customer_address' => 'required|string',
             'shop' => 'required|integer',
             'delivery_method' => 'required|string',
+            'note' => 'nullable',
             'sell' => 'required|integer',
             'shipping' => 'required|integer',
             'advanced' => 'required|integer',

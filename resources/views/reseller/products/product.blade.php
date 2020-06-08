@@ -16,7 +16,9 @@
 @section('styles')
 <style>
     .price-box {
-        width: 240px;
+        min-width: 240px;
+        width: max-content;
+        padding-right: 10px;
         display: flex;
         align-items: center;
         border: 3px double #ddd;

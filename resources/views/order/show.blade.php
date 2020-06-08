@@ -123,6 +123,17 @@
                                     {!! $errors->first('customer_address', '<span class="error-message">:message</span>') !!}
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group {{ $errors->has('note') ? 'has-error': '' }}">
+                                    <label for="note">
+                                        Additional Note
+                                    </label>
+
+                                    <textarea name="note" class="form-control" id="note" rows="6" cols="30" readonly>{{ old('note', $order->data['note'] ?? '') }}</textarea>
+
+                                    {!! $errors->first('note', '<span class="error-message">:message</span>') !!}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row box-wrapper address clearfix">
