@@ -122,6 +122,24 @@
                     }
                 }
             }
+            
+            $(document).on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+                
+                var form = $(this).parents('form');
+                if (form.length) {
+                    $.ajax(form.attr('action'), {
+                        type: 'POST',
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}',
+                        },
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+                }
+            });
         });
     </script>
     @yield('scripts')
