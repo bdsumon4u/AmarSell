@@ -43,4 +43,9 @@ class ResellerController extends Controller
     {
         return view('admin.resellers.show', compact('reseller'));
     }
+    
+    public function destroy($id) {
+        Reseller::where(compact('id'))->delete();
+        return true;
+    }
 }
