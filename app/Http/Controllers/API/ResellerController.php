@@ -24,7 +24,12 @@ class ResellerController extends Controller
                         return '<span class="badge badge-' . ($row->verified_at ? 'success' : 'secondary') . '">' . ($row->verified_at ? 'Verified' : 'Non-Verified') . '</span>';
                     })
                     ->addColumn('action', function($row){
-                        return '<a href="' . route('admin.resellers.edit', $row->id) . '" class="select-item btn btn-light btn-sm">Edit</a>';
+                        return '<form action="'.route('admin.resellers.destroy', $row->id).'" method="post">
+                            <div class="btn-group btn-group-inline">
+                                <a class="btn btn-sm btn-primary" target="_blank" href="'.route('admin.resellers.edit', $row->id).'">Edit</a>
+                                <button class="btn btn-sm delete-btn btn-danger">Delete</button>
+                            </div>
+                        </form>';
                     })
                     ->rawColumns(['name', 'status', 'action'])
                     ->setRowAttr([
