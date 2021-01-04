@@ -40,6 +40,10 @@ class SidebarComposer
                         'route' => 'admin.products.index',
                     ],
                     [
+                        'name' => 'Trashed',
+                        'route' => 'admin.products.trashed',
+                    ],
+                    [
                         'name' => 'Create',
                         'route' => 'admin.products.create',
                     ],

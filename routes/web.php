@@ -68,18 +68,22 @@ Route::group(['prefix' => 'reseller', 'as' => 'reseller.'], function(){
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::resource('categories', 'CategoryController');
+    Route::get('/products/trashed', 'ProductController@trashed')->name('products.trashed');
     Route::resource('products', 'ProductController');
+    Route::post('/products/{product}/restore', 'ProductController@restore')->name('products.restore');
     Route::resource('images', 'ImageController');
     Route::view('orders', 'admin.orders.list')->name('order.index');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
+    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel'); #--#--#
 
     Route::get('/transactions/pay', 'TransactionController@pay')->name('transactions.pay');
     Route::get('/transactions/pay/{reseller}', 'TransactionController@payToReseller')->name('transactions.pay-to-reseller');
     Route::post('/transactions/pay/store', 'TransactionController@store')->name('transactions.pay.store');
     Route::view('/transactions/history', 'admin.transactions.index')->name('transactions.index');
     Route::view('/transactions/requests', 'admin.transactions.requests')->name('transactions.requests');
+    Route::get('/transactions/{transaction}', 'TransactionController@show')->name('transactions.show');
 
     Route::resource('images', 'ImageController');
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');
@@ -118,7 +122,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
     Route::post('/cart/add/{product}', 'CartController@add')->name('cart.add');
     Route::delete('/cart/remove/{product}', 'CartController@remove')->name('cart.remove');
     Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
-    
+
 });
 
 
@@ -136,8 +140,8 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
     Route::delete('order/{order}/delete', 'OrderController@destroy')->name('order.destroy');
     Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel'); #--#--#
-    
-    
+
+
     Route::view('/transactions/history', 'reseller.transactions.index')->name('transactions.index');
     Route::get('/transactions/request', 'TransactionController@request')->name('transactions.request');
     Route::post('/transactions/request', 'TransactionController@store')->name('transactions.store');

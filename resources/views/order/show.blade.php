@@ -155,7 +155,7 @@
                                         @foreach($order->data['products'] as $item)
                                         @php
                                             $quantity = 0;
-                                            $pw = $products->find($item['id'])->wholesale;
+                                            $pw = $products->findOrFail($item['id'])->wholesale;
                                             $iw = $item['wholesale']
                                         @endphp
                                         <tr>

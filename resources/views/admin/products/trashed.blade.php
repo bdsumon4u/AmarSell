@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card rounded-0 shadow-sm">
-            <div class="card-header py-2">All <strong>Products</strong></div>
+            <div class="card-header py-2">Trashed <strong>Products</strong></div>
             <div class="card-body p-2">
                 <div class="row justify-content-between">
                     <div class="col-md-5 offset-md-7">
@@ -26,14 +26,17 @@
                         </form>
                     </div>
                     @foreach($products as $product)
-                    <div class="col-md-3 col-lg-2 products">
+                    <div class="col-md-4 col-lg-3 products">
                         <div class="product-item">
                             <div class="card rounded-0 shadow-sm">
                                 <img class="card-img-top p-2" src="{{ $product->base_image }}" alt="Base Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
                                     <div class="d-flex justify-content-between">
-                                        <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-sm btn-primary">Details</a>
+                                        <form action="{{ route('admin.products.restore', $product) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                                        </form>
                                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
                                             @csrf
                                             @method('DELETE')

@@ -74,7 +74,7 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -102,7 +102,7 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -134,7 +134,7 @@ class OrderController extends Controller
         if($order->status == 'completed' || $order->status == 'returned') {
             return back()->with('error', 'Order Can\'t be Updated');
         }
-        
+
         tap($request->validate([
             'buy_price' => 'required',
             'payable' => 'required',
@@ -180,5 +180,20 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function cancel(Order $order)
+    {
+        if (in_array($order->status, ['completed', 'returned'])) {
+            return redirect()->back()->with('error', "Order Can\'t be Cancelled.");
+        }
+
+        foreach($order->data['products'] as $item) {
+            $product = Product::findOrFail($item['id']);
+            $product->stock = is_numeric($product->stock) ? $product->stock + $item['quantity'] : $product->stock;
+            $product->save();
+        }
+        $order->delete();
+        return redirect()->back()->with('success', 'Order Cancelled');
     }
 }
