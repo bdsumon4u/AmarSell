@@ -1,9 +1,5 @@
 @extends('layouts.ready')
 
-@section('styles')
-@livewireStyles
-@endsection
-
 @section('content')
 <div class="row">
     <div class="col-sm-12">
@@ -13,20 +9,20 @@
                 <form action="{{ route('admin.pages.update', $page->slug) }}" method="post">
                     @csrf
                     @method('PATCH')
-                    @livewire('slugify', [
-                        'src' => [
-                            'label' => 'Page Title',
-                            'name' => 'title',
-                            'id' => 'title',
-                            'default' => $page->title,
-                        ],
-                        'emt' => [
-                            'label' => 'SLUG',
-                            'name' => 'slug',
-                            'id' => 'slug',
-                            'default' => $page->slug,
-                        ]
-                    ])
+                    <div class="form-group">
+                        <label for="title">Page Title</label><span class="text-danger">*</span>
+                        <input type="text" name="title" value="{{ old('title', $page->title) }}" id="title" data-target="#slug" class="form-control @error('title') is-invalid @enderror">
+                        @error('title')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="slug">Slug</label><span class="text-danger">*</span>
+                        <input type="text" name="slug" value="{{ old('slug', $page->slug) }}" id="slug" class="form-control @error('slug') is-invalid @enderror">
+                        @error('slug')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -50,5 +46,11 @@
 @endsection
 
 @section('scripts')
-@livewireScripts
+<script>
+$(document).ready(function () {
+    $('[name="title"]').keyup(function () {
+        $($(this).data('target')).val(slugify($(this).val()));
+    });
+});
+</script>
 @endsection

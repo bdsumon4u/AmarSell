@@ -19,15 +19,6 @@
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
-            <a class="nav-link" href="{{ route('admin.notifications.index') }}">
-                <i class="icon-bell"></i>
-                @php $unreadCount = $admin->unreadNotifications->count() @endphp
-                @if($unreadCount)
-                <span class="badge badge-pill badge-danger notice-count">{{ $unreadCount }}</span>
-                @endif
-            </a>
-        </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                 aria-expanded="false">
@@ -37,12 +28,6 @@
                 <div class="dropdown-header text-center">
                     <strong>{{ $admin->name }}</strong>
                 </div>
-                <a class="dropdown-item" href="{{ route('admin.notifications.index') }}">
-                    <i class="fa fa-bell-o"></i> Notifications
-                    @if($unreadCount)
-                    <span class="badge badge-danger notice-count">{{ $unreadCount }}</span>
-                    @endif
-                </a>
                 <a class="dropdown-item" href="{{ route('admin.settings.edit') }}">
                     <i class="fa fa-wrench"></i> Settings</a>
                 <!-- <a class="dropdown-item" href="{{ route('admin.transactions.requests') }}">

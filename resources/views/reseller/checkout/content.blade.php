@@ -14,7 +14,7 @@
                             <div class="personal-information clearfix">
                                 <h5>Customer Info</h5>
 
-                            <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('customer_name') ? 'has-error': '' }}">
                                         <label for="customer-name">
                                             Name<span>*</span>
@@ -23,18 +23,6 @@
                                         <input type="text" name="customer_name" class="form-control" id="customer-name" value="{{ old('customer_name') }}">
 
                                         {!! $errors->first('customer_name', '<span class="error-message">:message</span>') !!}
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('customer_email') ? 'has-error': '' }}">
-                                        <label for="customer-email">
-                                            Email
-                                        </label>
-
-                                        <input type="text" name="customer_email" class="form-control" id="customer-email" value="{{ old('customer_email') }}">
-
-                                        {!! $errors->first('customer_email', '<span class="error-message">:message</span>') !!}
                                     </div>
                                 </div>
 

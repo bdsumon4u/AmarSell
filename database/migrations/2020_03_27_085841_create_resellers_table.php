@@ -16,7 +16,7 @@ class CreateResellersTable extends Migration
         Schema::create('resellers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email', 80)->unique();
             $table->string('phone')->unique();
             $table->text('payment')->nullable();
             $table->text('documents')->nullable();

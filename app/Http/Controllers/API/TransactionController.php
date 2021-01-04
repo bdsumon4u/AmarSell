@@ -28,8 +28,11 @@ class TransactionController extends Controller
                     ->addColumn('empty', function($row){
                         return '';
                     })
+                    ->addColumn('id', function ($row) {
+                        return '<a href="' .  route(auth('reseller')->check() ? 'reseller.transactions.show' : 'admin.transactions.show', $row->id ?? 0) . '">'.$row->id.'</a>';
+                    })
                     ->addColumn('reseller', function($row){
-                        return '<a href="' .  route('reseller.profile.show', $row->reseller->id ?? 0) . '">
+                        return '<a href="' .  route(auth('reseller')->check() ? 'reseller.profile.show' : 'admin.resellers.show', $row->reseller->id ?? 0) . '">
                             <strong>Name:</strong>' . ($row->reseller->name ?? '') . '
                             <br>
                             <strong>Phone:</strong>' . ($row->reseller->phone ?? '') . '
@@ -62,7 +65,7 @@ class TransactionController extends Controller
                             'account_number' => $row->account_number,
                         ]) . '">Pay</a>';
                     })
-                    ->rawColumns(['reseller', 'way', 'pay'])
+                    ->rawColumns(['id', 'reseller', 'way', 'pay'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;

@@ -27,7 +27,7 @@ class ResellerController extends Controller
                         return '<form action="'.route('admin.resellers.destroy', $row->id).'" method="post">
                             <div class="btn-group btn-group-inline">
                                 <a class="btn btn-sm btn-primary" target="_blank" href="'.route('admin.resellers.edit', $row->id).'">Edit</a>
-                                <button class="btn btn-sm delete-btn btn-danger">Delete</button>
+                                <button class="btn btn-sm btn-danger">Delete</button>
                             </div>
                         </form>';
                     })

@@ -67,7 +67,31 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        
+        $fOfCurrMonth = $transaction->created_at->firstOfMonth();
+        $mOfCurrMonth = $fOfCurrMonth->copy()->addDays(14);
+
+        $fOfPrevMonth = $transaction->created_at->subMonth()->firstOfMonth();
+        $mOfPrevMonth = $fOfPrevMonth->copy()->addDays(14);
+        $lOfPrevMonth = $transaction->created_at->subMonth()->lastOfMonth();
+
+        $this->timezone = $transaction->created_at->day >= 1 && $transaction->created_at->day <= 15 ? [
+            $mOfPrevMonth->addDay()->toDateTimeString(), $lOfPrevMonth->endOfDay()->toDateTimeString()
+        ] : [
+            $fOfCurrMonth->toDateTimeString(), $mOfCurrMonth->endOfDay()->toDateTimeString()
+        ];
+
+
+        $query = $transaction->reseller->orders()->whereIn('status', ['completed', 'returned']);
+        $orders = $query->where(function ($query) {
+            return $query->whereBetween('data->completed_at', $this->timezone)
+            ->orWhereBetween('data->returned_at', $this->timezone);
+        })->get();
+        return view('reseller.transactions.show', [
+            'data' => $transaction->toArray(),
+            'timezone' => $this->timezone,
+            'orders' => $orders,
+        ]);
     }
 
     /**

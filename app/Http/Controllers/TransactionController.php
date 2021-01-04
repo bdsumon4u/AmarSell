@@ -160,7 +160,7 @@ class TransactionController extends Controller
         $query = $transaction->reseller->orders()->whereIn('status', ['completed', 'returned']);
         $orders = $query->where(function ($query) {
             return $query->whereBetween('data->completed_at', $this->timezone)
-                ->orWhereBetween('data->returned_at', $this->timezone);
+            ->orWhereBetween('data->returned_at', $this->timezone);
         })->get();
         return view('admin.transactions.show', [
             'data' => $transaction->toArray(),

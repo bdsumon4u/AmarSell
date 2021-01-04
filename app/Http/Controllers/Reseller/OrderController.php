@@ -60,9 +60,13 @@ class OrderController extends Controller
             'sell' => 'required|integer',
             'shipping' => 'required|integer',
             'advanced' => 'required|integer',
+        ], [
+            'sell.required' => 'The :key field must be at least 0.',
+            'shipping.required' => 'The :key field must be at least 0.',
+            'advanced.required' => 'The :key field must be at least 0.',
         ]);
         $data['payable'] = $data['sell'] + $data['shipping'] - $data['advanced'];
-        
+
         $cart = CartFacade::session($reseller->id);
         $data['price'] = $cart->getTotal();
         $products = $cart->getContent()
@@ -91,7 +95,7 @@ class OrderController extends Controller
                     $product->stock = is_numeric($product->stock) ? ($product->stock >= $item->quantity ? $product->stock - $item->quantity : 0) : $product->stock;
                     return $product->save();
                 });
-                
+
             $user_id = auth('reseller')->user()->id;
             CartFacade::session($user_id)->clear();
             event(new NewOrderRecieved($order, $reseller));
@@ -124,13 +128,13 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;
         }
         // if($order->status == 'completed' | $order->status == 'returned') {
-            $products = Product::whereIn('id', array_keys($order->data['products']))->get();
+            $products = Product::withTrashed()->whereIn('id', array_keys($order->data['products']))->get();
             $cp = $order->current_price();
             return view('reseller.orders.show', compact('order', 'products', 'cp', 'variant'));
         // }
@@ -155,7 +159,7 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;

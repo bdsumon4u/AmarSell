@@ -126,6 +126,16 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         return $this->orders->where('status', '!=', 'pending');
     }
 
+    public function getProcessingOrdersAttribute()
+    {
+        return $this->orders->where('status', 'processing');
+    }
+
+    public function getShippingOrdersAttribute()
+    {
+        return $this->orders->where('status', 'shipping');
+    }
+
     public function getCompletedOrdersAttribute()
     {
         return $this->orders->where('status', 'completed');
@@ -146,9 +156,24 @@ class Reseller extends Authenticatable implements MustVerifyEmail
         return $this->pending_orders->sum(function($order){ return $order->data['sell']; });
     }
     
+    public function getProcessingSellAttribute()
+    {
+        return $this->processing_orders->sum(function($order){ return $order->data['sell']; });
+    }
+    
+    public function getShippingSellAttribute()
+    {
+        return $this->shipping_orders->sum(function($order){ return $order->data['sell']; });
+    }
+    
     public function getCompletedSellAttribute()
     {
         return $this->completed_orders->sum(function($order){ return $order->data['sell']; });
+    }
+    
+    public function getReturnedSellAttribute()
+    {
+        return $this->returned_orders->sum(function($order){ return $order->data['sell']; });
     }
 
     /**

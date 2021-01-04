@@ -60,19 +60,12 @@
                                     <h4>{{ $footer_menu->title ?? '' }}</h4>
                                 </div>
 
-                                @menu(optional(\CodexShaper\Menu\Models\Menu::find(optional($footer_menu)->id))->slug)
-                                <!-- <ul class="list-inline">
-                                    <li><a href="http://fleetcart.envaysoft.com/en/products?category=laptops"
-                                            target="_self">Laptops</a></li>
-                                    <li><a href="http://fleetcart.envaysoft.com/en/products?category=mobiles"
-                                            target="_self">Mobiles</a></li>
-                                    <li><a href="http://fleetcart.envaysoft.com/en/products?category=desktops"
-                                            target="_self">Desktops</a></li>
-                                    <li><a href="http://localhost/en/fleetcart11/en/products?category=t-shirts"
-                                            target="_self">T-shirts</a></li>
-                                    <li><a href="http://fleetcart.envaysoft.com/en/products?category=backpacks"
-                                            target="_self">Backpacks</a></li>
-                                </ul> -->
+                                <ul class="list-inline">
+                                    @foreach(menuItems($footer_menu->id ?? null) as $item)
+                                    <li><a href="{{ url($item->url) }}"
+                                            target="_self">{{ $item->title }}</a></li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>

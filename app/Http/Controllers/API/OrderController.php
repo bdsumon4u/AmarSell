@@ -6,8 +6,6 @@ use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reseller;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class OrderController extends Controller
@@ -31,7 +29,7 @@ class OrderController extends Controller
                         return '';
                     })
                     ->addColumn('reseller', function($row){
-                        return '<a href="' .  route('reseller.profile.show', $row->reseller->id) . '">
+                        return '<a href="' .  route('admin.resellers.show', $row->reseller->id) . '">
                             <strong>Name:</strong>' . $row->reseller->name . '
                             <br>
                             <strong>Phone:</strong>' . $row->reseller->phone . '
@@ -44,15 +42,20 @@ class OrderController extends Controller
                     })
                     ->addColumn('price', function($row){
                         $ret = "
-                        <strong>Buy:</strong> " . theMoney($row->data['price']) . "
+                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
                         <br>";
                         if($row->status == 'pending') {
                             $current_price = $row->current_price();
                             if($row->data['price'] != $current_price) {
-                                $ret .= "<strong>Current:</strong> " . theMoney($current_price) . "
+                                $ret .= "<strong style=\"white-space: nowrap;\">Current:</strong> " . theMoney($current_price) . "
                                 <br>";
                             }
+                        } else if ($row->data['price'] != $row->data['buy_price']) {
+                            $ret .= "<del style=\"white-space: nowrap;\"><strong>Order:</strong> " . theMoney($row->data['price']) . "</del>
+                            <br>";
                         }
+                        $ret .= "<strong style=\"white-space: nowrap;\">Sell:</strong> " . theMoney($row->data['sell']) . "
+                            <br>";
                         return $ret;
                     })
                     ->addColumn('status', function($row){
@@ -80,17 +83,20 @@ class OrderController extends Controller
                         return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
                     ->addColumn('ordered_at', function($row){
-                        return $row->created_at->format('F j, Y');
+                        return '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>';
                     })
                     ->addColumn('completed_returned_at', function($row){
                         $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
-                        return isset($row->data[$col]) ? date('F j, Y', strtotime($row->data[$col])) : 'Not Yet';
+                        return isset($row->data[$col]) ? date('d-M-Y', strtotime($row->data[$col])) : 'N/A';
                     })
                     ->addColumn('action', function($row){
-                        $btn = '<a class="btn btn-sm btn-block btn-primary" target="popup" href="' . route('admin.order.show', $row->id) . '" onclick="window.open(\'' . route('admin.order.show', $row->id) . '\', \'popup\', \'width=`100%`, height=`100%`\')">View</a>';
+                        $btn = '<div class="btn-group btn-group-sm d-flex justify-content-between">
+                            <a class="btn btn-sm btn-primary" target="_blank" href="' . route('admin.order.show', $row->id) . '" noclick="window.open(\'' . route('reseller.order.show', $row->id) . '\', \'popup\', \'width=`100%`, height=`100%`\')">View</a>';
+                        in_array($row->status, ['completed', 'returned']) || $btn .= '<a class="btn btn-sm btn-danger" href="' . route('admin.order.cancel', $row->id) . '" onclick="return confirm(\'Are You Sure\');">Cancel</a>'; 
+                        $btn .= '</div>';
                         return $btn;
                     })
-                    ->rawColumns(['reseller', 'customer', 'status', 'price', 'action'])
+                    ->rawColumns(['reseller', 'customer', 'status', 'price', 'ordered_at', 'action'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;
@@ -126,15 +132,20 @@ class OrderController extends Controller
                     })
                     ->addColumn('price', function($row){
                         $ret = "
-                        <strong>Buy:</strong> " . theMoney($row->data['price']) . "
+                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
                         <br>";
                         if($row->status == 'pending') {
                             $current_price = $row->current_price();
                             if($row->data['price'] != $current_price) {
-                                $ret .= "<strong>Current:</strong> " . theMoney($current_price) . "
+                                $ret .= "<strong style=\"white-space: nowrap;\">Current:</strong> " . theMoney($current_price) . "
                                 <br>";
                             }
+                        } else if ($row->data['price'] != $row->data['buy_price']) {
+                            $ret .= "<del style=\"white-space: nowrap;\"><strong>Order:</strong> " . theMoney($row->data['price']) . "</del>
+                            <br>";
                         }
+                        $ret .= "<strong style=\"white-space: nowrap;\">Sell:</strong> " . theMoney($row->data['sell']) . "
+                            <br>";
                         return $ret;
                     })
                     ->addColumn('status', function($row){
@@ -162,21 +173,20 @@ class OrderController extends Controller
                         return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
                     ->addColumn('ordered_at', function($row){
-                        return $row->created_at->format('F j, Y');
+                        return '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>';
                     })
                     ->addColumn('completed_returned_at', function($row){
                         $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
-                        return isset($row->data[$col]) ? date('F j, Y', strtotime($row->data[$col])) : 'Not Yet';
+                        return isset($row->data[$col]) ? date('d-M-Y', strtotime($row->data[$col])) : 'N/A';
                     })
                     ->addColumn('action', function($row){
-                        if ($row->status == 'pending') {
-                            $btn = '<a class="btn btn-sm btn-danger" href="' . route('reseller.order.cancel', $row->id) . '">Cancel</a>';
-                        } else {
-                            $btn = '<a class="btn btn-sm btn-primary" target="popup" href="' . route('reseller.order.show', $row->id) . '" onclick="window.open(\'' . route('reseller.order.show', $row->id) . '\', \'popup\', \'width=`100%`, height=`100%`\')">View</a>';
-                        }
+                        $btn = '<div class="btn-group btn-group-sm d-flex justify-content-between">
+                            <a class="btn btn-sm btn-primary" target="_blank" href="' . route('reseller.order.show', $row->id) . '" noclick="window.open(\'' . route('reseller.order.show', $row->id) . '\', \'popup\', \'width=`100%`, height=`100%`\')">View</a>';
+                        $row->status == 'pending' && $btn .= '<a class="btn btn-sm btn-danger" href="' . route('reseller.order.cancel', $row->id) . '" onclick="return confirm(\'Are You Sure\');">Cancel</a>'; 
+                        $btn .= '</div>';
                         return $btn;
                     })
-                    ->rawColumns(['customer', 'status', 'price', 'action'])
+                    ->rawColumns(['customer', 'status', 'price', 'ordered_at', 'action'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;

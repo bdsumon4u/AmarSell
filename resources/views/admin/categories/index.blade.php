@@ -1,7 +1,6 @@
 @extends('layouts.ready')
 
 @section('styles')
-@livewireStyles
 <style>
     .nav-tabs .nav-item .nav-link {
         border-top-left-radius: 0;
@@ -84,18 +83,20 @@
                                             <p class="text-info">Create <strong>{{ $active ? 'Child' : 'Root' }}</strong> Category</p>
                                             <form action="{{ route('admin.categories.store') }}" method="post">
                                                 @csrf
-                                                @livewire('slugify', [
-                                                    'src' => [
-                                                        'label' => 'Name',
-                                                        'name' => 'name',
-                                                        'id' => 'create-name'
-                                                    ],
-                                                    'emt' => [
-                                                        'label' => 'SLUG',
-                                                        'name' => 'slug',
-                                                        'id' => 'create-slug'
-                                                    ]
-                                                ])
+                                                <div class="form-group">
+                                                    <label for="create-name">Name</label>
+                                                    <input type="text" name="name" value="{{ old('name') }}" id="create-name" data-target="#create-slug" class="form-control @error('name') is-invalid @enderror">
+                                                    @error('name')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="create-slug">Slug</label>
+                                                    <input type="text" name="slug" value="{{ old('slug') }}" id="create-slug" class="form-control @error('slug') is-invalid @enderror">
+                                                    @error('slug')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="create-parent-id">Select Parent</label>
                                                     <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="create-parent-id" :selected="request('active_id', 0)" />
@@ -109,20 +110,20 @@
                                             <form action="{{ route('admin.categories.update', request('active_id', 0)) }}" method="post">
                                                 @csrf
                                                 @method('PATCH')
-                                                @livewire('slugify', [
-                                                    'src' => [
-                                                        'label' => 'Name',
-                                                        'name' => 'name',
-                                                        'id' => 'edit-name',
-                                                        'default' => old('name', $active->name ?? '')
-                                                    ],
-                                                    'emt' => [
-                                                        'label' => 'SLUG',
-                                                        'name' => 'slug',
-                                                        'id' => 'edit-slug',
-                                                        'default' => old('slug', $active->slug ?? '')
-                                                    ]
-                                                ])
+                                                <div class="form-group">
+                                                    <label for="edit-name">Name</label><span class="text-danger">*</span>
+                                                    <input type="text" name="name" value="{{ old('name', $active->name) }}" id="edit-name" data-target="#edit-slug" class="form-control @error('name') is-invalid @enderror">
+                                                    @error('name')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edit-slug">Slug</label><span class="text-danger">*</span>
+                                                    <input type="text" name="slug" value="{{ old('slug', $active->slug) }}" id="edit-slug" class="form-control @error('slug') is-invalid @enderror">
+                                                    @error('slug')
+                                                        <span class="invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="edit-parent-id">Select Parent</label>
                                                     <x-category-dropdown :categories="$categories" name="parent_id" placeholder="Select parent" id="edit-parent-id" :selected="$active->parent->id ?? 0" :disabled="$active->id" />
@@ -144,5 +145,11 @@
 @endsection
 
 @section('scripts')
-@livewireScripts
+<script>
+    $(document).ready(function () {
+        $('[name="name"]').keyup(function () {
+            $($(this).data('target')).val(slugify($(this).val()));
+        });
+    });
+</script>
 @endsection

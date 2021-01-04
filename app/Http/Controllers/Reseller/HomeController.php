@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Reseller;
 use App\Order;
 use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Services\EarningService;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController extends Controller

@@ -8,6 +8,7 @@ use App\User;
 use App\Order;
 use App\Product;
 use App\Reseller;
+use App\Services\EarningService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('install/pre-installation', 'InstallController@preInstallation');
 Route::get('install/configuration', 'InstallController@getConfiguration');
 Route::post('install/configuration', 'InstallController@postConfiguration');
@@ -32,6 +34,7 @@ Route::get('/dev', function () {
     Artisan::call('config:cache');
     Artisan::call('view:cache');
     Artisan::call('cache:clear');
+    // Artisan::call('storage:link');
     dd('DONE');
 });
 
@@ -49,7 +52,7 @@ Route::get('/', function (Request $request) {
 
 Route::get('getpass', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('getpass', 'Auth\LoginController@login')->name('login');
-Auth::routes(['register' => true]);
+Auth::routes(['register' => false]);
 Route::match(['get', 'post'], '/login', function(){
     return abort('404');
 });
@@ -99,6 +102,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::patch('/pages/{page:slug}/edit', 'PageController@update')->name('pages.update');
     Route::delete('/pages/{page:slug}/delete', 'PageController@destroy')->name('pages.destroy');
 
+    Route::resource('hmenus', 'MenuController');
+    Route::post('menuItems/{menu}/sort', 'MenuItemController@sort')->name('menuItems.sort');
+    Route::resource('menuItems', 'MenuItemController');
+
     Route::get('/settings', 'SettingController@edit')->name('settings.edit');
     Route::patch('/settings', 'SettingController@update')->name('settings.update');
 
@@ -126,6 +133,7 @@ Route::group(['middleware' => 'auth:reseller'], function(){
 });
 
 
+Route::get('/earnings', 'EarningController')->name('earnings');
 
 
 Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefix' => 'reseller', 'as' => 'reseller.'], function() {
@@ -145,10 +153,15 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::view('/transactions/history', 'reseller.transactions.index')->name('transactions.index');
     Route::get('/transactions/request', 'TransactionController@request')->name('transactions.request');
     Route::post('/transactions/request', 'TransactionController@store')->name('transactions.store');
+    Route::get('/transactions/{transaction}', 'TransactionController@show')->name('transactions.show');
 
     Route::get('/setting', 'SettingController@edit')->name('setting.edit');
     Route::patch('/setting', 'SettingController@update')->name('setting.update');
-
+    Route::view('/setting/profile', 'reseller.setting.profile');
+    Route::patch('/setting/profile', 'SettingController@profile')->name('setting.profile');
+    Route::view('/setting/payment', 'reseller.setting.payment');
+    Route::patch('/setting/payment', 'SettingController@payment')->name('setting.payment');
+    Route::view('/setting/password', 'reseller.setting.password');
     Route::patch('/password', 'PasswordController')->name('password.update');
 
     Route::get('/profile/{reseller}', 'ProfileController')->name('profile.show');
@@ -157,7 +170,16 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::delete('/notifications/destroy/{notification?}', 'NotificationController@destroy')->name('notifications.destroy');
 });
 
-MenuBuilder::routes();
+
+Route::get('derning', function ()
+{
+    foreach(Reseller::whereNotNull('verified_at')->get() as $reseller) {
+        dump($reseller->created_at->format('d-M-Y'));
+        $service = new EarningService($reseller);
+        dump($service->periods);
+    }
+});
+
 
 Route::get('/clear', function () {
     Artisan::call('view:clear');

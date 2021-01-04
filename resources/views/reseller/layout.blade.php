@@ -78,20 +78,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav navbar-nav d-md-down-none">
-            <li class="nav-item px-3">
-                <a class="nav-link" href="{{ route('reseller.setting.edit') }}">Settings</a>
-            </li>
+            
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="{{ route('reseller.notifications.index') }}">
-                    <i class="icon-bell"></i>
-                    @php $unreadCount = $reseller->unreadNotifications->count() @endphp
-                    @if($unreadCount)
-                    <span class="badge badge-pill badge-danger notice-count">{{ $unreadCount }}</span>
-                    @endif
-                </a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                     aria-expanded="false">
@@ -101,20 +90,8 @@
                     <div class="dropdown-header text-center">
                         <strong>{{ $reseller->name }}</strong>
                     </div>
-                    <a class="dropdown-item" href="{{ route('reseller.notifications.index') }}">
-                        <i class="fa fa-bell-o"></i> Notifications
-                        @if($unreadCount)
-                        <span class="badge badge-danger notice-count">{{ $unreadCount }}</span>
-                        @endif
-                    </a>
                     <a class="dropdown-item" href="{{ route('reseller.profile.show', auth('reseller')->user()->id) }}">
                         <i class="fa fa-user"></i> Profile</a>
-                    <a class="dropdown-item" href="{{ route('reseller.setting.edit') }}">
-                        <i class="fa fa-wrench"></i> Settings</a>
-                    <a class="dropdown-item" href="{{ route('reseller.transactions.index') }}">
-                        <i class="fa fa-usd"></i> Payments
-                        <span class="badge badge-secondary">{{ $reseller->transactions->where('status', 'paid')->count() }}</span>
-                    </a>
                     <a class="dropdown-item" href="{{ route('reseller.logout') }}"
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
@@ -156,11 +133,11 @@
     <script src="{{ asset('js/coreui.js') }}"></script>
     @yield('scripts')
     <script>
-        window.Echo.channel(`reseller-{{ auth('reseller')->user()->id }}-notice-count`)
-            .listen('.reseller.notice.count', function (data) {
-                console.log(data);
-                $('.notice-count').text(data.notice_count);
-            });
+        // window.Echo.channel(`reseller-{{ auth('reseller')->user()->id }}-notice-count`)
+        //     .listen('.reseller.notice.count', function (data) {
+        //         console.log(data);
+        //         $('.notice-count').text(data.notice_count);
+        //     });
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
         });

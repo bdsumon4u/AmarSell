@@ -60,7 +60,7 @@
                     <div class="col-sm-6 col-md-4 col-xl-3">
                         <ul class="nav nav-tabs list-group" role="tablist">
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('name') || $errors->has('email') || $errors->has('phone') || $errors->has('photo')) text-danger @endif active" data-toggle="tab" href="#item-1">General</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('photo') || $errors->has('nid.front') || $errors->has('nid.back')) text-danger @endif" data-toggle="tab" href="#item-2">Documents</a></li>
+                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('nid.front') || $errors->has('nid.back')) text-danger @endif" data-toggle="tab" href="#item-2">Documents</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('payment_method') || $errors->has('payment_number')) text-danger @endif" data-toggle="tab" href="#item-3">Transaction</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('password') || $errors->has('old_password') || $errors->has('password_confirmation')) text-danger @endif" data-toggle="tab" href="#item-4">Password</a></li>
                         </ul>
@@ -176,29 +176,115 @@
                                                 <div class="col-sm-12">
                                                     <div class="form-group" id="ways">
                                                         <label for="payment">Payment Methods</label>
-                                                        <a href="" id="add-way" class="btn btn-primary btn-sm float-right mb-1"><strong>Add New</strong></a>
-                                                        @foreach($user->payment ?? [] as $payment)
-                                                        <div class="input-group" data-id="{{ $loop->index }}">
-                                                            <select name="payment[{{ $loop->index }}][method]" class="form-control payment_method @error('payment.'.$loop->index.'.method') is-invalid @enderror">
-                                                                <option value="">Select Method*</option>
-                                                                @php $old_method = old('payment.'.$loop->index.'.method', $payment->method ?? '') @endphp
-                                                                @foreach(config('transaction.ways') as $way)
-                                                                    <option value="{{ $way }}" @if($way == $old_method) selected @endif>{{ $way }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            @if(($payment->method ?? '') == 'Bank')
-                                                                <input type="text" name="payment[{{ $loop->index }}][bank_name]" placeholder="Bank Name*" value="{{ old('payment.'.$loop->index.'.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
-                                                                <input type="text" name="payment[{{ $loop->index }}][account_name]" placeholder="Account Name*" value="{{ old('payment.'.$loop->index.'.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
-                                                                <input type="text" name="payment[{{ $loop->index }}][branch]" placeholder="Branch" value="{{ old('payment.'.$loop->index.'.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
-                                                                <input type="text" name="payment[{{ $loop->index }}][routing_no]" placeholder="Routing No*" value="{{ old('payment.'.$loop->index.'.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
+                                                        <!-- <a href="" id="add-way" class="btn btn-primary btn-sm float-right mb-1"><strong>Add New</strong></a> -->
+                                                        @forelse($user->payment ?? [] as $payment)
+                                                        <div class="row border pt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="">Method</label>
+                                                                    <select name="payment[{{ $loop->index }}][method]" class="form-control payment_method @error('payment.'.$loop->index.'.method') is-invalid @enderror">
+                                                                        <option value="">Select Method*</option>
+                                                                        @php $old_method = old('payment.'.$loop->index.'.method', $payment->method ?? '') @endphp
+                                                                        @foreach(config('transaction.ways') as $way)
+                                                                            <option value="{{ $way }}" @if($way == $old_method) selected @endif>{{ $way }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 {{ $payment->method == 'Bank' ? '' : 'd-none' }}" method="bank">
+                                                                <div class="form-group">
+                                                                    <label for="">Bank Name</label>
+                                                                    <input type="text" title="Bank Name" name="payment[{{ $loop->index }}][bank_name]" placeholder="Bank Name*" value="{{ old('payment.'.$loop->index.'.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 {{ $payment->method == 'Bank' ? '' : 'd-none' }}" method="bank">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Name</label>
+                                                                    <input type="text" title="Account Name" name="payment[{{ $loop->index }}][account_name]" placeholder="Account Name*" value="{{ old('payment.'.$loop->index.'.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2 {{ $payment->method == 'Bank' ? '' : 'd-none' }}" method="bank">
+                                                                <div class="form-group">
+                                                                    <label for="">Branch</label>
+                                                                    <input type="text" title="Branch" name="payment[{{ $loop->index }}][branch]" placeholder="Branch" value="{{ old('payment.'.$loop->index.'.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2 {{ $payment->method == 'Bank' ? '' : 'd-none' }}" method="bank">
+                                                                <div class="form-group">
+                                                                    <label for="">Routing No</label>
+                                                                    <input type="text" title="Routing No" name="payment[{{ $loop->index }}][routing_no]" placeholder="Routing No*" value="{{ old('payment.'.$loop->index.'.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Type</label>
+                                                                    <input type="text" title="Account Type" name="payment[{{ $loop->index }}][type]" placeholder="Account Type*" value="{{ old('payment.'.$loop->index.'.type', $payment->type) }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Number</label>
+                                                                    <input type="text" title="Account Number" name="payment[{{ $loop->index }}][number]" placeholder="Account Number*" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            @if (count($reseller->payment ?? []) > 1)
+                                                            <div class="col-12">
+                                                                <button class="form-group btn btn-danger float-right remove-way">Remove</button>
+                                                            </div>
                                                             @endif
-                                                            <input type="text" name="payment[{{ $loop->index }}][type]" placeholder="Account Type*" value="{{ old('payment.'.$loop->index.'.type', $payment->type) }}" class="form-control @error('payment_number') is-invalid @enderror">
-                                                            <input type="text" name="payment[{{ $loop->index }}][number]" placeholder="Account Number*" value="{{ old('payment.'.$loop->index.'.number', $payment->number) }}" class="form-control @error('payment_number') is-invalid @enderror">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text bg-danger remove-way">&minus;</span>
+                                                        </div>
+                                                        @empty
+                                                        <div class="row border pt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="">Method</label>
+                                                                    <select name="payment[0][method]" class="form-control payment_method @error('payment.0.method') is-invalid @enderror">
+                                                                        <option value="">Select Method*</option>
+                                                                        @php $old_method = old('payment.0.method') @endphp
+                                                                        @foreach(config('transaction.ways') as $way)
+                                                                            <option value="{{ $way }}" @if($way == $old_method) selected @endif>{{ $way }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" method="bank" style="display: none;">
+                                                                <div class="form-group">
+                                                                    <label for="">Bank Name</label>
+                                                                    <input type="text" title="Bank Name" name="payment[0][bank_name]" placeholder="Bank Name*" value="{{ old('payment.0.bank_name') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4" method="bank" style="display: none;">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Name</label>
+                                                                    <input type="text" title="Account Name" name="payment[0][account_name]" placeholder="Account Name*" value="{{ old('payment.0.account_name') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2" method="bank" style="display: none;">
+                                                                <div class="form-group">
+                                                                    <label for="">Branch</label>
+                                                                    <input type="text" title="Branch" name="payment[0][branch]" placeholder="Branch" value="{{ old('payment.0.branch') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2" method="bank" style="display: none;">
+                                                                <div class="form-group">
+                                                                    <label for="">Routing No</label>
+                                                                    <input type="text" title="Routing No" name="payment[0][routing_no]" placeholder="Routing No*" value="{{ old('payment.0.routing_no') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Type</label>
+                                                                    <input type="text" title="Account Type" name="payment[0][type]" placeholder="Account Type*" value="{{ old('payment.0.type') }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="">Account Number</label>
+                                                                    <input type="text" title="Account Number" name="payment[0][number]" placeholder="Account Number*" value="{{ old('payment.0.number') }}" class="form-control @error('payment_number') is-invalid @enderror">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        @endforeach
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
@@ -313,27 +399,16 @@
 
         $(document).on('click','.remove-way', function(e) {
             e.preventDefault();
-            $(this).parents('.input-group').fadeOut(300, function(){
+            $(this).closest('.row').fadeOut(300, function(){
                 $(this).remove();
             })
         });
 
         $(document).on('change', '.payment_method', function(){
-            // console.log('changed')
-            var id = $(this).parents('.input-group').data('id');
-            console.log(id)
             if($(this).val() == 'Bank') {
-                $(this).after(`
-                    <input type="text" name="payment[`+id+`][bank_name]" placeholder="Bank Name*" value="{{ old('payment.`+id+`.bank_name', $payment->bank_name ?? '') }}" class="bank_name form-control @error('payment_number') is-invalid @enderror">
-                    <input type="text" name="payment[`+id+`][account_name]" placeholder="Account Name*" value="{{ old('payment.`+id+`.account_name', $payment->account_name ?? '') }}" class="account_name form-control @error('payment_number') is-invalid @enderror">
-                    <input type="text" name="payment[`+id+`][branch]" placeholder="Branch" value="{{ old('payment.`+id+`.branch', $payment->branch ?? '') }}" class="branch form-control @error('payment_number') is-invalid @enderror">
-                    <input type="text" name="payment[`+id+`][routing_no]" placeholder="Routing No*" value="{{ old('payment.`+id+`.routing_no', $payment->routing_no ?? '') }}" class="routing_no form-control @error('payment_number') is-invalid @enderror">
-                `);
-                $(this).parent().find('.bank_name, .account_name, .branch, .routing_no').hide().fadeIn(300);
-            } else if($(this).parent().find('.bank_name, .account_name, .branch, .routing_no').length) {
-                $(this).parent().find('.bank_name, .account_name, .branch, .routing_no').fadeOut(300, function(){
-                    $(this).remove();
-                })
+                $('[method="Bank"]').removeClass('d-none');
+            } else {
+                $('[method="Bank"]').addClass('d-none');
             }
         })
     });

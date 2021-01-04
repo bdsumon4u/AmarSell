@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Image;
 use Illuminate\Http\Request;
 use App\Helpers\Traits\ImageHelper;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
@@ -57,7 +58,7 @@ class ImageController extends Controller
             'disk' => config('filesystems.default'),
             'filename' => $file->getClientOriginalName(),
             'path' => $path,
-            'extension' => $file->guessClientExtension() ?? '',
+            'extension' => $file->guessClientExtension(),
             'mime' => $file->getClientMimeType(),
             'size' => $file->getSize(),
         ]);
@@ -72,10 +73,14 @@ class ImageController extends Controller
     public function show(Image $image)
     {
         if($image->products->isEmpty()) {
-            if(unlink(public_path($image->path))) {
+            if (File::exists($path = public_path($image->path))) {
+                if(unlink($path)) {
+                    $image->delete();
+                }
+            } else {
                 $image->delete();
             }
-            return redirect()->back()->with('success', 'Image Has Deleted.');
+            return back()->with('success', 'Image Has Deleted.');
         }
         return redirect()->back()->with('error', 'Error! The Image Is In Use.');
     }

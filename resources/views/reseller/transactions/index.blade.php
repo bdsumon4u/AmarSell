@@ -24,7 +24,7 @@
                                     <th>ID</th>
                                     <th>Amount</th>
                                     <th>Date</th>
-                                    <th>Way</th>
+                                    <th>Via</th>
                                     <th>Account Number</th>
                                     <th>Transaction Number</th>
                                 </tr>

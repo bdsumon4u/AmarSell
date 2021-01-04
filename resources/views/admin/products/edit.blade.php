@@ -1,7 +1,6 @@
 @extends('layouts.ready')
 
 @section('styles')
-@livewireStyles
 <style>
     .nav-tabs {
         border: 2px solid #ddd;
@@ -77,7 +76,6 @@
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('wholesale') || $errors->has('retail')) text-danger @endif" data-toggle="tab" href="#item-2">Price</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link" data-toggle="tab" href="#item-3">Inventory</a></li>
                             <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('base_image') || $errors->has('additional_images') || $errors->has('additional_images.*')) text-danger @enderror" data-toggle="tab" href="#item-4">Images</a></li>
-                            <li class="nav-item rounded-0"><a class="nav-link @if($errors->has('meta_title') || $errors->has('meta_keywords') || $errors->has('meta_description')) text-danger @enderror" data-toggle="tab" href="#item-5">SEO</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 col-md-8 col-xl-9">
@@ -93,20 +91,20 @@
                                                     <h4><small class="border-bottom mb-1">General</small></h4>
                                                 </div>
                                             </div>
-                                            @livewire('slugify', [
-                                                'src' => [
-                                                    'label' => 'Product Name',
-                                                    'name' => 'name',
-                                                    'id' => 'name',
-                                                    'default' => old('name', $product->name),
-                                                ],
-                                                'emt' => [
-                                                    'label' => 'SLUG',
-                                                    'name' => 'slug',
-                                                    'id' => 'slug',
-                                                    'default' => old('slug', $product->slug),
-                                                ]
-                                            ])
+                                            <div class="form-group">
+                                                <label for="edit-name">Name</label><span class="text-danger">*</span>
+                                                <input type="text" name="name" value="{{ old('name', $product->name) }}" id="edit-name" data-target="#edit-slug" class="form-control @error('name') is-invalid @enderror">
+                                                @error('name')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit-slug">Slug</label><span class="text-danger">*</span>
+                                                <input type="text" name="slug" value="{{ old('slug', $product->slug) }}" id="edit-slug" class="form-control @error('slug') is-invalid @enderror">
+                                                @error('slug')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
@@ -201,7 +199,7 @@
                                                                 
                                                                 <img src="{{ $product->base_image }}" alt="Base Image" id="base_image-preview" class="img-thumbnail img-responsive" style="height: 150px; width: 150px; cursor: pointer;">
                                                                 
-                                                                <input type="hidden" name="base_image" value="{{ old('base_image', $product->baseImage()->id) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
+                                                                <input type="hidden" name="base_image" value="{{ old('base_image', $product->baseImage()->id ?? 0) }}" class="@error('base_image') is-invalid @enderror" id="base-image" class="form-control">
                                                                 @error('base_image')
                                                                     <span class="invalid-feedback">{{ $message }}</span>
                                                                 @enderror
@@ -230,47 +228,6 @@
                                                     </div>
                                                     <div class="form-group mb-0">
                                                     <button type="submit" class="btn btn-success">Update Product</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="item-5" role="tabpanel">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <h4><small class="border-bottom mb-1">SEO</small></h4>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="meta-title">Meta Title</label>
-                                                                <input type="text" name="meta_title" value="{{ old('meta_title', $product->meta_title) }}" id="meta-title" class="form-control @error('meta_title') is-invalid @enderror">
-                                                                @error('meta_title')
-                                                                <span class="invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="meta-keywords">Meta Keywords</label>
-                                                                <select name="meta_keywords[]" id="meta-keywords" class="form-control @error('meta_keywords') is-invalid @enderror" data-tags="true" data-placeholder="Select an option" data-allow-clear="true" multiple="true">
-                                                                    @foreach($product->meta_keywords as $keyword)
-                                                                    <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @error('meta_keywords')
-                                                                <span class="invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="meta-title">Meta Description</label>
-                                                                <textarea name="meta_description" rows="8" id="meta-description" class="form-control w-100 @error('meta_description') is-invalid @enderror">{{ old('meta_description', $product->meta_description) }}</textarea>
-                                                                @error('meta_description')
-                                                                <span class="invalid-feedback">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mb-0">
-                                                    <button type="submit" class="btn btn-success">Save Product</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -342,14 +299,20 @@
 @endsection
 
 @section('scripts')
-@livewireScripts
+<script>
+    $(document).ready(function () {
+        $('[name="name"]').keyup(function () {
+            $($(this).data('target')).val(slugify($(this).val()));
+        });
+    });
+</script>
 <script>
     $(document).ready(function(){
 
         $('#base_image-preview').click(function(){
             $(this).parent().find('[data-target="#select-images-modal"]').click();
         })
-        var ID = {{ $product->baseImage()->id }};
+        var ID = {{ $product->baseImage()->id ?? 0 }};
         var IDs = {!! json_encode($product->additional_images->pluck('id')->toArray()) !!};
         $('[data-target="#select-images-modal"]').click(function(){
             $(this).attr('opened', 'true');

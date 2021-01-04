@@ -1,14 +1,5 @@
 @extends('layouts.ready')
 
-@section('styles')
-<style>
-    table th,
-    table td {
-        /* vertical-align: middle !important; */
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="row">
     <div class="col-md-6">
@@ -67,7 +58,7 @@
                             <tbody>
                                 @foreach($transactions as $transaction)
                                 <tr data-row-id="{{ $transaction->id }}">
-                                    <td>{{ $transaction->id }}</td>
+                                    <td><a href="{{ route('admin.transactions.show', $transaction->id) }}">{{ $transaction->id }}</a></td>
                                     <td>
                                         <a href="{{ route('admin.resellers.show', $transaction->reseller->id) }}">
                                             <strong>Name:</strong> {{ $transaction->reseller->name }}
@@ -107,7 +98,6 @@
                     <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -119,9 +109,10 @@
                         <tbody>
                             @foreach($resellers as $reseller)
                             <tr>
-                                <td></td>
                                 <td>{{ $reseller->id }}</td>
-                                <td>{{ $reseller->name }}</td>
+                                <td>
+                                    <a href="{{ route('admin.resellers.show', $reseller->id) }}">{{ $reseller->name }}</a>
+                                </td>
                                 <td>{{ $reseller->email }}</td>
                                 <td>{{ $reseller->phone }}</td>
                                 <td><span class="badge badge-{{ $reseller->verified_at ? 'success' : 'secondary' }}">{{ $reseller->verified_at ? 'Verified' : 'Non-Verified' }}</span></td>

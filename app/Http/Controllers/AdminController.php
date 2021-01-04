@@ -42,6 +42,7 @@ class AdminController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
+        $data['password'] = bcrypt($data['password']);
 
         User::create($data);
         return redirect()->back()->with('success', 'Admin Has Created.');
