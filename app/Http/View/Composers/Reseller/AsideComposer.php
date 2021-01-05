@@ -15,6 +15,11 @@ class AsideComposer
             'id' => 'account',
             'view' => 'reseller.aside.account',
         ],
+        [
+            'title' => 'Earnings',
+            'id' => 'earnings',
+            'view' => 'reseller.aside.earnings',
+        ],
     ];
 
     /**

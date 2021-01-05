@@ -4,14 +4,14 @@
     <div class="card-body">
         <form action="{{ route($is_reseller ? 'reseller.transactions.store' : 'admin.transactions.pay.store') }}" method="post">
             @csrf
-            <h4 class="text-center">Balance: {{ $balance }}</h4>
+            <!-- <h4 class="text-center balance">Balance: {{ $balance }}</h4> -->
             <input type="hidden" name="reseller_id" value="{{ $reseller->id }}">
             <input type="hidden" name="transaction_id" value="{{ request('transaction_id', 0) }}">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="amount">Amount</label>
-                        <input type="text" name="amount" wire:model.debounce.250ms="amount" wire:keyup="calc" value="{{ old('amount', request('amount', $amount)) }}" class="form-control @error('amount') is-invalid @enderror" readonly @if(!empty(request('method'))) readonly @endif>
+                        <input type="text" name="amount" data-balance="{{ $reseller->balance }}" value="{{ old('amount', request('amount', $amount)) }}" class="form-control @error('amount') is-invalid @enderror" @if(!empty(request('method'))) readonly @endif>
                         @error('amount')
                         <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

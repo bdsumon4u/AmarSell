@@ -10,14 +10,6 @@
     @show
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @section('meta')
-    <meta name="title" content="{{ $company->tagline }}">
-    <meta name="keywords" content="">
-    <meta name="description" content="{{ $company->tagline }}">
-    <meta property="og:title" content="{{ $company->tagline }}">
-    <meta property="og:description" content="{{ $company->tagline }}">
-    <meta property="og:image" content="">
-    @show
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
     <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->

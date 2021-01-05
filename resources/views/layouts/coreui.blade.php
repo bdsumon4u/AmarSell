@@ -30,6 +30,7 @@
             left: 0;
             right: 0;
             bottom: 0;
+            opacity: 0.9;
         }
         .loader {
             z-index: 7700;
@@ -96,12 +97,12 @@
     <x-layouts.footer />
     <script src="{{ asset('js/coreui.js') }}"></script>
     <script>
-        window.Echo.channel('admin-notice-count')
-            .listen('.admin.notice.count', function (data) {
-                console.log(data);
-                var now = $('.notice-count').first().text();
-                $('.notice-count').text(parseInt(now) + 1);
-            });
+        // window.Echo.channel('admin-notice-count')
+            // .listen('.admin.notice.count', function (data) {
+                // console.log(data);
+                // var now = $('.notice-count').first().text();
+                // $('.notice-count').text(parseInt(now) + 1);
+            // });
         $(document).ready(function(){
             $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
 
@@ -122,22 +123,27 @@
                     }
                 }
             }
-            
-            $(document).on('click', '.btn-delete', function(e) {
+
+
+            $(document).on('click', '.btn-danger', function(e) {
                 e.preventDefault();
-                
-                var form = $(this).parents('form');
-                if (form.length) {
-                    $.ajax(form.attr('action'), {
-                        type: 'POST',
-                        data: {
-                            _method: 'DELETE',
-                            _token: '{{ csrf_token() }}',
-                        },
-                        success: function () {
-                            location.reload();
-                        }
-                    });
+
+                if ($(this).is('a')) {
+                    document.location = $(this).attr('href');
+                } else {
+                    var form = $(this).parents('form');
+                    if (form.length) {
+                        $.ajax(form.attr('action'), {
+                            type: 'POST',
+                            data: {
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    }
                 }
             });
         });

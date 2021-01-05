@@ -26,13 +26,20 @@
                         </form>
                     </div>
                     @foreach($products as $product)
-                    <div class="col-md-4 col-lg-3 products">
+                    <div class="col-md-3 col-lg-2 products">
                         <div class="product-item">
                             <div class="card rounded-0 shadow-sm">
                                 <img class="card-img-top p-2" src="{{ $product->base_image }}" alt="Base Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
-                                    <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-primary">Details</a>
+                                    <div class="d-flex justify-content-between">
+                                        <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-sm btn-primary">Details</a>
+                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

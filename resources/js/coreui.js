@@ -1,12 +1,10 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
-require('./bootstrap');
+    window.Popper = require('popper.js').default;
+    window.$ = window.jQuery = require('jquery');
 
-window.Vue = require('vue');
+    require('bootstrap');
+
+// window.Vue = require('vue');
 
 import 'perfect-scrollbar';
 import '@coreui/coreui/dist/js/coreui';
@@ -14,6 +12,26 @@ import '@coreui/coreui/dist/js/coreui';
 import 'jquery-confirm';
 
 // Vue.component('slugify', require('./components/HotashSLUG.vue').default);
+
+
+window.slugify = src => {
+    return src.toLowerCase()
+        .replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, 'e')
+        .replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, 'a')
+        .replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, 'o')
+        .replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, 'u')
+        .replace(/đ/gi, 'd')
+        .replace(/\s*$/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/[\[,!:;{}=+%^()\/\\?><`~|\]]/g, '')
+        .replace(/@/g, '-at-')
+        .replace(/\$/g, '-dollar-')
+        .replace(/#/g, '-hash-')
+        .replace(/\*/g, '-star-')
+        .replace(/&/g, '-and-')
+        .replace(/-+/g, '-')
+        .replace(/\.+/g, '');
+}
 
 import 'select2';
 import Dropzone from 'dropzone';
@@ -50,24 +68,24 @@ import 'datatables.net-select-bs4';
 
 require('tinymce');
 require('tinymce/themes/silver');
-require('tinymce/plugins/paste');
-require('tinymce/plugins/advlist');
-require('tinymce/plugins/autolink');
+// require('tinymce/plugins/paste');
+// require('tinymce/plugins/advlist');
+// require('tinymce/plugins/autolink');
 require('tinymce/plugins/lists');
-require('tinymce/plugins/link');
-require('tinymce/plugins/image');
-require('tinymce/plugins/charmap');
-require('tinymce/plugins/print');
-require('tinymce/plugins/preview');
-require('tinymce/plugins/anchor');
-require('tinymce/plugins/searchreplace');
-require('tinymce/plugins/visualblocks');
-require('tinymce/plugins/code');
-require('tinymce/plugins/fullscreen');
-require('tinymce/plugins/insertdatetime');
-require('tinymce/plugins/media');
+// require('tinymce/plugins/link');
+// require('tinymce/plugins/image');
+// require('tinymce/plugins/charmap');
+// require('tinymce/plugins/print');
+// require('tinymce/plugins/preview');
+// require('tinymce/plugins/anchor');
+// require('tinymce/plugins/searchreplace');
+// require('tinymce/plugins/visualblocks');
+// require('tinymce/plugins/code');
+// require('tinymce/plugins/fullscreen');
+// require('tinymce/plugins/insertdatetime');
+// require('tinymce/plugins/media');
 require('tinymce/plugins/table');
-require('tinymce/plugins/code');
+// require('tinymce/plugins/code');
 require('tinymce/plugins/help');
 require('tinymce/plugins/wordcount');
 
@@ -77,14 +95,13 @@ $( document ).ready(function() {
         height: 300,
         menubar: true,
         plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
+            'lists',
+            'table help wordcount'
         ],
         toolbar: 'insert | undo redo |  formatselect | bold italic underline strikethrough backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-            '/css/hotash.css'
+            '/public/css/hotash.css'
         ]
     });
 });

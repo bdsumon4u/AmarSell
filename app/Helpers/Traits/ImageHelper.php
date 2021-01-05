@@ -2,41 +2,28 @@
 
 namespace App\Helpers\Traits;
 
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 trait ImageHelper
 {
     protected function uploadImage($file, $arg = [])
     {
-        // $filenameWithExt = $file->getClientOriginalName(); 
-        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
-        // $extension = $file->getClientOriginalExtension(); 
-        // $fileNameToStore= $filename.time().'.'.$extension; 
-        // $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
+        $arg += [
+            'dir' => 'images',
+            'width' => 250,
+            'height' => 66,
+        ];
+        $path = implode('/', [
+            date('d-M-Y'),
+            $arg['dir'],
+            time(),
+        ]).'-'.preg_replace('/\s+/', '-', $file->getClientOriginalName());
 
-        // //This store image creates the folder and saves the file 
-        // $path = $file->storeAs('public/' . ($arg['dir'] ?? 'images'), $fileNameToStore);
+        $image = Image::make($file)->resize($arg['width'], $arg['height']);
+        Storage::disk('public')->put($path, (string)$image->encode());
 
-        // if(! is_dir($dir = public_path($arg['dir'] ?? 'images'))) {
-        //     mkdir($dir, 755);
-        // }
-        // $to = ($arg['dir'] ?? 'images') . '/' . $thumbnailpic;
-
-        // //Here is where I am trying to resize with image and it breaks
-        // Image::make( storage_path().'/app/public/'. ($arg['dir'] ?? 'images') . '/'.$fileNameToStore)->resize($arg['width'] ?? 250, $arg['height'] ?? 66)->save(public_path($to));
-
-        // return $to;
-
-        $filename = time().$file->getClientOriginalName();
-        $dirname = $arg['dir'] ?? 'images';
-
-        $image = Image::make($file);
-        if(! is_dir($dir = public_path($dirname))) {
-            mkdir($dir, 755);
-        }
-        $image->resize($arg['width'] ?? 250, $arg['height'] ?? 66);
-        $image->save($dir.'/'.$filename); 
-
-        return $dirname.'/'.$filename;
+        return Storage::url($path);
     }
 }

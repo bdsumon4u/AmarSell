@@ -25,9 +25,9 @@ class TransactionController extends Controller
         $lOfPrevMonth = now()->subMonth()->lastOfMonth();
 
         $this->timezone = date('d') >= 1 && date('d') <= 15 ? [
-            $mOfPrevMonth->toDateTimeString(), $lOfPrevMonth->toDateTimeString()
+            $mOfPrevMonth->addDay()->toDateTimeString(), $lOfPrevMonth->endOfDay()->toDateTimeString()
         ] : [
-            $fOfCurrMonth->toDateTimeString(), $mOfCurrMonth->toDateTimeString()
+            $fOfCurrMonth->toDateTimeString(), $mOfCurrMonth->endOfDay()->toDateTimeString()
         ];
     }
 
@@ -51,7 +51,7 @@ class TransactionController extends Controller
         $resellers = $resellers->filter(function (Reseller $reseller) {
             $lastPaidAt = optional($reseller->lastPaid->created_at)->toDateString();
             if(! is_null($reseller->payment) && ( $lastPaidAt <= $this->timezone[1] )) {
-                // if($reseller->balance > 0) {
+                if($reseller->balance > 0) {
                     $com = $reseller->orders()
                         ->completedWT($this->timezone)
                         ->get()
@@ -65,10 +65,10 @@ class TransactionController extends Controller
                             return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge'];
                         });
                     $reseller->payNow = $com - $ret;
-                    // if ($reseller->payNow > 0) {
+                    if ($reseller->payNow > 0) {
                         return $reseller;
-                    // }
-                // }
+                    }
+                }
             }
         });
 
@@ -133,7 +133,7 @@ class TransactionController extends Controller
             'transaction_number.required_if' => 'The transaction number field is required.',
         ]);
 
-        dd($data);
+        // dd($data);
         $transaction_type = null;
         if($id = $request->transaction_id) {
             $transaction = Transaction::findOrFail($id);
@@ -153,5 +153,19 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::with('reseller')->where('status', 'pending')->get();
         return view('admin.transactions.requests', compact('transactions'));
+    }
+
+    public function show(Transaction $transaction)
+    {
+        $query = $transaction->reseller->orders()->whereIn('status', ['completed', 'returned']);
+        $orders = $query->where(function ($query) {
+            return $query->whereBetween('data->completed_at', $this->timezone)
+            ->orWhereBetween('data->returned_at', $this->timezone);
+        })->get();
+        return view('admin.transactions.show', [
+            'data' => $transaction->toArray(),
+            'timezone' => $this->timezone,
+            'orders' => $orders,
+        ]);
     }
 }

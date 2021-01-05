@@ -18,4 +18,11 @@
 
 @section('scripts')
 @livewireScripts
+<script>
+    $(document).ready(function() {
+        $(document).on('keyup', '[name="amount"]', function() {
+            $('.balance').text('Balance: ' + (Number($(this).data('balance')) - Number($(this).val())))
+        });
+    });
+</script>
 @endsection

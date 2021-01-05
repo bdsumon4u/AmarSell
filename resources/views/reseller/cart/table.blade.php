@@ -46,7 +46,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit" wire:click.prevent="remove({{ $cartItem['id'] }})" wire:loading.remove class="btn-close" data-toggle="tooltip" data-placement="top" title="Remove">
+                            <button type="submit" class="btn-close" data-toggle="tooltip" data-placement="top" title="Remove">
                                 &times;
                             </button>
                         </form>

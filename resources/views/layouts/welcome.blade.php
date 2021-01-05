@@ -106,6 +106,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
     <script src="{{ asset('js/landing.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $(window).scrollTop(0);
+        })
+    </script>
 </body>
 
 </html>

@@ -184,13 +184,13 @@
                 <div class="author-box" data-aos="fade-right">
                     <ul class="list-unstyled">
                         <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email ?? '' }}"><i
-                                    class="fa fa-envelope"></i></a></li>
+                                    class="fa fa-envelope"></i> Email</a></li>
                         <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone ?? '' }}"><i
-                                    class="fa fa-phone"></i></a></li>
+                                    class="fa fa-phone"></i> Phone</a></li>
                         @foreach($social ?? [] as $name => $item)
                         @if($item->display ?? false)
                         <li class="d-inline-block"><a class="p-2" href="{{ url($item->link ?? '') }}"><i
-                                    class="fa fa-{{ $name ?? '' }}"></i></a></li>
+                                    class="fa fa-{{ $name ?? '' }}"></i> {{ ucfirst($name ?? '') }}</a></li>
                         @endif
                         @endforeach
                     </ul>
@@ -215,9 +215,10 @@
                     <div class="card">
                         <div class="card-header" id="heading-{{ $faq->id }}">
                             <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-{{ $faq->id }}"
+                                <button class="btn btn-link d-flex w-100 align-items-center justify-content-between" data-toggle="collapse" data-target="#collapse-{{ $faq->id }}"
                                     aria-expanded="true" aria-controls="collapse-{{ $faq->id }}">
-                                    {{ $faq->question }}
+                                    <div class="font-weight-bold">{{ $faq->question }}</div>
+                                    <div class="badge badge-primary">Answer</div>
                                 </button>
                             </h5>
                         </div>

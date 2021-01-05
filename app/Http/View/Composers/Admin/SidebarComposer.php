@@ -40,6 +40,10 @@ class SidebarComposer
                         'route' => 'admin.products.index',
                     ],
                     [
+                        'name' => 'Trash',
+                        'route' => 'admin.products.trashed',
+                    ],
+                    [
                         'name' => 'Create',
                         'route' => 'admin.products.create',
                     ],
@@ -76,7 +80,7 @@ class SidebarComposer
                 'icon' => 'fa fa-bars',
                 'style' => 'simple',
                 'name' => 'Menus',
-                'url' => 'admin/menus',
+                'url' => 'admin/hmenus',
             ],
             [
                 'icon' => 'fa fa-money',

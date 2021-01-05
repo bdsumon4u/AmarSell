@@ -38,8 +38,20 @@
                                 <td>{{ theMoney($reseller->pending_sell) }}</td>
                             </tr>
                             <tr>
+                                <th>Processing Sell:</th>
+                                <td>{{ theMoney($reseller->processing_sell) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Shipping Sell:</th>
+                                <td>{{ theMoney($reseller->shipping_sell) }}</td>
+                            </tr>
+                            <tr>
                                 <th>Completed Sell:</th>
                                 <td>{{ theMoney($reseller->completed_sell) }}</td>
+                            </tr>
+                            <tr>
+                                <th>Returned Sell:</th>
+                                <td>{{ theMoney($reseller->returned_sell) }}</td>
                             </tr>
                             <tr>
                                 <th>Total Paid:</th>
@@ -51,10 +63,6 @@
                                 <td>{{ theMoney($reseller->lastPaid->amount) }}</td>
                             </tr>
                             @endif
-                            <tr>
-                                <th>Current Balance:</th>
-                                <td>{{ theMoney($reseller->balance) }}</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -74,12 +74,12 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;
         }
-        $products = Product::whereIn('id', array_keys($order->data['products']))->get();
+        $products = Product::withTrashed()->whereIn('id', array_keys($order->data['products']))->get();
         $cp = $order->current_price();
         return view('admin.orders.show', compact('order', 'products', 'cp', 'variant'));
     }
@@ -102,7 +102,7 @@ class OrderController extends Controller
             case 'returned':
                 $variant = 'danger';
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -134,21 +134,29 @@ class OrderController extends Controller
         if($order->status == 'completed' || $order->status == 'returned') {
             return back()->with('error', 'Order Can\'t be Updated');
         }
-        
+
         tap($request->validate([
+            'customer_name' => 'required|string',
+            'customer_email' => 'nullable',
+            'customer_phone' => 'required',
+            'customer_address' => 'required|string',
+            'delivery_method' => 'required|string',
+            'note' => 'nullable',
+            'shipping' => 'required',
+            'advanced' => 'required',
             'buy_price' => 'required',
             'payable' => 'required',
             'profit' => 'required',
             'packaging' => 'required',
             'delivery_charge' => 'required',
             'cod_charge' => 'required',
-            'profit' => 'required',
+            'sell' => 'required',
             'delivery_method' => 'required',
             'booking_number' => 'nullable',
             'status' => 'required',
         ]), function($data) use($order, $request){
             $before = $order->status;
-            $data['profit'] = $data['buy_price'] - ($data['packaging'] + $data['delivery_charge'] + $data['cod_charge']);
+            $data['profit'] = $data['sell'] - $data['buy_price'] - ($data['packaging'] + $data['delivery_charge'] + $data['cod_charge']) + $data['shipping'];
             $order->status = $data['status'];
             $data['completed_at'] = $data['status'] == 'completed' ? now()->toDateTimeString() : NULL;
             $data['returned_at'] = $data['status'] == 'returned' ? now()->toDateTimeString() : NULL;
@@ -171,14 +179,18 @@ class OrderController extends Controller
         return back()->with('success', 'Order Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Order $order)
+    public function cancel(Order $order)
     {
-        //
+        if (in_array($order->status, ['completed', 'returned'])) {
+            return redirect()->back()->with('error', "Order Can\'t be Cancelled.");
+        }
+
+        foreach($order->data['products'] as $item) {
+            $product = Product::findOrFail($item['id']);
+            $product->stock = is_numeric($product->stock) ? $product->stock + $item['quantity'] : $product->stock;
+            $product->save();
+        }
+        $order->delete();
+        return redirect()->back()->with('success', 'Order Cancelled');
     }
 }

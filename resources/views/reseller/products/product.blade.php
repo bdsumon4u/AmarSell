@@ -4,15 +4,6 @@
 <title>{{ $company->name }} - {{ $product->name }}</title>
 @endsection
 
-@section('meta')
-    <meta name="title" content="{{ $product->meta_title }}">
-    <meta name="keywords" content="{{ implode(', ', $product->meta_keywords) }}">
-    <meta name="description" content="{{ $product->meta_description }}">
-    <meta property="og:title" content="{{ $product->meta_title }}">
-    <meta property="og:description" content="{{ $product->meta_description }}">
-    <meta property="og:image" content="{{ $product->base_image }}">
-@endsection
-
 @section('styles')
 <style>
     .price-box {

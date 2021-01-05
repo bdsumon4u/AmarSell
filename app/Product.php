@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     /**
      * Currency
      */
@@ -17,18 +20,8 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'code', 'stock', 'description', 'meta_title', 'meta_keywords', 'meta_description', 'wholesale', 'retail',
+        'name', 'slug', 'code', 'stock', 'description', 'wholesale', 'retail',
     ];
-
-    public function setMetaKeywordsAttribute($data)
-    {
-        $this->attributes['meta_keywords'] = implode(',', $data);
-    }
-
-    public function getMetaKeywordsAttribute($data)
-    {
-        return explode(',', $data);
-    }
 
     /**
      * Categories

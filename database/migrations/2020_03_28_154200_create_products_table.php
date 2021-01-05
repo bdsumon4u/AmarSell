@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('wholesale');
             $table->integer('retail');
+            $table->softDeletes();
             $table->timestamps();
         });
 

@@ -23,8 +23,22 @@ class ProductController extends Controller
         $categories = Category::formatted();
         $products = Product::when($request->s, function ($query) use ($request) {
             return $query->where('name', 'like', "%{$request->s}%");
-        })->latest()->paginate(8);
+        })->latest()->paginate(18);
         return view('admin.products.index', compact('categories', 'products'));
+    }
+
+    /**
+     * Display a listing of the trashed resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed(Request $request)
+    {
+        $categories = Category::formatted();
+        $products = Product::onlyTrashed()->when($request->s, function ($query) use ($request) {
+            return $query->where('name', 'like', "%{$request->s}%");
+        })->latest()->paginate(18);
+        return view('admin.products.trashed', compact('categories', 'products'));
     }
 
     /**
@@ -67,7 +81,7 @@ class ProductController extends Controller
         $data['code'] = $this->code();
         $product = Product::create($data);
 
-        
+
         $images = [ $data['base_image'] => ['zone' => 'base'] ];
         if($data['additional_images']) {
             foreach(explode(',', $data['additional_images']) as $additional_image) {
@@ -77,7 +91,7 @@ class ProductController extends Controller
         $product->images()->sync($images);
 
         $product->categories()->sync($data['categories']);
-        
+
         return redirect()->route('admin.products.index')->with('success', 'Product Uploaded');
     }
 
@@ -152,7 +166,7 @@ class ProductController extends Controller
         $product->images()->sync($images);
 
         $product->categories()->sync($data['categories']);
-        
+
         return redirect()->route('admin.products.index')->with('success', 'Product Updated');
     }
 
@@ -162,8 +176,29 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($product)
     {
-        //
+        $product = Product::withTrashed()->findOrFail($product);
+
+        if ($product->deleted_at) {
+            $product->forceDelete();
+        } else {
+            $product->delete();
+        }
+
+        return back()->with('success', 'Product Deleted');
+    }
+
+    /**
+     * Restore the specified resource to storage.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($product)
+    {
+        Product::withTrashed()->findOrFail($product)->restore();
+
+        return redirect()->route('admin.products.trashed')->with('success', 'Product Deleted');
     }
 }

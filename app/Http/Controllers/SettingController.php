@@ -6,7 +6,7 @@ use App\Helpers\Traits\ImageHelper;
 use App\Page;
 use App\Repository\SettingsRepository;
 use App\Setting;
-use CodexShaper\Menu\Models\Menu;
+use App\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,6 +18,7 @@ class SettingController extends Controller
         'company' => 'sometimes|array',
         'social' => 'sometimes|array',
         'contact' => 'sometimes|array',
+        'header_menu' => 'sometimes|array',
         'footer_menu' => 'sometimes|array',
         'courier' => 'sometimes|array',
     ];

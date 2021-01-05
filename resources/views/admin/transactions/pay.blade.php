@@ -5,7 +5,7 @@
     <div class="col-sm-12">
         <div class="orders-table">
             <div class="card rounded-0 shadow-sm">
-                <div class="card-header"><strong>Resellers</strong></div>
+                <div class="card-header d-flex justify-content-between"><strong>Resellers</strong></div>
                 <div class="card-body">
                     <div class="table-responive">
                         <table class="table table-bordered table-striped table-hover datatable" style="width: 100%;">
@@ -14,33 +14,27 @@
                                     <th></th>
                                     <th width="30">ID</th>
                                     <th>Reseller</th>
-                                    <!-- <th>Last Paid</th> -->
-                                    <th>Balance</th>
+                                    <!-- <th>Balance</th> -->
                                     <th width="125">Pay</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $payNow = 0 @endphp
                                 @foreach($resellers as $reseller)
                                 <tr data-row-id="{{ $reseller->id }}">
                                     <td></td>
                                     <td>{{ $reseller->id }}</td>
                                     <td>
-                                        <a href="{{ route('reseller.profile.show', $reseller->id) }}">
+                                        <a href="{{ route('admin.resellers.show', $reseller->id) }}">
                                             <strong>Name:</strong> {{ $reseller->name }}
                                             <br>
                                             <strong>Phone:</strong> {{ $reseller->phone }}
                                         </a>
                                     </td>
-                                    <!-- <td>
-                                        @if($reseller->lastPaid->created_at)
-                                            {{ theMoney($reseller->lastPaid->amount) }}
-                                            <br>
-                                            {{ $reseller->lastPaid->created_at->format('F j, Y') }}
-                                        @endif
-                                    </td> -->
-                                    <td>{{ theMoney($reseller->balance) }}</td>
+                                    <!-- <td>{{ theMoney($reseller->balance) }}</td> -->
                                     <td><a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$reseller->id, 'amount' => $reseller->payNow]) }}">Pay {{ theMoney($reseller->payNow) }}</a></td>
                                 </tr>
+                                @php $payNow += $reseller->payNow @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -54,6 +48,10 @@
 
 @section('scripts')
 <script>
+    $(document).ready(function() {
+        $('.card-header').append('<span class="badge p-2 badge-info required-amount" style="font-size: 100%;">Required Amount: {{ theMoney($payNow) }}</span>')
+    })
+
     $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn btn-sm' });
     
     $.extend(true, $.fn.dataTable.defaults, {

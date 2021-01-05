@@ -226,12 +226,20 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
+                                                        <label for="header-menu-id">Products Page Header Menu</label>
+                                                        <select selector name="header_menu[id]" id="header-menu-id" class="form-control @error('header_menu.id') is-invalid @enderror">
+                                                            <option value="">Select Correct Menu</option>
+                                                            @foreach($all_menus ?? [] as $item)
+                                                            <option value="{{ $item->id }}" @if(($header_menu->id ?? 0) == $item->id) selected @endif>{{ $item->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        {!! $errors->first('header_menu.id', '<span class="invalid-feedback">:message</span>') !!}
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="footer-menu-title">Products Page Footer Menu Title</label>
                                                         <input type="text" name="footer_menu[title]" value="{{ old('footer_menu.title', $footer_menu->title ?? '') }}" id="footer-menu-title" class="form-control @error('footer_menu.title') is-invalid @enderror">
                                                         {!! $errors->first('footer_menu.title', '<span class="invalid-feedback">:message</span>') !!}
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="footer-menu-id">Products Page Footer Menu</label>
                                                         <select selector name="footer_menu[id]" id="footer-menu-id" class="form-control @error('footer_menu.id') is-invalid @enderror">

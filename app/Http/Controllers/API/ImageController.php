@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ImageCollection;
 use App\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -57,7 +58,11 @@ class ImageController extends Controller
         foreach($images as $image) {
             // dump(storage_path($image->path));
             if($image->products->isEmpty()) {
-                if(unlink(public_path($image->path))) {
+                if (File::exists($path = public_path($image->path))) {
+                    if(unlink($path)) {
+                        $image->delete();
+                    }
+                } else {
                     $image->delete();
                 }
             }

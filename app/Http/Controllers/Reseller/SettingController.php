@@ -16,77 +16,61 @@ class SettingController extends Controller
         return view('reseller.setting.edit', compact('user'));
     }
 
+    public function profile(Request $request)
+    {
+        $data = $request->validate([
+            'phone' => 'required',
+            'photo' => 'nullable|image|max:2048',
+            'nid.front' => 'nullable|image|max:2048',
+            'nid.back' => 'nullable|image|max:2048',
+        ]);
+        $reseller = \Auth::guard('reseller')->user();
+
+        if ($reseller->verified_at == null) {
+            $data['documents']['photo'] = isset($data['photo'])
+                ? $this->uploadImage($data['photo'], [
+                    'dir' => 'documents',
+                    'width' => 150,
+                    'height' => 150,
+                ])
+                : optional($reseller->documents)->photo;
+
+            $data['documents']['nid_front'] = isset($data['nid']['front'])
+                ? $this->uploadImage($data['nid']['front'], [
+                    'dir' => 'documents',
+                    'width' => 322,
+                    'height' => 222,
+                ])
+                : optional($reseller->documents)->nid_front;
+
+            $data['documents']['nid_back'] = isset($data['nid']['back'])
+                ? $this->uploadImage($data['nid']['back'], [
+                    'dir' => 'documents',
+                    'width' => 322,
+                    'height' => 222,
+                ])
+                : optional($reseller->documents)->nid_back;
+        }
+
+        $reseller->update($data);
+        return redirect()->back()->with('success', 'Profile Updated.');
+    }
+
+    public function payment(Request $request)
+    {
+        $data = $request->validate([
+            'payment' => 'required|array',
+            'payment.*' => 'required|array',
+        ]);
+        \Auth::guard('reseller')->user()->update([
+            'payment' => $this->payment_filter($data['payment']),
+        ]);
+        return back()->with('success', 'Payment Method Updatd.');
+    }
+
     public function update(Request $request)
     {
-        $reseller = auth('reseller')->user();
-        $rules = [
-            // 'name' => 'required',
-            // 'email' => 'required|email',
-            'phone' => 'required',
-            'payment' => 'nullable|array',
-            'payment.*' => 'nullable|array',
-        ];
-        
-        if($request->verified_at == 0) {
-            if(! isset($reseller->documents->photo)) {
-                $rules['photo'] = 'required|image|max:2048';
-            } else
-                $rules['photo'] = 'nullable|image|max:2048';
-        }
-
-        if($request->verified_at == 0) {
-            if(! isset($reseller->documents->nid_front)) {
-                $rules['nid.front'] = 'required|image|max:2048';
-            } else
-                $rules['nid.front'] = 'nullable|image|max:2048';
-        }
-
-        if($request->verified_at == 0) {
-            if(! isset($reseller->documents->nid_back)) {
-                $rules['nid.back'] = 'required|image|max:2048';
-            } else
-                $rules['nid.back'] = 'nullable|image|max:2048';
-        }
-
-        $data = $request->validate($rules);
-        // dd($data);
-        // dump($data);
-        if(isset($data['payment'])) {
-            $data['payment'] = $this->payment_filter($data['payment']);
-        }
-
-        if($data['photo'] ?? null) {
-            $data['documents']['photo'] = $this->uploadImage($data['photo'], [
-                'dir' => 'documents',
-                'width' => 150,
-                'height' => 150,
-            ]);
-            unset($data['photo']);
-        } else
-            $data['documents']['photo'] = optional($reseller->documents)->photo;
-
-        if($data['nid']['front'] ?? null) {
-            $data['documents']['nid_front'] = $this->uploadImage($data['nid']['front'], [
-                'dir' => 'documents',
-                'width' => 322,
-                'height' => 222,
-            ]);
-            unset($data['nid']['front']);
-        } else
-            $data['documents']['nid_front'] = optional($reseller->documents)->nid_front;
-
-        if($data['nid']['back'] ?? null) {
-            $data['documents']['nid_back'] = $this->uploadImage($data['nid']['back'], [
-                'dir' => 'documents',
-                'width' => 322,
-                'height' => 222,
-            ]);
-            unset($data['nid']['back']);
-        } else
-            $data['documents']['nid_back'] = optional($reseller->documents)->nid_back;
-        
-        $reseller->update($data);
-        return redirect()->back()->with('success', 'Setting Updated.');
+        //
     }
 
     public function payment_filter($payment)
