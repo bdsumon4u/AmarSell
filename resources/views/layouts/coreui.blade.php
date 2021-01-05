@@ -123,23 +123,27 @@
                     }
                 }
             }
-            
-            
+
+
             $(document).on('click', '.btn-danger', function(e) {
                 e.preventDefault();
-                
-                var form = $(this).parents('form');
-                if (form.length) {
-                    $.ajax(form.attr('action'), {
-                        type: 'POST',
-                        data: {
-                            _method: 'DELETE',
-                            _token: '{{ csrf_token() }}',
-                        },
-                        success: function () {
-                            location.reload();
-                        }
-                    });
+
+                if ($(this).is('a')) {
+                    document.location = $(this).attr('href');
+                } else {
+                    var form = $(this).parents('form');
+                    if (form.length) {
+                        $.ajax(form.attr('action'), {
+                            type: 'POST',
+                            data: {
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    }
                 }
             });
         });
