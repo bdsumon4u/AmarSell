@@ -6,15 +6,10 @@
             </div>
             <div class="card-body p-2">
                 <div class="d-flex justify-content-between">
-                    <div class="dropdown mb-2">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Select Perood
-                        </button>
-                        <div class="dropdown-menu">
-                            @foreach($periods as $period)
-                            <a class="dropdown-item" href="{{ route('earnings', ['reseller_id' => request('reseller_id'), 'period' => $period]) }}">{{ $period }}</a>
-                            @endforeach
-                        </div>
+                    <div>
+                        @foreach($periods as $period)
+                            <a class="badge @if(request('period') === $period) badge-success @else badge-primary @endif m-1 p-2" href="{{ route('earnings', ['reseller_id' => request('reseller_id'), 'period' => $period]) }}">{{ $period }}</a>
+                        @endforeach
                     </div>
                     <div class="badge badge-{{ $howPaid ? 'success' : 'secondary' }} p-2 mb-2 d-flex align-items-center" style="font-size: 100%; vertical-align: middle;">{{ $howPaid ? "Paid $howPaid" : "Unpaid" }}</div>
                 </div>

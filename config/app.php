@@ -64,7 +64,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => isRunningInLocalhost() ? null : (env('APP_URL') . '/public'),
+    // 'asset_url' => isRunningInLocalhost() ? null : (env('APP_URL') . '/public'),
 
     /*
     |--------------------------------------------------------------------------

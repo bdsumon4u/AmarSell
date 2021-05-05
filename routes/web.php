@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::view('/setting/payment', 'reseller.setting.payment');
     Route::patch('/setting/payment', 'SettingController@payment')->name('setting.payment');
     Route::view('/setting/password', 'reseller.setting.password');
-    Route::patch('/password', 'PasswordController')->name('password.update');
+    Route::patch('/password', 'PasswordController')->name('password.change');
 
     Route::get('/profile/{reseller}', 'ProfileController')->name('profile.show');
     Route::get('/notifications', 'NotificationController@index')->name('notifications.index');

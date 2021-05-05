@@ -1,5 +1,7 @@
 <?php
 
+use App\Menu;
+
 function theMoney($amount, $currency = "৳")
 {
     return "$currency " . number_format($amount,null,null,',');
@@ -14,4 +16,11 @@ function bytesToHuman($bytes)
     }
 
     return round($bytes, 2) . ' ' . $units[$i];
+}
+
+function menuItems($menuId = null)
+{
+    return ($menu = Menu::find($menuId))
+        ? $menu->items()->orderBy('order')->get()
+        : [];
 }

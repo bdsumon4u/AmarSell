@@ -37,27 +37,27 @@
                     <table class="table table-sm table-borderless table-striped table-hover">
                         <tbody>
                             <tr>
-                                <th>Total Orders:</th>
+                                <th class="text-nowrap">Total Orders:</th>
                                 <td>{{ theMoney($reseller->total_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'pending', 'reseller' => $reseller->id]) }}">Pending Orders</a>:</th>
+                                <th class="text-nowrap"><a href="{{ route('admin.order.index', ['status' => 'pending', 'reseller' => $reseller->id]) }}">Pending Orders</a>:</th>
                                 <td>{{ theMoney($reseller->pending_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'processing', 'reseller' => $reseller->id]) }}">Processing Orders</a>:</th>
+                                <th class="text-nowrap"><a href="{{ route('admin.order.index', ['status' => 'processing', 'reseller' => $reseller->id]) }}">Processing Orders</a>:</th>
                                 <td>{{ theMoney($reseller->processing_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'shipping', 'reseller' => $reseller->id]) }}">Shipping Orders</a>:</th>
+                                <th class="text-nowrap"><a href="{{ route('admin.order.index', ['status' => 'shipping', 'reseller' => $reseller->id]) }}">Shipping Orders</a>:</th>
                                 <td>{{ theMoney($reseller->shipping_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'completed', 'reseller' => $reseller->id]) }}">Completed Orders</a>:</th>
+                                <th class="text-nowrap"><a href="{{ route('admin.order.index', ['status' => 'completed', 'reseller' => $reseller->id]) }}">Completed Orders</a>:</th>
                                 <td>{{ theMoney($reseller->completed_sell) }}</td>
                             </tr>
                             <tr>
-                                <th><a href="{{ route('admin.order.index', ['status' => 'returned', 'reseller' => $reseller->id]) }}">Returned Orders</a>:</th>
+                                <th class="text-nowrap"><a href="{{ route('admin.order.index', ['status' => 'returned', 'reseller' => $reseller->id]) }}">Returned Orders</a>:</th>
                                 <td>{{ theMoney($reseller->returned_sell) }}</td>
                             </tr>
                             <tr>
@@ -66,31 +66,24 @@
                             </tr>
                             @if($reseller->lastPaid->created_at)
                             <tr>
-                                <th>Last Paid:</th>
+                                <th class="text-nowrap">Last Paid:</th>
                                 <td>{{ theMoney($reseller->lastPaid->amount) }}</td>
                             </tr>
                             @endif
                             <!-- <tr>
-                                <th>Current Balance:</th>
+                                <th class=text-nowrap>Current Balance:</th>
                                 <td>{{ theMoney($reseller->balance) }}</td>
                             </tr> -->
                             <tr>
-                                <th>Earning Status:</th>
+                                <th class="text-nowrap">Earning Status:</th>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            Select Period
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            @foreach((new App\Services\EarningService($reseller))->periods as $period)
-                                            <a class="dropdown-item" href="{{ route('earnings', ['reseller_id' => $reseller, 'period' => $period]) }}">{{ $period }}</a>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                    @foreach((new App\Services\EarningService($reseller))->periods as $period)
+                                        <a class="badge badge-primary m-1 p-2" href="{{ route('earnings', ['reseller_id' => $reseller, 'period' => $period]) }}">{{ $period }}</a>
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
-                                <th style="vertical-align: middle;">Payment Methods:</th>
+                                <th class="text-nowrap" style="vertical-align: middle;">Payment Methods:</th>
                                 <td>
                                     <div>
                                         <table class="table mb-0 table-bordered">

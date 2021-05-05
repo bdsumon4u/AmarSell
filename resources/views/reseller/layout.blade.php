@@ -78,7 +78,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav navbar-nav d-md-down-none">
-            
+
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -139,7 +139,8 @@
         //         $('.notice-count').text(data.notice_count);
         //     });
         $(document).ready(function(){
-            $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
+            $(".loader").fadeOut("fast");
+            $("#overlayer").fadeOut("fast");
         });
     </script>
 </body>

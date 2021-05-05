@@ -47,28 +47,28 @@ class TransactionController extends Controller
      */
     public function pay()
     {
-        $resellers = Reseller::with(['transactions', 'orders'])->get()->sortByDesc('balance');
+        $resellers = Reseller::with(['transactions', 'orders' => function ($query) {
+            $query->whereBetween('data->completed_at', $this->timezone)
+                ->orWhereBetween('data->returned_at', $this->timezone);
+        }])->get()->sortByDesc('balance');
         $resellers = $resellers->filter(function (Reseller $reseller) {
             $lastPaidAt = optional($reseller->lastPaid->created_at)->toDateString();
             if(! is_null($reseller->payment) && ( $lastPaidAt <= $this->timezone[1] )) {
-                if($reseller->balance > 0) {
-                    $com = $reseller->orders()
-                        ->completedWT($this->timezone)
-                        ->get()
-                        ->sum(function (Order $item) {
-                            return $item->data['profit'] - $item->data['advanced'];
-                        });
-                    $ret = $reseller->orders()
-                        ->returnedWT($this->timezone)
-                        ->get()
-                        ->sum(function ($order) {
-                            return $order->data['delivery_charge'] + $order->data['packaging'] + $order->data['cod_charge'];
-                        });
-                    $reseller->payNow = $com - $ret;
-                    if ($reseller->payNow > 0) {
-                        return $reseller;
-                    }
+                // if($reseller->balance > 0) {
+                $com = $ret = 0;
+                $reseller->orders
+                    ->each(function (Order $item) use (&$com, &$ret) {
+                        if ($item->status === 'completed') {
+                            $com += $item->data['profit'] - $item->data['advanced'];
+                        } elseif ($item->status === 'returned') {
+                            $ret += $item->data['delivery_charge'] + $item->data['packaging'] + $item->data['cod_charge'];
+                        }
+                    });
+                $reseller->payNow = $com - $ret;
+                if ($reseller->payNow !== 0) {
+                    return $reseller;
                 }
+                // }
             }
         });
 
@@ -160,7 +160,7 @@ class TransactionController extends Controller
         $query = $transaction->reseller->orders()->whereIn('status', ['completed', 'returned']);
         $orders = $query->where(function ($query) {
             return $query->whereBetween('data->completed_at', $this->timezone)
-            ->orWhereBetween('data->returned_at', $this->timezone);
+                ->orWhereBetween('data->returned_at', $this->timezone);
         })->get();
         return view('admin.transactions.show', [
             'data' => $transaction->toArray(),
