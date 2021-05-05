@@ -6,7 +6,7 @@
         <div class="card rounded-0 shadow-sm">
             <div class="card-header py-2">Reseller <strong>Setting</strong></div>
             <div class="card-body p-2">
-                <form action="{{ route('reseller.password.update') }}" method="post">
+                <form action="{{ route('reseller.password.change') }}" method="post">
                     @csrf
                     @method('PATCH')
                     <div class="row">

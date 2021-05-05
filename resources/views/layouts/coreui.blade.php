@@ -104,7 +104,8 @@
                 // $('.notice-count').text(parseInt(now) + 1);
             // });
         $(document).ready(function(){
-            $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
+            $(".loader").fadeOut("fast");
+            $("#overlayer").fadeOut("fast");
 
             $('#color-logo, #white-logo, #footer-logo, #favicon-logo').change(function(e){
                 console.log('changed')
