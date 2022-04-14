@@ -12,7 +12,7 @@ class EarningService
     public $timeFormat = 'd-M-Y';
     public $seperator = '--';
     public $orders;
-    
+
     public $currentPeriod;
     public $nextTransactionPeriod;
 
@@ -22,44 +22,49 @@ class EarningService
             $reseller = Reseller::findOrFail($reseller)
         );
         $periods = [];
-        
-        for ($year = $reseller->created_at->year, $i = 0; $year <= date('Y'); $year++, $i++) {
-            for ($month = ($year == date('Y') ? $reseller->created_at->month : 1), $j = 0; $month <= ($year == date('Y') ? date('m') : 12); $month++, $j++) {
-                $date = $reseller->created_at;
-                $j && $date->firstOfMonth()->addMonths($j);
 
-                $fOfMon = $date->copy()->firstOfMonth();
-                $mOfMon = $fOfMon->copy()->addDays(14);
-                $lOfMon = $date->copy()->lastOfMonth();
+        $created_at = $reseller->created_at;
+        $date = $created_at->clone();
 
-                $snapOne = $fOfMon->format($this->timeFormat);
-                $snapTwo = $mOfMon->format($this->timeFormat);
-                $snapThree = $mOfMon->addDay()->format($this->timeFormat);
-                $snapFour = $lOfMon->format($this->timeFormat);
-
-                // First Month
-                if (! $j) {
-                    $date->day <= 15 && ($periods[] = $snapOne . $this->seperator . $snapTwo);
-                    $periods[] = $snapThree . $this->seperator . $snapFour;
-                    continue;
+        while ($date->year <= date('Y')) {
+            // First Month
+            if ($date->year == $created_at->year && $date->month == $created_at->month) {
+                if ($date->day <= 15) {
+                    $periods[] = $this->firstHalf($date->firstOfMonth());
                 }
-
-                // Current Month
-                if ($date->month == date('m')) {
-                    $periods[] = $snapOne . $this->seperator . $snapTwo;
-                    date('d') > 15 && ($periods[] = $snapThree . $this->seperator . $snapFour);
-                    continue;
-                }
-
-                $periods[] = $snapOne . $this->seperator . $snapTwo;
-                $periods[] = $snapThree . $this->seperator . $snapFour;
+                $periods[] = $this->lastHalf($date->firstOfMonth());
             }
+            // Last Month
+            else if ($date->year == date('Y') && $date->month == date('m')) {
+                $periods[] = $this->firstHalf($date);
+                date('d') <= 15 || (
+                    $periods[] = $this->lastHalf($date)
+                );
+                break;
+            }
+            // Else
+            else {
+                $periods[] = $this->firstHalf($date);
+                $periods[] = $this->lastHalf($date);
+            }
+
+            $date->addMonth();
         }
 
         $this->periods = $periods;
         $this->reseller = $reseller;
         $this->currentPeriod = end($periods);
         $this->nextTransactionPeriod();
+    }
+
+    public function firstHalf($date): string
+    {
+        return $date->format($this->timeFormat) . $this->seperator . $date->copy()->addDays(14)->format($this->timeFormat);
+    }
+
+    public function lastHalf($date): string
+    {
+        return $date->copy()->addDays(15)->format($this->timeFormat) . $this->seperator . $date->copy()->lastOfMonth()->format($this->timeFormat);
     }
 
     public function orders($period)
@@ -69,9 +74,9 @@ class EarningService
                 list($start_date, $end_date) = explode($this->seperator, $period);
                 $start_date = Carbon::parse($start_date);
                 $end_date = Carbon::parse($end_date)->endOfDay();
-        
+
                 $query->whereBetween('data->completed_at', [$start_date, $end_date])
-                ->orWhereBetween('data->returned_at', [$start_date, $end_date]);
+                    ->orWhereBetween('data->returned_at', [$start_date, $end_date]);
             })
             ->orderBy('updated_at', 'asc')
             ->get();
@@ -102,7 +107,7 @@ class EarningService
     public function nextTransactionPeriod($currentPeriod = null)
     {
         $currentPeriod && (
-            $this->currentPeriod = $currentPeriod
+        $this->currentPeriod = $currentPeriod
         );
 
         if (! $this->currentPeriod) {
@@ -112,7 +117,7 @@ class EarningService
         list($start_date, $end_date) = array_map(function ($date) {
             return Carbon::parse($date);
         }, explode($this->seperator, $this->currentPeriod));
-        
+
         $fOfMon = $start_date->copy()->firstOfMonth();
         $mOfMon = $fOfMon->copy()->addDays(14);
         $lOfMon = $end_date->copy()->lastOfMonth();
@@ -122,16 +127,16 @@ class EarningService
 
         return $this->nextTransactionPeriod
             = $end_date->day > 15 ? [
-                $fOfNextMon, $mOfNextMon->endOfDay(),
-            ] : [
-                $mOfMon->addDay(), $lOfMon->endOfDay(),
-            ];
+            $fOfNextMon, $mOfNextMon->endOfDay(),
+        ] : [
+            $mOfMon->addDay(), $lOfMon->endOfDay(),
+        ];
     }
 
     public function howPaid($currentPeriod = null)
     {
         $currentPeriod && (
-            $this->nextTransactionPeriod($currentPeriod)
+        $this->nextTransactionPeriod($currentPeriod)
         );
 
         $transactions = $this->reseller->transactions()->status('paid')->whereBetween('updated_at', $this->nextTransactionPeriod)->get();
