@@ -55,7 +55,7 @@
 
 
         <div class="row">
-            <div class="col-sm-12 col-md-3">
+            <div class="col-sm-12 col-md-3 hidden visible-md-block">
             @include('reseller.products.partials.sidebar')
             </div>
             <div class="col-sm-12 col-md-9">
