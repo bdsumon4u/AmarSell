@@ -59,13 +59,13 @@ class ShopController extends Controller
                 //This store image creates the folder and saves the file 
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
-                if(! is_dir($dir = public_path('shop'))) {
-                    mkdir($dir, 755);
-                }
+//                 if(! is_dir($dir = public_path('shop'))) {
+//                     mkdir($dir, 755);
+//                 }
                 $to = 'shop/' . $thumbnailpic;
 
                 //Here is where I am trying to resize with image and it breaks
-                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(public_path($to));
+                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(base_path('../public_html/'.$to));
 
                 if(!empty($to)) {
                     Storage::delete(public_path($to));
@@ -134,13 +134,13 @@ class ShopController extends Controller
                 //This store image creates the folder and saves the file 
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
-                if(! is_dir($dir = public_path('shop'))) {
-                    mkdir($dir, 755);
-                }
+//                 if(! is_dir($dir = public_path('shop'))) {
+//                     mkdir($dir, 755);
+//                 }
                 $to = 'shop/' . $thumbnailpic;
 
                 //Here is where I am trying to resize with image and it breaks
-                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(public_path($to));
+                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(base_path('../public_html/'.$to));
 
                 if(!empty($to)) {
                     Storage::delete(public_path($to));
