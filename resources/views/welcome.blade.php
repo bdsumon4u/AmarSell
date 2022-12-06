@@ -183,14 +183,14 @@
                 <p class="mb-4">We're always ready to help you via:</p>
                 <div class="author-box" data-aos="fade-right">
                     <ul class="list-unstyled">
-                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email ?? '' }}"><i
-                                    class="fa fa-envelope"></i> Email</a></li>
                         <li class="d-inline-block"><a class="p-2" href="tel:{{ $contact->phone ?? '' }}"><i
-                                    class="fa fa-phone"></i> Phone</a></li>
+                                    class="fa fa-phone"></i> {{ $contact->phone ?? '' }}</a></li>
+                        <li class="d-inline-block"><a class="p-2" href="mailto:{{ $company->email ?? '' }}"><i
+                                    class="fa fa-envelope"></i> {{ $company->email ?? '' }}</a></li>
                         @foreach($social ?? [] as $name => $item)
                         @if($item->display ?? false)
                         <li class="d-inline-block"><a class="p-2" href="{{ url($item->link ?? '') }}"><i
-                                    class="fa fa-{{ $name ?? '' }}"></i> {{ ucfirst($name ?? '') }}</a></li>
+                                    class="fa fa-{{ $name ?? '' }}"></i> {{ url($item->link ?? '') }}</a></li>
                         @endif
                         @endforeach
                     </ul>
@@ -212,18 +212,18 @@
             <div class="testimonial">
                 <div id="accordion">
                     @foreach($faqs as $faq)
-                    <div class="card">
+                    <div class="card my-2">
                         <div class="card-header" id="heading-{{ $faq->id }}">
                             <h5 class="mb-0">
-                                <button class="btn btn-link d-flex w-100 align-items-center justify-content-between" data-toggle="collapse" data-target="#collapse-{{ $faq->id }}"
+                                <button class="btn btn-link d-flex w-100 align-items-center justify-content-between" data-toggle="collapse" data-target="#-collapse-{{ $faq->id }}"
                                     aria-expanded="true" aria-controls="collapse-{{ $faq->id }}">
                                     <div class="font-weight-bold">{{ $faq->question }}</div>
-                                    <div class="badge badge-primary">Answer</div>
+                                    <!--<div class="badge badge-primary">Answer</div>-->
                                 </button>
                             </h5>
                         </div>
 
-                        <div id="collapse-{{ $faq->id }}" class="collapse" aria-labelledby="heading-{{ $faq->id }}"
+                        <div id="collapse-{{ $faq->id }}" class="-collapse" aria-labelledby="heading-{{ $faq->id }}"
                             data-parent="#accordion">
                             <div class="card-body text-left">{!! $faq->answer !!}</div>
                         </div>
