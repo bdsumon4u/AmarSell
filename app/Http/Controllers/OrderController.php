@@ -193,4 +193,17 @@ class OrderController extends Controller
         $order->delete();
         return redirect()->back()->with('success', 'Order Cancelled');
     }
+
+    /**
+     * Print selected orders
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function print(Request $request)
+    {
+        $orders = Order::whereIn('id', explode(',', $request->ids))->get();
+        
+        return view('admin.orders.print', compact('orders'));
+    }
 }

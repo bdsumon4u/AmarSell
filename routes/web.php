@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::post('/products/{product}/restore', 'ProductController@restore')->name('products.restore');
     Route::resource('images', 'ImageController');
     Route::view('orders', 'admin.orders.list')->name('order.index');
+    Route::get('order/print', 'OrderController@print')->name('order.print');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');

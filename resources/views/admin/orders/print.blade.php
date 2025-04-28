@@ -1,3 +1,4 @@
+@extends('layouts.ready')
 @section('styles')
 <style>
     .address {
@@ -14,7 +15,13 @@
     @media print {
         @page {
             size: auto;   /* auto is the initial value */
-            margin: 0mm;  /* this affects the margin in the printer settings */
+            margin: 0mm !important;  /* this affects the margin in the printer settings */
+        }
+        .app-header {
+            display: none !important;
+        }
+        .app-body {
+            margin-top: 0 !important;
         }
         #invoice-wrapper {
             margin-top: 0 !important;
@@ -58,9 +65,13 @@
 <div class="row justify-content-center">
     <div id="invoice-wrapper" class="col-md-8">
         <div id="ui-view">
-            @php $shop = $order->shop @endphp
-            @include('order.invoice.admin')
-            @include('order.invoice.reseller')
+            @foreach ($orders as $order)
+                <div style="page-break-after: always;">
+                @php $shop = $order->shop @endphp
+                @include('order.invoice.admin')
+                @include('order.invoice.reseller')
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

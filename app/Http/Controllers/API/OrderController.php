@@ -25,9 +25,7 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return Datatables::of($orders->status($status)->latest()->with('reseller'))
                     ->addIndexColumn()
-                    // ->addColumn('empty', function($row){
-                    //     return '';
-                    // })
+                    ->addColumn('checkbox', fn() : string => '')
                     ->addColumn('reseller', function($row){
                         return '<a href="' .  route('admin.resellers.show', $row->reseller->id ?? 0) . '">
                             <strong>Name:</strong>' . optional($row->reseller)->name . '
@@ -96,7 +94,7 @@ class OrderController extends Controller
                         $btn .= '</div>';
                         return $btn;
                     })
-                    ->rawColumns(['reseller', 'customer', 'status', 'price', 'ordered_at', 'action'])
+                    ->rawColumns(['checkbox', 'reseller', 'customer', 'status', 'price', 'ordered_at', 'action'])
                     ->setRowAttr([
                         'data-entry-id' => function($row) {
                             return $row->id;
