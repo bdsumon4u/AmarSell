@@ -60,16 +60,16 @@
                                 <tr data-row-id="{{ $transaction->id }}">
                                     <td><a href="{{ route('admin.transactions.show', $transaction->id) }}">{{ $transaction->id }}</a></td>
                                     <td>
-                                        <a href="{{ route('admin.resellers.show', $transaction->reseller->id) }}">
-                                            <strong>Name:</strong> {{ $transaction->reseller->name }}
+                                        <a href="{{ route('admin.resellers.show', $transaction->reseller->id ?? 0) }}">
+                                            <strong>Name:</strong> {{ $transaction->reseller->name ?? 'Deleted' }}
                                             <br>
-                                            <strong>Phone:</strong> {{ $transaction->reseller->phone }}
+                                            <strong>Phone:</strong> {{ $transaction->reseller->phone ?? 'Deleted' }}
                                         </a>
                                     </td>
                                     <td>{{ theMoney($transaction->amount) }}</td>
                                     <td>{{ $transaction->created_at->format('d-M-Y') }}</td>
                                     <!-- <td>
-                                        <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$transaction->reseller->id,
+                                        <a class="btn btn-sm btn-block btn-primary" href="{{ route('admin.transactions.pay-to-reseller', [$transaction->reseller->id ?? 0,
                                             'transaction_id' => $transaction->id,
                                             'amount' => $transaction->amount,
                                             'method' => $transaction->method,

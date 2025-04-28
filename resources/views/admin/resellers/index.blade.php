@@ -124,7 +124,42 @@
             ],
         });
         var dt_buttons = $.extend(true, [], $.fn.dataTable.defaults.buttons);
-        
+        var delete_button = {
+            text: 'Bulk Delete',
+            url: "{{ route('api.resellers.destroy') }}",
+            className: 'btn-danger',
+            action: function(e, dt, node, config) {
+                var IDs = $.map(dt.rows({
+                    selected: true
+                }).nodes(), function(entry) {
+                    return $(entry).data('entry-id')
+                });
+    
+                if (IDs.length === 0) {
+                    alert('Select Rows First.')
+    
+                    return;
+                }
+    
+                if (confirm('Are You Sure To Delete?')) {
+                    $.ajax({
+                        headers: {
+                            'x-csrf-token': "{{ csrf_token() }}"
+                        },
+                        method: 'POST',
+                        url: config.url,
+                        data: {
+                            IDs: IDs,
+                            _method: 'DELETE'
+                        }
+                    })
+                    .done(function() {
+                        $('.datatable').DataTable().ajax.reload();
+                    })
+                }
+            }
+        }
+        dt_buttons.push(delete_button)
         
         
         var table = $('.datatable')

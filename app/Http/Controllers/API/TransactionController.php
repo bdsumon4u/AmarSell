@@ -32,7 +32,7 @@ class TransactionController extends Controller
                         return '<a href="' .  route(auth('reseller')->check() ? 'reseller.transactions.show' : 'admin.transactions.show', $row->id ?? 0) . '">'.$row->id.'</a>';
                     })
                     ->addColumn('reseller', function($row){
-                        return '<a href="' .  route(auth('reseller')->check() ? 'reseller.profile.show' : 'admin.resellers.show', $row->reseller->id ?? 0) . '">
+                        return '<a href="' .  route(auth('reseller')->check() ? 'reseller.profile.show' : 'admin.resellers.show', data_get($row->reseller, 'id', 0)) . '">
                             <strong>Name:</strong>' . ($row->reseller->name ?? '') . '
                             <br>
                             <strong>Phone:</strong>' . ($row->reseller->phone ?? '') . '
@@ -53,7 +53,7 @@ class TransactionController extends Controller
                         return $ret;
                     })
                     ->addColumn('pay', function($row) {
-                        return '<a class="btn btn-sm btn-block btn-primary" href="' . route('admin.transactions.pay-to-reseller', [$row->reseller->id,
+                        return '<a class="btn btn-sm btn-block btn-primary" href="' . route('admin.transactions.pay-to-reseller', [data_get($row->reseller, 'id', 0),
                             'transaction_id' => $row->id,
                             'amount' => $row->amount,
                             'method' => $row->method,

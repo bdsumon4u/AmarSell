@@ -16,7 +16,9 @@ class PasswordController extends Controller
         ]);
 
         if(Hash::check($data['old_password'], auth()->user()->password)) {
-            if(auth()->user()->update($data)) {
+            if(auth()->user()->update([
+                'password' => bcrypt($data['password'])
+            ])) {
                 return redirect()->back()->with('success', 'Password Changed Successfully.');
             }
         }

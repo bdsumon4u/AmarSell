@@ -123,8 +123,7 @@
                 // $('.notice-count').text(parseInt(now) + 1);
             // });
         $(document).ready(function(){
-            $(".loader").fadeOut("fast");
-            $("#overlayer").fadeOut("fast");
+            $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
 
             $('#color-logo, #white-logo, #footer-logo, #favicon-logo').change(function(e){
                 console.log('changed')
@@ -143,11 +142,11 @@
                     }
                 }
             }
-
-
+            
+            
             $(document).on('click', '.btn-danger', function(e) {
                 e.preventDefault();
-
+                
                 if ($(this).is('a')) {
                     document.location = $(this).attr('href');
                 } else {

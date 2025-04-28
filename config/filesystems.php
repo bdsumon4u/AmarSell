@@ -78,10 +78,10 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
-        public_path('shop') => storage_path('app/public/shop'),
-        public_path('images') => storage_path('app/public/images'),
-        public_path('documents') => storage_path('app/public/documents'),
+        base_path('../public_html/storage') => storage_path('app/public'),
+        base_path('../public_html/shop') => storage_path('app/public/shop'),
+        base_path('../public_html/images') => storage_path('app/public/images'),
+        base_path('../public_html/documents') => storage_path('app/public/documents'),
     ],
 
 ];

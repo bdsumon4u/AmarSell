@@ -29,4 +29,7 @@ Route::group(['namespace' => 'API', 'as' => 'api.'], function() {
 
     Route::get('resellers', 'ResellerController@index')->name('resellers.index');
     Route::get('resellers/edit', 'ResellerController@edit')->name('resellers.edit');
+    Route::delete('resellers/delete', function (Request $request) {
+        \App\Reseller::find($request->IDs)->map->delete();
+    })->name('resellers.destroy');
 });

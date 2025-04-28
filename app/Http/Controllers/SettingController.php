@@ -93,6 +93,9 @@ class SettingController extends Controller
      */
     public function update(Request $request, SettingsRepository $settingsRepo)
     {
+        if ($request->password && $request->old_password && $request->password_confirmation) {
+            return (new PasswordController)(...func_get_args());
+        }
         $data = $request->validate($this->rules);
 
         tap($settingsRepo->first('logo')->value, function($logo) use ($request, &$data) {

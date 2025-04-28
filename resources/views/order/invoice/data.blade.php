@@ -5,10 +5,10 @@
                 @if($logo = $shop->logo)
                 <img src="{{ asset($logo) }}" alt="" class="img-responsive">
                 @else
-                <h1 class="my-2">{{ $shop->name }}</h1>
+                <h1 class="my-0">{{ $shop->name }}</h1>
                 @endif
             </div>
-            <h2 class="my-2"><strong>INVOICE</strong></h2>
+            <h2 class="my-0"><strong>INVOICE</strong></h2>
         </div>
 
         <div class="col-sm-5">

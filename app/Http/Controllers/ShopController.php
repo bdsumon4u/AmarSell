@@ -59,9 +59,9 @@ class ShopController extends Controller
                 //This store image creates the folder and saves the file 
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
-//                 if(! is_dir($dir = public_path('shop'))) {
-//                     mkdir($dir, 755);
-//                 }
+                // if(! is_dir($dir = public_path('shop'))) {
+                //     mkdir($dir, 755);
+                // }
                 $to = 'shop/' . $thumbnailpic;
 
                 //Here is where I am trying to resize with image and it breaks
@@ -134,9 +134,9 @@ class ShopController extends Controller
                 //This store image creates the folder and saves the file 
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
-//                 if(! is_dir($dir = public_path('shop'))) {
-//                     mkdir($dir, 755);
-//                 }
+                // if(! is_dir($dir = public_path('shop'))) {
+                //     mkdir($dir, 755);
+                // }
                 $to = 'shop/' . $thumbnailpic;
 
                 //Here is where I am trying to resize with image and it breaks

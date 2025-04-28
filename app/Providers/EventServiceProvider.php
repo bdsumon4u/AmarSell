@@ -28,18 +28,18 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        NewOrderRecieved::class => [
-            HasRecievedNewOrder::class,
-        ],
-        OrderStatusChanged::class => [
-            HasChangedOrderStatus::class,
-        ],
-        TransactionRequestRecieved::class => [
-            HasRecievedTransactionRequest::class,
-        ],
-        TransactionCompleted::class => [
-            HasCompletedTransaction::class,
-        ],
+        // NewOrderRecieved::class => [
+        //     HasRecievedNewOrder::class,
+        // ],
+        // OrderStatusChanged::class => [
+        //     HasChangedOrderStatus::class,
+        // ],
+        // TransactionRequestRecieved::class => [
+        //     HasRecievedTransactionRequest::class,
+        // ],
+        // TransactionCompleted::class => [
+        //     HasCompletedTransaction::class,
+        // ],
         SendingContactEmail::class => [
             SendContactEmail::class,
         ],

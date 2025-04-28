@@ -31,9 +31,9 @@ Route::post('install/configuration', 'InstallController@postConfiguration');
 Route::get('install/complete', 'InstallController@complete');
 
 Route::get('/dev', function () {
-    Artisan::call('config:cache');
-    Artisan::call('view:cache');
-    Artisan::call('cache:clear');
+    // Artisan::call('config:cache');
+    // Artisan::call('view:cache');
+    Artisan::call('optimize:clear');
     // Artisan::call('storage:link');
     dd('DONE');
 });

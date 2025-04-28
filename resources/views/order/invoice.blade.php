@@ -33,13 +33,19 @@
             background-color: red !important;
             -webkit-print-color-adjust: exact; 
         }
+        .aside-menu {
+            display: none;
+        }
+        .table-sm td, .table-sm th {
+            padding: 0.2rem;
+        }
     }
     .subtotal {
-        border-top: 3px solid #555;
-        border-bottom: 3px solid #555;
+        border-top: 2px solid #555;
+        border-bottom: 2px solid #555;
     }
     .payable {
-        border-top: 3px solid #ccc;
+        border-top: 2px solid #ccc;
     }
     .qr-code > * {
         height: 160px;

