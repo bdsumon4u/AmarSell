@@ -18,13 +18,13 @@ class Order extends Model
     public function setDataAttribute($data)
     {
         // $this->attributes['data'] = serialize($data);
-        $this->attributes['data'] = json_encode(array_merge($this->data, $data));
+        $this->attributes['data'] = json_encode(array_merge($this->data ?? [], $data));
     }
 
     public function getDataAttribute($data)
     {
         // return unserialize($data);
-        return json_decode($data, true);
+        return json_decode($data, true) ?? [];
     }
 
     public function getShopAttribute()
