@@ -7,15 +7,24 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reseller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Pathao\Apis\AreaApi;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
+    protected $areaApi;
+
+    public function __construct(AreaApi $areaApi)
+    {
+        $this->areaApi = $areaApi;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function admin(Request $request, $status = null, ?Reseller $reseller)
+    public function admin(Request $request, ?Reseller $reseller, $status = null)
     {
         if($reseller->getKey()) {
             $orders = $reseller->orders()->getQuery();
@@ -26,18 +35,14 @@ class OrderController extends Controller
             return Datatables::of($orders->status($status)->latest()->with('reseller'))
                     ->addIndexColumn()
                     ->addColumn('checkbox', fn() : string => '')
-                    ->addColumn('reseller', function($row){
-                        return '<a href="' .  route('admin.resellers.show', $row->reseller->id ?? 0) . '">
+                    ->addColumn('reseller', fn($row) => '<a href="' .  route('admin.resellers.show', $row->reseller->id ?? 0) . '">
                             <strong>Name:</strong>' . optional($row->reseller)->name . '
                             <br>
                             <strong>Phone:</strong>' . optional($row->reseller)->phone . '
-                        </a>';
-                    })
-                    ->addColumn('customer', function($row){
-                        return '<strong>Name:</strong>' . $row->data['customer_name'] . '
+                        </a>')
+                    ->addColumn('customer', fn($row) => '<strong>Name:</strong>' . $row->data['customer_name'] . '
                             <br>
-                            <strong>Phone:</strong>' . $row->data['customer_phone'];
-                    })
+                            <strong>Phone:</strong>' . $row->data['customer_phone'])
                     ->addColumn('price', function($row){
                         $ret = "
                         <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
@@ -80,12 +85,37 @@ class OrderController extends Controller
                         }
                         return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
-                    ->addColumn('ordered_at', function($row){
-                        return '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>';
-                    })
+                    ->addColumn('ordered_at', fn($row) => '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>')
                     ->addColumn('completed_returned_at', function($row){
                         $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
                         return isset($row->data[$col]) ? date('d-M-Y', strtotime($row->data[$col])) : 'N/A';
+                    })
+                    ->addColumn('courier', function($row) {
+                        $data = $row->data;
+                        $courierInfo = [];
+                        
+                        if (isset($data['delivery_method'])) {
+                            $courierInfo[] = '<strong>Method:</strong> ' . $data['delivery_method'];
+                        }
+                        
+                        if (isset($data['city_id']) && isset($data['zone_id'])) {
+                            $courierInfo[] = '<strong>City:</strong> ' . $data['city_id'];
+                            $courierInfo[] = '<strong>Zone:</strong> ' . $data['zone_id'];
+                        }
+                        
+                        if (isset($data['consignment_id'])) {
+                            if ($data['delivery_method'] == 'Pathao') {
+                                $trackingUrl = 'https://merchant.pathao.com/tracking?consignment_id='.($data['consignment_id'] ?? '').'&phone='.Str::after($data['customer_phone'], '+88');
+                            } else if ($data['delivery_method'] == 'Stead Fast') {
+                                $trackingUrl  = 'https://www.steadfast.com.bd/user/consignment/'.($data['consignment_id'] ?? '');
+                            }
+                            
+                            if (isset($trackingUrl)) {
+                                $courierInfo[] = '<strong>Consignment ID:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['consignment_id'] . '</a>';
+                            }
+                        }
+                        
+                        return implode('<br>', $courierInfo);
                     })
                     ->addColumn('action', function($row){
                         $btn = '<div class="btn-group btn-group-sm d-flex justify-content-between">
@@ -94,11 +124,9 @@ class OrderController extends Controller
                         $btn .= '</div>';
                         return $btn;
                     })
-                    ->rawColumns(['checkbox', 'reseller', 'customer', 'status', 'price', 'ordered_at', 'action'])
+                    ->rawColumns(['checkbox', 'reseller', 'customer', 'status', 'price', 'ordered_at', 'action', 'courier'])
                     ->setRowAttr([
-                        'data-entry-id' => function($row) {
-                            return $row->id;
-                        },
+                        'data-entry-id' => fn($row) => $row->id,
                     ])
                     ->make(true);
         }
@@ -120,14 +148,10 @@ class OrderController extends Controller
         if ($request->ajax()) {
             return Datatables::of($orders->status($status)->latest()->with('reseller'))
                     ->addIndexColumn()
-                    ->addColumn('empty', function($row){
-                        return '';
-                    })
-                    ->addColumn('customer', function($row){
-                        return '<strong>Name:</strong>' . $row->data['customer_name'] . '
+                    ->addColumn('empty', fn($row) => '')
+                    ->addColumn('customer', fn($row) => '<strong>Name:</strong>' . $row->data['customer_name'] . '
                             <br>
-                            <strong>Phone:</strong>' . $row->data['customer_phone'];
-                    })
+                            <strong>Phone:</strong>' . $row->data['customer_phone'])
                     ->addColumn('price', function($row){
                         $ret = "
                         <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
@@ -170,12 +194,40 @@ class OrderController extends Controller
                         }
                         return '<span class="badge badge-square badge-' . $variant . ' text-uppercase">' . $row->status . '</span>';
                     })
-                    ->addColumn('ordered_at', function($row){
-                        return '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>';
-                    })
+                    ->addColumn('ordered_at', fn($row) => '<span style="white-space: nowrap;">'.$row->created_at->format('d-M-Y').'</span><br><span>'.$row->created_at->format('h:i A').'</span>')
                     ->addColumn('completed_returned_at', function($row){
                         $col = $row->status == 'returned' ? 'returned_at' : 'completed_at';
                         return isset($row->data[$col]) ? date('d-M-Y', strtotime($row->data[$col])) : 'N/A';
+                    })
+                    ->addColumn('courier', function($row) {
+                        $data = $row->data;
+                        $courierInfo = [];
+                        
+                        if (isset($data['delivery_method'])) {
+                            $courierInfo[] = '<strong>Method:</strong> ' . $data['delivery_method'];
+                        }
+                        
+                        if (isset($data['city_id']) && isset($data['zone_id'])) {
+                            $city = $this->areaApi->city()->data->firstWhere('city_id', $data['city_id']);
+                            $zone = $this->areaApi->zone($data['city_id'])->data->firstWhere('zone_id', $data['zone_id']);
+                            
+                            if ($city && $zone) {
+                                $courierInfo[] = '<strong>City:</strong> ' . $city->city_name;
+                                $courierInfo[] = '<strong>Zone:</strong> ' . $zone->zone_name;
+                            }
+                        }
+                        
+                        if (isset($data['consignment_id'])) {
+                            $trackingUrl = "https://pathao.com/track/{$data['consignment_id']}";
+                            $courierInfo[] = '<strong>Consignment ID:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['consignment_id'] . '</a>';
+                        }
+                        
+                        if (isset($data['tracking_code'])) {
+                            $trackingUrl = "https://steadfast.com.bd/track/{$data['tracking_code']}";
+                            $courierInfo[] = '<strong>Tracking Code:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['tracking_code'] . '</a>';
+                        }
+                        
+                        return implode('<br>', $courierInfo);
                     })
                     ->addColumn('action', function($row){
                         $btn = '<div class="btn-group btn-group-sm d-flex justify-content-between">
@@ -184,11 +236,9 @@ class OrderController extends Controller
                         $btn .= '</div>';
                         return $btn;
                     })
-                    ->rawColumns(['customer', 'status', 'price', 'ordered_at', 'action'])
+                    ->rawColumns(['customer', 'status', 'price', 'ordered_at', 'action', 'courier'])
                     ->setRowAttr([
-                        'data-entry-id' => function($row) {
-                            return $row->id;
-                        },
+                        'data-entry-id' => fn($row) => $row->id,
                     ])
                     ->make(true);
         }

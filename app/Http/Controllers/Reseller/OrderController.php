@@ -60,6 +60,8 @@ class OrderController extends Controller
             'sell' => 'required|integer',
             'shipping' => 'required|integer',
             'advanced' => 'required|integer',
+            'city_id' => 'required|integer',
+            'zone_id' => 'required|integer',
         ], [
             'sell.required' => 'The :key field must be at least 0.',
             'shipping.required' => 'The :key field must be at least 0.',

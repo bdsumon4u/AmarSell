@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Pathao\Apis\AreaApi;
 use Darryldecode\Cart\Facades\CartFacade;
 use Livewire\Component;
 use Cart;
@@ -21,6 +22,12 @@ class LiveCart extends Component
     public $success;
     public $delete;
 
+    public $cities = [];
+    public $zones = [];
+    public $selectedCity;
+    public $selectedZone;
+    public $deliveryMethod;
+
     public function mount($type, $cart, $sell = 0, $shipping = 100, $advanced = 100)
     {
         $this->type = $type;
@@ -31,6 +38,37 @@ class LiveCart extends Component
         $this->advanced = $advanced;
         $this->theMoney();
         $this->shops = auth('reseller')->user()->shops;
+        $this->loadCities();
+    }
+
+    public function loadCities()
+    {
+        try {
+            $areaApi = new AreaApi();
+            $this->cities = json_decode(json_encode($areaApi->city()->data), true);
+        } catch (\Exception $e) {
+            $this->cities = [];
+        }
+    }
+
+    public function loadZones()
+    {
+        if ($this->selectedCity) {
+            try {
+                $areaApi = new AreaApi();
+                $this->zones = json_decode(json_encode($areaApi->zone($this->selectedCity)->data), true);
+            } catch (\Exception $e) {
+                $this->zones = [];
+            }
+        } else {
+            $this->zones = [];
+        }
+    }
+
+    public function updatedSelectedCity()
+    {
+        $this->loadZones();
+        $this->selectedZone = '';
     }
 
     public function increment($id)

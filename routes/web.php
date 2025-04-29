@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('images', 'ImageController');
     Route::view('orders', 'admin.orders.list')->name('order.index');
     Route::get('order/print', 'OrderController@print')->name('order.print');
+    Route::post('order/book-courier', 'OrderController@bookCourier')->name('order.book-courier');
+    Route::post('order/booking', 'OrderController@booking')->name('order.booking');
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
@@ -148,7 +150,7 @@ Route::group(['middleware' => 'auth:reseller', 'namespace' => 'Reseller', 'prefi
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
     Route::delete('order/{order}/delete', 'OrderController@destroy')->name('order.destroy');
-    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel'); #--#--#
+    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel');
 
 
     Route::view('/transactions/history', 'reseller.transactions.index')->name('transactions.index');
