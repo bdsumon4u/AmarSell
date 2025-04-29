@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     Route::post('order/{order}/update', 'OrderController@update')->name('order.update');
     Route::get('order/{order}/invoice', 'OrderController@invoice')->name('order.invoice');
-    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel'); #--#--#
+    Route::get('order/{order}/cancel', 'OrderController@cancel')->name('order.cancel');
 
     Route::get('/transactions/pay', 'TransactionController@pay')->name('transactions.pay');
     Route::get('/transactions/pay/{reseller}', 'TransactionController@payToReseller')->name('transactions.pay-to-reseller');
@@ -121,6 +121,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('/admins/create', 'AdminController@create')->name('admins.create');
     Route::post('/admins/create', 'AdminController@store')->name('admins.store');
     Route::delete('/admins/{user}/destroy', 'AdminController@destroy')->name('admins.destroy');
+
+    // Pathao API routes
+    Route::get('pathao/cities', 'PathaoController@cities')->name('pathao.cities');
+    Route::get('pathao/zones/{cityId}', 'PathaoController@zones')->name('pathao.zones');
 });
 
 Route::get('/page/{page:slug}', 'PageController@show')->name('page.show')->middleware(['auth:reseller', PageMiddleware::class]);
