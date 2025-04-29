@@ -266,6 +266,9 @@
 
         // Handle courier booking
         $('#book-courier').on('click', function() {
+            var $button = $(this);
+            $button.prop('disabled', true);
+            
             var selectedIds = table.rows({
                 selected: true
             }).data().pluck('id').toArray();
@@ -275,6 +278,11 @@
                 // Store selected order IDs for later use
                 $('#courier-modal').data('order-ids', selectedIds);
             }
+            
+            // Re-enable button after modal is shown
+            $('#courier-modal').on('shown.bs.modal', function() {
+                $button.prop('disabled', false);
+            });
         });
 
 
