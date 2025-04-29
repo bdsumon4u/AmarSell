@@ -22,14 +22,14 @@
                                     class="btn btn-sm btn-danger">Returned</a>
                             </div>
                         </div>
-                        <div class="d-none" id="selected-actions">
+                        {{-- <div class="d-none" id="selected-actions">
                             <button id="print-selected" class="btn btn-sm btn-primary">
                                 <i class="fa fa-print"></i> Print Selected
                             </button>
                             <button id="book-courier" class="btn btn-sm btn-info ml-2">
                                 <i class="fa fa-truck"></i> Book to Courier
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responive">
