@@ -26,9 +26,11 @@
                             {{-- <button id="print-selected" class="btn btn-sm btn-primary">
                                 <i class="fa fa-print"></i> Print Selected
                             </button> --}}
+                            @if (request('status') == 'processing')
                             <button id="book-courier" class="btn btn-sm btn-info ml-2">
                                 <i class="fa fa-truck"></i> Book to Courier
                             </button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">

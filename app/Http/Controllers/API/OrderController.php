@@ -45,7 +45,7 @@ class OrderController extends Controller
                             <strong>Phone:</strong>' . $row->data['customer_phone'])
                     ->addColumn('price', function($row){
                         $ret = "
-                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
+                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : ($row->data['buy_price'] ?? $row->data['price'])) . "
                         <br>";
                         if($row->status == 'pending') {
                             $current_price = $row->current_price();
@@ -53,7 +53,7 @@ class OrderController extends Controller
                                 $ret .= "<strong style=\"white-space: nowrap;\">Current:</strong> " . theMoney($current_price) . "
                                 <br>";
                             }
-                        } else if ($row->data['price'] != $row->data['buy_price']) {
+                        } else if ($row->data['price'] != ($row->data['buy_price'] ?? $row->data['price'])) {
                             $ret .= "<del style=\"white-space: nowrap;\"><strong>Order:</strong> " . theMoney($row->data['price']) . "</del>
                             <br>";
                         }
@@ -154,7 +154,7 @@ class OrderController extends Controller
                             <strong>Phone:</strong>' . $row->data['customer_phone'])
                     ->addColumn('price', function($row){
                         $ret = "
-                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : $row->data['buy_price']) . "
+                        <strong style=\"white-space: nowrap;\">Buy:</strong> " . theMoney($row->status == 'pending' ? $row->data['price'] : ($row->data['buy_price'] ?? $row->data['price'])) . "
                         <br>";
                         if($row->status == 'pending') {
                             $current_price = $row->current_price();
@@ -162,7 +162,7 @@ class OrderController extends Controller
                                 $ret .= "<strong style=\"white-space: nowrap;\">Current:</strong> " . theMoney($current_price) . "
                                 <br>";
                             }
-                        } else if ($row->data['price'] != $row->data['buy_price']) {
+                        } else if ($row->data['price'] != ($row->data['buy_price'] ?? $row->data['price'])) {
                             $ret .= "<del style=\"white-space: nowrap;\"><strong>Order:</strong> " . theMoney($row->data['price']) . "</del>
                             <br>";
                         }
