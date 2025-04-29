@@ -355,7 +355,7 @@ class OrderController extends Controller
             $order->update([
                 'status' => 'shipping',
                 'data' => [
-                    'delivery_method' => 'SteadFast',
+                    'delivery_method' => 'Stead Fast',
                     'consignment_id' => $item['consignment_id'],
                     'tracking_code' => $item['tracking_code'],
                 ],
