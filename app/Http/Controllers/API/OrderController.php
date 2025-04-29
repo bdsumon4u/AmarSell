@@ -208,23 +208,20 @@ class OrderController extends Controller
                         }
                         
                         if (isset($data['city_id']) && isset($data['zone_id'])) {
-                            $city = $this->areaApi->city()->data->firstWhere('city_id', $data['city_id']);
-                            $zone = $this->areaApi->zone($data['city_id'])->data->firstWhere('zone_id', $data['zone_id']);
-                            
-                            if ($city && $zone) {
-                                $courierInfo[] = '<strong>City:</strong> ' . $city->city_name;
-                                $courierInfo[] = '<strong>Zone:</strong> ' . $zone->zone_name;
-                            }
+                            $courierInfo[] = '<strong>City:</strong> ' . $data['city_id'];
+                            $courierInfo[] = '<strong>Zone:</strong> ' . $data['zone_id'];
                         }
                         
                         if (isset($data['consignment_id'])) {
-                            $trackingUrl = "https://pathao.com/track/{$data['consignment_id']}";
-                            $courierInfo[] = '<strong>Consignment ID:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['consignment_id'] . '</a>';
-                        }
-                        
-                        if (isset($data['tracking_code'])) {
-                            $trackingUrl = "https://steadfast.com.bd/track/{$data['tracking_code']}";
-                            $courierInfo[] = '<strong>Tracking Code:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['tracking_code'] . '</a>';
+                            if ($data['delivery_method'] == 'Pathao') {
+                                $trackingUrl = 'https://merchant.pathao.com/tracking?consignment_id='.($data['consignment_id'] ?? '').'&phone='.Str::after($data['customer_phone'], '+88');
+                            } else if ($data['delivery_method'] == 'Stead Fast') {
+                                $trackingUrl  = 'https://www.steadfast.com.bd/user/consignment/'.($data['consignment_id'] ?? '');
+                            }
+                            
+                            if (isset($trackingUrl)) {
+                                $courierInfo[] = '<strong>Consignment ID:</strong> <a href="' . $trackingUrl . '" target="_blank">' . $data['consignment_id'] . '</a>';
+                            }
                         }
                         
                         return implode('<br>', $courierInfo);
