@@ -38,7 +38,7 @@
         }
         tr.head-row {
             background-color: red !important;
-            -webkit-print-color-adjust: exact; 
+            -webkit-print-color-adjust: exact;
         }
         .aside-menu {
             display: none;
@@ -84,6 +84,39 @@
             e.preventDefault();
             javascript:window.print();
         });
+
+        window.onload = function () {
+            setTimeout(function() {
+                window.print();
+            }, 1000);
+        };
+        // window.onfocus = function() {
+        //     window.close();
+        // };
+        window.onafterprint = function() {
+            if (confirm('Book to Courier?')) {
+                $.ajax({
+                    url: '/admin/order/booking',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: JSON.stringify({
+                        order_ids: '{{request('ids')}}'.split(',')
+                    }),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        window.location.href = '{{ route('admin.order.index', ['status' => 'shipping']) }}';
+                    },
+                    complete: function () {
+
+                    }
+                });
+            } else {
+                window.close();
+            }
+        };
     });
 </script>
 @endsection

@@ -208,7 +208,7 @@ class OrderController extends Controller
     public function print(Request $request)
     {
         $orders = Order::whereIn('id', explode(',', $request->ids))->get();
-        
+
         return view('admin.orders.print', compact('orders'));
     }
 
@@ -448,11 +448,11 @@ class OrderController extends Controller
         try {
             $orders = Order::whereIn('id', $request->order_ids)->get();
             $courierProvider = $request->courier_provider;
-            
+
             foreach ($orders as $order) {
                 // Get courier booking number from API
                 $bookingNumber = $this->getCourierBookingNumber($order, $courierProvider);
-                
+
                 if (!$bookingNumber) {
                     throw new \Exception("Failed to get booking number for order #{$order->id}");
                 }
