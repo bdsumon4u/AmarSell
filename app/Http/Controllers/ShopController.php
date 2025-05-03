@@ -48,15 +48,15 @@ class ShopController extends Controller
         ]) + [
             'reseller_id' => auth('reseller')->user()->id
         ], function($data) use ($request) {
-            
+
             if($request->hasFile('logo')) {
-                $filenameWithExt = $request->file('logo')->getClientOriginalName(); 
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
-                $extension = $request->file('logo')->getClientOriginalExtension(); 
-                $fileNameToStore= $filename.time().'.'.$extension; 
+                $filenameWithExt = $request->file('logo')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('logo')->getClientOriginalExtension();
+                $fileNameToStore= $filename.time().'.'.$extension;
                 $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
 
-                //This store image creates the folder and saves the file 
+                //This store image creates the folder and saves the file
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
                 // if(! is_dir($dir = public_path('shop'))) {
@@ -65,7 +65,7 @@ class ShopController extends Controller
                 $to = 'shop/' . $thumbnailpic;
 
                 //Here is where I am trying to resize with image and it breaks
-                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(base_path('../public_html/'.$to));
+                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(storage_path().'/app/public/'.$to);
 
                 if(!empty($to)) {
                     Storage::delete(public_path($to));
@@ -75,7 +75,7 @@ class ShopController extends Controller
                     ];
                 }
             }
-            
+
             $shop = Shop::create($data);
         });
 
@@ -123,15 +123,15 @@ class ShopController extends Controller
         ]) + [
             'reseller_id' => auth('reseller')->user()->id
         ], function($data) use ($request, $shop) {
-            
+
             if($request->hasFile('logo')) {
-                $filenameWithExt = $request->file('logo')->getClientOriginalName(); 
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME); 
-                $extension = $request->file('logo')->getClientOriginalExtension(); 
-                $fileNameToStore= $filename.time().'.'.$extension; 
+                $filenameWithExt = $request->file('logo')->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $extension = $request->file('logo')->getClientOriginalExtension();
+                $fileNameToStore= $filename.time().'.'.$extension;
                 $thumbnailpic= 'thumb'.'-'.$fileNameToStore;
 
-                //This store image creates the folder and saves the file 
+                //This store image creates the folder and saves the file
                 $path = $request->file('logo')->storeAs('public/shop', $fileNameToStore);
 
                 // if(! is_dir($dir = public_path('shop'))) {
@@ -139,8 +139,9 @@ class ShopController extends Controller
                 // }
                 $to = 'shop/' . $thumbnailpic;
 
+                // dd(storage_path());
                 //Here is where I am trying to resize with image and it breaks
-                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(base_path('../public_html/'.$to));
+                Image::make( storage_path().'/app/public/shop/'.$fileNameToStore)->resize(250, 66)->save(storage_path().'/app/public/'.$to);
 
                 if(!empty($to)) {
                     Storage::delete(public_path($to));
@@ -150,7 +151,7 @@ class ShopController extends Controller
                     ];
                 }
             }
-            
+
             $shop->update($data);
         });
 
