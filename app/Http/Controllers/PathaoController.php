@@ -21,12 +21,19 @@ class PathaoController extends Controller
      */
     public function cities()
     {
-        try {
-            $cities = $this->areaApi->city();
-            return response()->json($cities);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        $cities = cache()->remember('pathao.cities', now()->addMonth(), function () {
+            try {
+                return $this->areaApi->city();
+            } catch (\Exception $e) {
+                return [];
+            }
+        });
+
+        if (empty($cities)) {
+            cache()->forget('pathao.cities');
         }
+
+        return response()->json($cities);
     }
 
     /**
@@ -37,11 +44,18 @@ class PathaoController extends Controller
      */
     public function zones($cityId)
     {
-        try {
-            $zones = $this->areaApi->zone($cityId);
-            return response()->json($zones);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        $zones = cache()->remember('pathao.zones.' . $cityId, now()->addMonth(), function () use ($cityId) {
+            try {
+                return $this->areaApi->zone($cityId);
+            } catch (\Exception $e) {
+                return [];
+            }
+        });
+
+        if (empty($zones)) {
+            cache()->forget('pathao.zones.' . $cityId);
         }
+
+        return response()->json($zones);
     }
 }
